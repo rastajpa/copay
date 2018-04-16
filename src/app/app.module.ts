@@ -23,6 +23,7 @@ import { TranslatePoHttpLoader } from '@biesbjerg/ngx-translate-po-http-loader';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { MomentModule } from 'angular2-moment';
 import { NgxQRCodeModule } from 'ngx-qrcode2';
+import { ZXingScannerModule } from '@zxing/ngx-scanner';
 
 /* Copay App */
 import { CopayApp } from './app.component';
@@ -53,6 +54,7 @@ import { PayProPage } from '../pages/paypro/paypro';
 import { FeeWarningPage } from '../pages/send/fee-warning/fee-warning';
 import { BitcoinCashPage } from '../pages/settings/bitcoin-cash/bitcoin-cash';
 import { SlideToAcceptPage } from '../pages/slide-to-accept/slide-to-accept';
+import { ScanCameraSelectorPage } from '../pages/scan/scan-camera-selector/scan-camera-selector';
 import { TabsPage } from '../pages/tabs/tabs';
 import { TxDetailsPage } from '../pages/tx-details/tx-details';
 import { TxpDetailsPage } from '../pages/txp-details/txp-details';
@@ -282,6 +284,7 @@ export function createTranslateLoader(http: HttpClient) {
     PinModalPage,
     ProposalsPage,
     ReceivePage,
+    ScanCameraSelectorPage,
     ScanPage,
     SendPage,
     SettingsPage,
@@ -352,7 +355,8 @@ export function createTranslateLoader(http: HttpClient) {
         useFactory: createTranslateLoader,
         deps: [HttpClient]
       }
-    })
+    }),
+    ZXingScannerModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -417,6 +421,7 @@ export function createTranslateLoader(http: HttpClient) {
     PinModalPage,
     ProposalsPage,
     ReceivePage,
+    ScanCameraSelectorPage,
     ScanPage,
     SendPage,
     SettingsPage,
@@ -522,4 +527,4 @@ export function createTranslateLoader(http: HttpClient) {
     }
   ]
 })
-export class AppModule {}
+export class AppModule { }

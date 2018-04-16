@@ -1,0 +1,31 @@
+<div class="backdrop" *ngIf="showScanCamerasSelector" (click)="backdropDismiss()">
+</div>
+<div class="scan-camera-selector slider" [ngClass]="{'opened': showSlideEffect, 'closed': !showSlideEffect }" [hidden]="!showScanCamerasSelector">
+  <ion-row align-items-center>
+    <ion-col col-4 text-left>
+      <button ion-button clear icon-only color="grey" (click)="backdropDismiss()">
+        <ion-icon name="arrow-round-back"></ion-icon>
+      </button>
+    </ion-col>
+    <ion-col col-4 text-center class="destination-title">{{ title }}</ion-col>
+  </ion-row>
+  <div *ngIf="scanCameras && scanCameras[0]">
+    <ion-item-divider>
+      <div class="title">
+        <span translate>Cameras</span>
+      </div>
+    </ion-item-divider>
+
+    <ion-list>
+      <button ion-item detail-none *ngFor="let camera of scanCameras" class="scan-camera-button" (click)="selectScanCamera(camera)">
+        <ion-icon item-start>
+          <img src="assets/img/scan-ico.svg" class="icon-wallet" />
+        </ion-icon>
+        <ion-icon item-end>
+          <img class="check" src="assets/img/icon-check-selected.svg" *ngIf="selectedScanCameraId === camera.deviceId">
+        </ion-icon>
+        <div class="item-title">{{camera.label}}</div>
+      </button>
+    </ion-list>
+  </div>
+</div>
