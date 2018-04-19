@@ -227,7 +227,7 @@ export class WalletExportPage {
       var ew = backup;
       if (!ew) return;
       this.clipboard.copy(ew);
-      let copyMessage = this.translate.instant('Copied to clipboard');
+      let copyMessage = this.translate.instant('Copied to Clipboard');
       let showSuccess = this.toastCtrl.create({
         message: copyMessage,
         duration: 1000,
@@ -237,7 +237,7 @@ export class WalletExportPage {
   };
 
   public sendWalletBackup(): void {
-    let preparingMessage = this.translate.instant('Preparing backup...');
+    let preparingMessage = this.translate.instant('Preparing Backup...');
     let showSuccess = this.toastCtrl.create({
       message: preparingMessage,
       duration: 1000,

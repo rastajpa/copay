@@ -1,6 +1,6 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>{{'Export wallet' | translate}}</ion-title>
+    <ion-title>{{'Export Wallet' | translate}}</ion-title>
   </ion-navbar>
 </ion-header>
 <ion-content>
@@ -20,11 +20,11 @@
       <div *ngIf="!backupWalletPlainText">
         <form [formGroup]="exportWalletForm">
           <ion-item>
-            <ion-label stacked>{{'Set up a password' | translate}}</ion-label>
+            <ion-label stacked>{{'Set Up a Password' | translate}}</ion-label>
             <ion-input type="password" formControlName="password" required></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label stacked>{{'Repeat the password' | translate}}</ion-label>
+            <ion-label stacked>{{'Repeat the Password' | translate}}</ion-label>
             <ion-input type="password" formControlName="confirmPassword" required></ion-input>
           </ion-item>
           <ion-item class='form-text error' *ngIf="exportWalletForm.controls.confirmPassword.touched && exportWalletForm.hasError('mismatchedPasswords') && exportWalletForm.controls.password.valid">
@@ -33,11 +33,11 @@
           <div *ngIf="canSign">
             <ion-item-divider></ion-item-divider>
             <ion-item (click)="showAdvChange()">
-              <span translate *ngIf="!showAdv">Show advanced options</span>
-              <span translate *ngIf="showAdv">Hide advanced options</span>
+              <span translate *ngIf="!showAdv">Show Advanced Options</span>
+              <span translate *ngIf="showAdv">Hide Advanced Options</span>
             </ion-item>
             <ion-item *ngIf="showAdv">
-              <ion-label stacked>{{'Do not include private key' | translate}}</ion-label>
+              <ion-label stacked>{{'Do Not Include Private Key' | translate}}</ion-label>
               <ion-checkbox formControlName="noSignEnabled" (ionChange)="noSignEnabledChange()"></ion-checkbox>
             </ion-item>
           </div>
@@ -60,7 +60,7 @@
         </form>
       </div>
       <div *ngIf="backupWalletPlainText">
-        <span translate>Backup wallet</span>
+        <span translate>Backup Wallet</span>
         <p translate>Copy this text as it is to a safe place (notepad or email)</p>
         <ion-textarea rows="12">{{backupWalletPlainText}}</ion-textarea>
       </div>

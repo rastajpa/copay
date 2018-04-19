@@ -84,7 +84,7 @@ export class WalletTransactionHistoryPage {
     this.walletProvider.getTxHistory(this.wallet, {}).then((txs: any) => {
       if (_.isEmpty(txs)) {
         this.logger.warn('Failed to generate CSV: no transactions');
-        this.err = 'no transactions';
+        this.err = 'No transactions';
         return;
       }
 
