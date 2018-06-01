@@ -74,6 +74,7 @@ export class HomePage {
   public showReorderBch: boolean;
   public showIntegration: any;
 
+  private isCordova: boolean;
   private isNW: boolean;
   private updatingWalletId: object;
   private zone: any;
@@ -106,6 +107,7 @@ export class HomePage {
     this.updatingWalletId = {};
     this.addressbook = {};
     this.cachedBalanceUpdateOn = '';
+    this.isCordova = this.platformProvider.isCordova;
     this.isNW = this.platformProvider.isNW;
     this.showReorderBtc = false;
     this.showReorderBch = false;
@@ -132,7 +134,8 @@ export class HomePage {
   }
 
   ionViewDidEnter() {
-    if (this.isNW) this.checkUpdate();
+    if (this.isNW) this.checkDesktopUpdate();
+    if (this.isCordova) this.checkMobileUpdate();
     this.checkHomeTip();
     this.checkFeedbackInfo();
 
@@ -405,27 +408,42 @@ export class HomePage {
     });
   }
 
-  private checkUpdate(): void {
+  private checkDesktopUpdate(): void {
     this.releaseProvider
-      .getLatestAppVersion()
+      .getLatestDesktopVersion()
       .toPromise()
       .then(version => {
-        this.logger.debug('Current app version:', version);
-        var result = this.releaseProvider.checkForUpdates(version);
-        this.logger.debug('Update available:', result.updateAvailable);
-        if (result.updateAvailable) {
-          this.newRelease = true;
-          this.updateText = this.replaceParametersProvider.replace(
-            this.translate.instant(
-              'There is a new version of {{nameCase}} available'
-            ),
-            { nameCase: this.appProvider.info.nameCase }
-          );
-        }
+        this.showAvailableVersionCard(version);
       })
       .catch(err => {
         this.logger.error('Error getLatestAppVersion', err);
       });
+  }
+
+  private checkMobileUpdate(): void {
+    let latestVersion = this.releaseProvider.getLatestMobileVersion();
+    if (!latestVersion) return;
+    if (this.platformProvider.isIOS) {
+      this.showAvailableVersionCard(latestVersion.ios);
+    } else {
+      this.showAvailableVersionCard(latestVersion.android);
+    }
+  }
+
+  private showAvailableVersionCard(version) {
+    if (!version) return;
+    this.logger.debug('Current app version:', version);
+    var result = this.releaseProvider.checkForUpdates(version);
+    this.logger.debug('Update available:', result.updateAvailable);
+    if (result.updateAvailable) {
+      this.newRelease = true;
+      this.updateText = this.replaceParametersProvider.replace(
+        this.translate.instant(
+          'There is a new version of {{nameCase}} available'
+        ),
+        { nameCase: this.appProvider.info.nameCase }
+      );
+    }
   }
 
   public openServerMessageLink(): void {
@@ -508,7 +526,22 @@ export class HomePage {
   }
 
   public goToDownload(): void {
-    let url = 'https://github.com/bitpay/copay/releases/latest';
+    let appName = this.appProvider.info.nameCase;
+    let defaults = this.configProvider.getDefaults();
+    let url: string;
+
+    if (this.isNW) url = 'https://github.com/bitpay/copay/releases/latest';
+    else if (this.platformProvider.isAndroid)
+      url =
+        appName == 'Copay'
+          ? defaults.rateApp.copay.android
+          : defaults.rateApp.bitpay.android;
+    else if (this.platformProvider.isIOS)
+      url =
+        appName == 'Copay'
+          ? defaults.rateApp.copay.ios
+          : defaults.rateApp.bitpay.ios;
+
     let optIn = true;
     let title = this.translate.instant('Update Available');
     let message = this.translate.instant(

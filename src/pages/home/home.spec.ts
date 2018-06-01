@@ -13,16 +13,19 @@ describe('HomePage', () => {
   let instance: any;
   let testBed: typeof TestBed;
 
-  beforeEach(async(() =>
-    TestUtils.configurePageTestingModule([HomePage]).then(testEnv => {
-      fixture = testEnv.fixture;
-      instance = testEnv.instance;
-      testBed = testEnv.testBed;
-      instance.showCard = {
-        setShowRateCard: () => {}
-      };
-      fixture.detectChanges();
-    })));
+  beforeEach(
+    async(() =>
+      TestUtils.configurePageTestingModule([HomePage]).then(testEnv => {
+        fixture = testEnv.fixture;
+        instance = testEnv.instance;
+        testBed = testEnv.testBed;
+        instance.showCard = {
+          setShowRateCard: () => {}
+        };
+        fixture.detectChanges();
+      })
+    )
+  );
   afterEach(() => {
     fixture.destroy();
   });
@@ -47,7 +50,7 @@ describe('HomePage', () => {
     describe('ionViewDidEnter', () => {
       it('should check for update if NW', () => {
         instance.isNW = true;
-        const spy = spyOn(instance, 'checkUpdate');
+        const spy = spyOn(instance, 'checkDesktopUpdate');
         instance.ionViewDidEnter();
         expect(spy).toHaveBeenCalled();
       });

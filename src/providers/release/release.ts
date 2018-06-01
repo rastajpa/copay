@@ -2,13 +2,18 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { AppProvider } from '../../providers/app/app';
+import { PlatformProvider } from '../platform/platform';
 
 @Injectable()
 export class ReleaseProvider {
   private LATEST_RELEASE_URL: string;
   private appVersion: string;
 
-  constructor(private http: HttpClient, private app: AppProvider) {
+  constructor(
+    private http: HttpClient,
+    private app: AppProvider,
+    private platform: PlatformProvider
+  ) {
     this.LATEST_RELEASE_URL =
       'https://api.github.com/repos/bitpay/copay/releases/latest';
     this.appVersion = this.app.info.version;
@@ -18,8 +23,14 @@ export class ReleaseProvider {
     return this.appVersion;
   }
 
-  public getLatestAppVersion() {
+  public getLatestDesktopVersion() {
     return this.http.get(this.LATEST_RELEASE_URL).pipe(map(x => x['tag_name']));
+  }
+
+  public getLatestMobileVersion() {
+    return this.app.servicesInfo && this.app.servicesInfo.latestVersion
+      ? this.app.servicesInfo.latestVersion
+      : null;
   }
 
   private verifyTagFormat(tag: string) {
