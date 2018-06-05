@@ -15,7 +15,7 @@ import { PaperWalletPage } from '../paper-wallet/paper-wallet';
 import { AmountPage } from '../send/amount/amount';
 import { AddressbookAddPage } from '../settings/addressbook/add/add';
 
-import env from '../../environments';
+import env from '../../environments/e2e';
 
 @Component({
   selector: 'page-scan',

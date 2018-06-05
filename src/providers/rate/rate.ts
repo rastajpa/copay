@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import * as _ from 'lodash';
-import env from '../../environments';
+import env from '../../environments/dev';
+
 import { Logger } from '../../providers/logger/logger';
 
 @Injectable()
@@ -120,7 +121,7 @@ export class RateProvider {
     ) {
       return null;
     }
-    return (amount / this.getRate(code, chain)) * this.BTC_TO_SAT;
+    return amount / this.getRate(code, chain) * this.BTC_TO_SAT;
   }
 
   public listAlternatives(sort: boolean) {

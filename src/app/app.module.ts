@@ -11,7 +11,7 @@ import { MomentModule } from 'angular2-moment';
 import { NgxQRCodeModule } from 'ngx-qrcode2';
 
 /* Copay App */
-import env from '../environments';
+import env from '../environments/e2e';
 import { CopayApp } from './app.component';
 
 import { PAGES } from './../pages/pages';

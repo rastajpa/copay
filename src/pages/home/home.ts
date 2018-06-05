@@ -421,13 +421,35 @@ export class HomePage {
   }
 
   private checkMobileUpdate(): void {
-    let latestVersion = this.releaseProvider.getLatestMobileVersion();
-    if (!latestVersion) return;
-    if (this.platformProvider.isIOS) {
-      this.showAvailableVersionCard(latestVersion.ios);
-    } else {
-      this.showAvailableVersionCard(latestVersion.android);
-    }
+    this.releaseProvider
+      .getLatestMobileVersion()
+      .toPromise()
+      .then(
+        (response: {
+          result: { result: string };
+          latestVersions: {
+            ios: { copay: string; bitpay: string };
+            android: { copay: string; bitpay: string };
+          };
+        }) => {
+          let version: string;
+          if (this.platformProvider.isIOS) {
+            version =
+              this.appProvider.info.nameCase == 'Copay'
+                ? response.latestVersions.ios.copay
+                : response.latestVersions.ios.bitpay;
+          } else {
+            version =
+              this.appProvider.info.nameCase == 'Copay'
+                ? response.latestVersions.android.copay
+                : response.latestVersions.android.bitpay;
+          }
+          this.showAvailableVersionCard(version);
+        }
+      )
+      .catch(err => {
+        this.logger.error('Error getLatestAppVersion', err);
+      });
   }
 
   private showAvailableVersionCard(version) {
