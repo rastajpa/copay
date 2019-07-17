@@ -39,6 +39,7 @@ export class ProfileProvider {
 
   public UPDATE_PERIOD = 15;
   public UPDATE_PERIOD_FAST = 5;
+  private MIGRATION_WALLET_COUNTER = 1;
   private throttledBwsEvent;
   private validationLock: boolean = false;
   private errors = this.bwcProvider.getErrors();
@@ -282,7 +283,7 @@ export class ProfileProvider {
           return;
         }
         wallet.setNotificationsInterval(this.UPDATE_PERIOD);
-        wallet.openWallet(() => {});
+        wallet.openWallet(() => { });
       }
     );
     this.events.subscribe('Local/ConfigUpdate', opts => {
@@ -308,6 +309,15 @@ export class ProfileProvider {
       groupBackupInfo = await this.getBackupGroupInfo(keyId, wallet);
       needsBackup = groupBackupInfo.needsBackup;
       name = await this.getWalletGroupName(keyId);
+      if (!name) {
+        // use wallets name for wallets group name at migration
+        name =
+          this.MIGRATION_WALLET_COUNTER === 1
+            ? 'Wallets'
+            : `Wallets #${this.MIGRATION_WALLET_COUNTER}`;
+        this.MIGRATION_WALLET_COUNTER++;
+        this.setWalletGroupName(keyId, name);
+      }
       isPrivKeyEncrypted = this.keyProvider.isPrivKeyEncrypted(keyId);
       canSign = true;
       isDeletedSeed = this.keyProvider.isDeletedSeed(keyId);
@@ -338,7 +348,7 @@ export class ProfileProvider {
       date = new Date(Number(groupBackupInfo.timestamp));
     this.logger.info(
       `Binding wallet: ${wallet.id} - Backed up: ${!needsBackup} ${
-        date ? date : ''
+      date ? date : ''
       } - Encrypted: ${wallet.isPrivKeyEncrypted}`
     );
     return Promise.resolve(true);
@@ -690,8 +700,8 @@ export class ProfileProvider {
           const mergeAddressBook = _.merge(addressBook, localAddressBook);
           this.persistenceProvider
             .setAddressBook(
-              wallet.credentials.network,
-              JSON.stringify(mergeAddressBook)
+            wallet.credentials.network,
+            JSON.stringify(mergeAddressBook)
             )
             .then(() => {
               return resolve();

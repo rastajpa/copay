@@ -132,8 +132,6 @@
           <img src="assets/img/add-wallet/wallet.svg" class="icon-settings" />
         </ion-icon>
         <ion-label>
-          <span *ngIf="walletsGroups.length === 1 && !walletsGroup.name">Wallets</span>
-          <span *ngIf="walletsGroups.length > 1 && !walletsGroup.name">Wallets #{{i + 1}}</span>
           <span *ngIf="walletsGroup.name">{{walletsGroup.name}}</span>
         </ion-label>
       </button>

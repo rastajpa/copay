@@ -108,8 +108,6 @@
       <div class="section-header">
         <span>
           <span class="ellipsis">
-            <span *ngIf="walletsGroups.length === 1 && !walletGroup[0].groupName">Wallets</span>
-            <span *ngIf="walletsGroups.length > 1 && !walletGroup[0].groupName">Wallets #{{i + 1}}</span>
             <span *ngIf="walletGroup[0].groupName">{{walletGroup[0].groupName}}</span>
           </span>
         </span>
