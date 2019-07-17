@@ -91,7 +91,7 @@ export class CreateWalletPage implements OnInit {
     this.showAdvOpts = false;
 
     this.createForm = this.fb.group({
-      profileName: [null],
+      walletGroupName: [null],
       walletName: [null, Validators.required],
       myName: [null],
       totalCopayers: [1],
@@ -106,7 +106,9 @@ export class CreateWalletPage implements OnInit {
     });
     this.createForm.controls['coin'].setValue(this.coin);
     if (!this.keyId) {
-      this.createForm.get('profileName').setValidators([Validators.required]);
+      this.createForm
+        .get('walletGroupName')
+        .setValidators([Validators.required]);
     }
     this.createLabel =
       this.coin === 'btc'
@@ -280,7 +282,7 @@ export class CreateWalletPage implements OnInit {
         if (!addingNewWallet) {
           this.profileProvider.setWalletGroupName(
             wallet.credentials.keyId,
-            this.createForm.value.profileName
+            this.createForm.value.walletGroupName
           );
         }
         this.navCtrl.popToRoot().then(() => {

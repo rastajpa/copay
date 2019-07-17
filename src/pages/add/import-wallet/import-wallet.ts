@@ -78,7 +78,7 @@ export class ImportWalletPage {
     this.formFile = null;
 
     this.importForm = this.form.group({
-      profileName: [null, Validators.required],
+      walletGroupName: [null, Validators.required],
       words: [null, Validators.required],
       backupText: [null],
       passphrase: [null],
@@ -225,7 +225,7 @@ export class ImportWalletPage {
       this.profileProvider.setBackupGroupFlag(wallets[0].credentials.keyId);
       this.profileProvider.setWalletGroupName(
         wallets[0].credentials.keyId,
-        this.importForm.value.profileName
+        this.importForm.value.walletGroupName
       );
     }
     this.events.publish('Local/WalletListChange');
