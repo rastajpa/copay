@@ -361,7 +361,7 @@ export class HomePage {
     */
 
     this.wallets = this.profileProvider.getWallets();
-    this.walletsGroups = _.values(_.groupBy(this.wallets, 'groupName'));
+    this.walletsGroups = _.values(_.groupBy(this.wallets, 'keyId'));
     this.profileProvider.setLastKnownBalance();
 
     // Avoid heavy tasks that can slow down the unlocking experience
@@ -481,8 +481,8 @@ export class HomePage {
             this.payProDetailsData.amount = selectedTransactionCurrency
               ? paymentTotals[selectedTransactionCurrency]
               : Coin[currency]
-                ? price / 1e-8
-                : price;
+              ? price / 1e-8
+              : price;
             this.clearCountDownInterval();
             this.paymentTimeControl(expirationTime);
           } catch (err) {
@@ -603,9 +603,9 @@ export class HomePage {
 
     this.logger.debug(
       'fetching status for: ' +
-      opts.walletId +
-      ' alsohistory:' +
-      opts.alsoUpdateHistory
+        opts.walletId +
+        ' alsohistory:' +
+        opts.alsoUpdateHistory
     );
     const wallet = this.profileProvider.getWallet(opts.walletId);
     if (!wallet) return;
@@ -804,28 +804,44 @@ export class HomePage {
 
   public shouldShowAddWallet(walletGroup): boolean {
     /* Allow account creation only for wallets:
-    n=1
-    BIP44
-    P2PKH
-    BTC
-    BCH only if it is 145'
+    n=1 : BIP44 - P2PKH - BTC o BCH only if it is 145'
+    n>1 : BIP48 - P2SH - BTC o BCH only if it is 145'
     */
 
-    if (!walletGroup.value || !walletGroup.value.length) {
+    if (!walletGroup || !walletGroup.length) {
       return false;
-    } else if (this.keyProvider.isDeletedSeed(walletGroup.value[0].credentials.keyId)) {
+    } else if (
+      this.keyProvider.isDeletedSeed(walletGroup[0].credentials.keyId)
+    ) {
       return false;
     } else {
       const derivationStrategy = this.derivationPathHelperProvider.getDerivationStrategy(
-        walletGroup.value[0].credentials.rootPath
+        walletGroup[0].credentials.rootPath
       );
 
-      const coinCode = this.derivationPathHelperProvider.parsePath(walletGroup.value[0].credentials.rootPath).coinCode;
+      const coinCode = this.derivationPathHelperProvider.parsePath(
+        walletGroup[0].credentials.rootPath
+      ).coinCode;
 
-      if (walletGroup.value[0].n == 1 && walletGroup.value[0].credentials.addressType == 'P2PKH' && derivationStrategy == 'BIP44' && (walletGroup.value[0].coin == 'btc' || (walletGroup.value[0].coin == 'bch' && coinCode == '145\''))) {
-        return true
+      if (
+        walletGroup[0].n == 1 &&
+        walletGroup[0].credentials.addressType == 'P2PKH' &&
+        derivationStrategy == 'BIP44' &&
+        (walletGroup[0].coin == 'btc' ||
+          (walletGroup[0].coin == 'bch' && coinCode == "145'"))
+      ) {
+        return true;
       }
-      return false
+      if (
+        walletGroup[0].n > 1 &&
+        walletGroup[0].credentials.addressType == 'P2SH' &&
+        derivationStrategy == 'BIP48' &&
+        (walletGroup[0].coin == 'btc' ||
+          (walletGroup[0].coin == 'bch' && coinCode == "145'"))
+      ) {
+        return true;
+      }
+      return false;
     }
   }
 
