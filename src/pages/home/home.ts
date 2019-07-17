@@ -74,6 +74,7 @@ export class HomePage {
   public showReorder: any[];
   public showReorderWallets: boolean = true;
   public hideReorderWallets: boolean = false;
+  public reorderingWallets: boolean = false;
   public showPriceChart: boolean;
   public hideHomeIntegrations: boolean;
   public showGiftCards: boolean;
@@ -360,7 +361,7 @@ export class HomePage {
     */
 
     this.wallets = this.profileProvider.getWallets();
-    this.walletsGroups = _.groupBy(this.wallets, 'groupName');
+    this.walletsGroups = _.values(_.groupBy(this.wallets, 'groupName'));
     this.profileProvider.setLastKnownBalance();
 
     // Avoid heavy tasks that can slow down the unlocking experience
@@ -792,11 +793,13 @@ export class HomePage {
   }
 
   public goToWalletDetails(wallet, params): void {
+    if (this.reorderingWallets) return;
     this.events.publish('OpenWallet', wallet, params);
   }
 
   public reorder(i: string): void {
     this.showReorder[i] = !this.showReorder[i];
+    this.reorderingWallets = this.showReorder[i];
   }
 
   public shouldShowAddWallet(walletGroup): boolean {
@@ -826,11 +829,11 @@ export class HomePage {
     }
   }
 
-  public reorderWallets(indexes): void {
-    const element = this.wallets[indexes.from];
-    this.wallets.splice(indexes.from, 1);
-    this.wallets.splice(indexes.to, 0, element);
-    _.each(this.wallets, (wallet, index: number) => {
+  public reorderWallets(indexes, name): void {
+    const element = this.walletsGroups[name][indexes.from];
+    this.walletsGroups[name].splice(indexes.from, 1);
+    this.walletsGroups[name].splice(indexes.to, 0, element);
+    _.each(this.walletsGroups[name], (wallet, index: number) => {
       this.profileProvider.setWalletOrder(wallet.id, index);
     });
   }
