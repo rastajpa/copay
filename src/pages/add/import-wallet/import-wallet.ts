@@ -12,7 +12,6 @@ import { TabsPage } from '../../tabs/tabs';
 import { ActionSheetProvider } from '../../../providers/action-sheet/action-sheet';
 import { BwcProvider } from '../../../providers/bwc/bwc';
 import { ConfigProvider } from '../../../providers/config/config';
-import { KeyProvider } from '../../../providers/key/key';
 import { OnGoingProcessProvider } from '../../../providers/on-going-process/on-going-process';
 import { PlatformProvider } from '../../../providers/platform/platform';
 import { PopupProvider } from '../../../providers/popup/popup';
@@ -53,7 +52,6 @@ export class ImportWalletPage {
     private bwcProvider: BwcProvider,
     private walletProvider: WalletProvider,
     private configProvider: ConfigProvider,
-    private keyProvider: KeyProvider,
     private popupProvider: PopupProvider,
     private platformProvider: PlatformProvider,
     private logger: Logger,
@@ -229,7 +227,6 @@ export class ImportWalletPage {
         wallets[0].credentials.keyId,
         this.importForm.value.profileName
       );
-      this.keyProvider.setActiveWGKey(wallets[0].credentials.keyId);
     }
     this.events.publish('Local/WalletListChange');
     // using setRoot(TabsPage) as workaround when coming from scanner

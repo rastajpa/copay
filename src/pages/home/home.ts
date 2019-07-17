@@ -12,14 +12,12 @@ import * as moment from 'moment';
 import { Observable, Subscription } from 'rxjs';
 
 // Pages
-import { AddWalletPage } from '../add-wallet/add-wallet';
 import { AddPage } from '../add/add';
 import { BitPayCardPage } from '../integrations/bitpay-card/bitpay-card';
 import { BitPayCardIntroPage } from '../integrations/bitpay-card/bitpay-card-intro/bitpay-card-intro';
 import { CoinbasePage } from '../integrations/coinbase/coinbase';
 import { ShapeshiftPage } from '../integrations/shapeshift/shapeshift';
 import { NewDesignTourPage } from '../new-design-tour/new-design-tour';
-import { WalletGroupSelectorPage } from '../wallet-group-selector/wallet-group-selector';
 import { ProposalsPage } from './proposals/proposals';
 
 // Providers
@@ -33,7 +31,6 @@ import { FeedbackProvider } from '../../providers/feedback/feedback';
 import { HomeIntegrationsProvider } from '../../providers/home-integrations/home-integrations';
 import { IncomingDataProvider } from '../../providers/incoming-data/incoming-data';
 import { InvoiceProvider } from '../../providers/invoice/invoice';
-import { KeyProvider } from '../../providers/key/key';
 import { Logger } from '../../providers/logger/logger';
 import { PersistenceProvider } from '../../providers/persistence/persistence';
 import { PlatformProvider } from '../../providers/platform/platform';
@@ -58,6 +55,7 @@ export class HomePage {
   @ViewChild('priceCard')
   priceCard;
   public wallets;
+  public walletsGroups;
   public txpsN: number;
   public serverMessages: any[];
   public homeIntegrations;
@@ -69,10 +67,11 @@ export class HomePage {
   public remainingTimeStr: string;
   public slideDown: boolean;
   public showServerMessage: boolean;
-  public selectedWalletGroup;
 
   public showRateCard: boolean;
-  public showReorder: boolean;
+  public showReorder;
+  public showReorderWallets: boolean = true;
+  public hideReorderWallets: boolean = false;
   public showPriceChart: boolean;
   public hideHomeIntegrations: boolean;
   public showGiftCards: boolean;
@@ -108,14 +107,12 @@ export class HomePage {
     private incomingDataProvider: IncomingDataProvider,
     private statusBar: StatusBar,
     private invoiceProvider: InvoiceProvider,
-    private modalCtrl: ModalController,
-    private keyProvider: KeyProvider
+    private modalCtrl: ModalController
   ) {
     this.slideDown = false;
     this.isBlur = false;
     this.isElectron = this.platformProvider.isElectron;
-    this.showReorder = false;
-    this.selectedWalletGroup = {};
+    this.showReorder = [];
     this.zone = new NgZone({ enableLongStackTrace: false });
     this.events.subscribe('Home/reloadStatus', () => {
       this._willEnter(true);
@@ -349,23 +346,6 @@ export class HomePage {
     }
   );
 
-  public openWalletGroupSelectorModal(): void {
-    this.isBlur = true;
-
-    let modal = this.modalCtrl.create(WalletGroupSelectorPage, null, {
-      showBackdrop: false,
-      enableBackdropDismiss: false,
-      cssClass: 'fullscreen-modal-no-backdrop',
-      enterAnimation: 'ModalEnterFadeIn',
-      leaveAnimation: 'ModalLeaveFadeOut'
-    });
-    modal.present();
-    modal.onDidDismiss((goToAddWallet?: boolean) => {
-      this.isBlur = false;
-      if (goToAddWallet) this.navCtrl.push(AddWalletPage);
-    });
-  }
-
   private setWallets = (shouldUpdate: boolean = false) => {
     // TEST
     /* 
@@ -375,12 +355,8 @@ export class HomePage {
     },100);
     */
 
-    let opts: any = {};
-    opts.keyId = this.keyProvider.activeWGKey;
-    this.wallets = this.profileProvider.getWallets(opts);
-    this.selectedWalletGroup = this.profileProvider.getWalletGroup(
-      this.keyProvider.activeWGKey
-    );
+    this.wallets = this.profileProvider.getWallets();
+    this.walletsGroups = _.groupBy(this.wallets, 'groupName');
     this.profileProvider.setLastKnownBalance();
 
     // Avoid heavy tasks that can slow down the unlocking experience
@@ -807,17 +783,16 @@ export class HomePage {
     this.externalLinkProvider.open(url);
   }
 
-  public goToAddView(): void {
-    this.navCtrl.push(AddPage, { addingNewWallet: true });
+  public goToAddView(keyId: string): void {
+    this.navCtrl.push(AddPage, { keyId });
   }
 
   public goToWalletDetails(wallet, params): void {
-    if (this.showReorder) return;
     this.events.publish('OpenWallet', wallet, params);
   }
 
-  public reorder(): void {
-    this.showReorder = !this.showReorder;
+  public reorder(i: string): void {
+    this.showReorder[i] = !this.showReorder[i];
   }
 
   public reorderWallets(indexes): void {

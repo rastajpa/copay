@@ -17,6 +17,7 @@ import { ProfileProvider } from '../../providers/profile/profile';
 import { TouchIdProvider } from '../../providers/touchid/touchid';
 
 // pages
+import { AddWalletPage } from '../add-wallet/add-wallet';
 import { BitPayCardIntroPage } from '../integrations/bitpay-card/bitpay-card-intro/bitpay-card-intro';
 import { BitPaySettingsPage } from '../integrations/bitpay-card/bitpay-settings/bitpay-settings';
 import { CoinbaseSettingsPage } from '../integrations/coinbase/coinbase-settings/coinbase-settings';
@@ -258,5 +259,9 @@ export class SettingsPage {
 
   public openWalletGroupSettings(walletGroup): void {
     this.navCtrl.push(WalletGroupSettingsPage, { keyId: walletGroup.keyId });
+  }
+
+  public goToAddWalletPage(): void {
+    this.navCtrl.push(AddWalletPage);
   }
 }

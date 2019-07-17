@@ -319,6 +319,7 @@ export class ProfileProvider {
     }
 
     wallet.needsBackup = needsBackup;
+    wallet.groupName = name;
 
     this.walletsGroups[keyId] = {
       order,
@@ -872,7 +873,6 @@ export class ProfileProvider {
       return this.keyProvider.addKeys(newKeys).then(() => {
         profile.credentials = newCrededentials;
         profile.dirty = true;
-        this.keyProvider.loadActiveWGKey();
         return this.storeProfileIfDirty();
       });
     } else {
@@ -1357,7 +1357,6 @@ export class ProfileProvider {
     return new Promise((resolve, reject) => {
       const MAX = 100;
       opts = opts ? opts : {};
-      opts.keyId = this.keyProvider.activeWGKey;
       const w = this.getWallets(opts);
       if (_.isEmpty(w)) {
         return reject('No wallets available');

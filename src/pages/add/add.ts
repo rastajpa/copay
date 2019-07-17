@@ -7,11 +7,9 @@ import { JoinWalletPage } from './join-wallet/join-wallet';
 import { SelectCurrencyPage } from './select-currency/select-currency';
 
 // providers
-import { KeyProvider } from '../../providers/key/key';
 import { Logger } from '../../providers/logger/logger';
 import { ProfileProvider } from '../../providers/profile/profile';
 import { ReplaceParametersProvider } from '../../providers/replace-parameters/replace-parameters';
-import { ImportWalletPage } from './import-wallet/import-wallet';
 
 @Component({
   selector: 'page-add',
@@ -25,14 +23,12 @@ export class AddPage {
     private logger: Logger,
     private navParam: NavParams,
     private profileProvider: ProfileProvider,
-    private keyProvider: KeyProvider,
     private translate: TranslateService,
     private replaceParametersProvider: ReplaceParametersProvider
   ) {
-    const keyId = this.keyProvider.activeWGKey;
-    const addingNewWallet = this.navParam.data.addingNewWallet;
+    const keyId = this.navParam.data.keyId;
     const walletGroup = this.profileProvider.getWalletGroup(keyId);
-    if (walletGroup && walletGroup.name && addingNewWallet) {
+    if (walletGroup && walletGroup.name && keyId) {
       this.title = this.replaceParametersProvider.replace(
         this.translate.instant('{{walletGroupName}}'),
         {
@@ -51,17 +47,13 @@ export class AddPage {
   public goToSelectCurrencyPage(isShared: boolean): void {
     this.navCtrl.push(SelectCurrencyPage, {
       isShared,
-      addingNewWallet: this.navParam.data.addingNewWallet
+      keyId: this.navParam.data.keyId
     });
   }
 
   public goToJoinWallet(): void {
     this.navCtrl.push(JoinWalletPage, {
-      addingNewWallet: this.navParam.data.addingNewWallet
+      keyId: this.navParam.data.keyId
     });
-  }
-
-  public goToImportWallet(): void {
-    this.navCtrl.push(ImportWalletPage);
   }
 }

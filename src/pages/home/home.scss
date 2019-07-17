@@ -19,10 +19,20 @@ page-home {
   }
 
   .home-header {
+    .notifications-badge {
+      border-radius: 9px;
+      font-size: 15px;
+      padding: 3px 7px;
+      padding-top: 4px;
+      font-weight: 600;
+      margin-right: 5px;
+    }
+
     .scan-button {
-      margin-right: 1rem;
+      margin-left: 1rem;
+      cursor: pointer;
       display: flex;
-      justify-content: flex-end;
+      justify-content: flex-start;
       .scan-img {
         mask-image: url(../assets/img/scan.svg);
         background-color: color($colors, secondary);
@@ -34,6 +44,8 @@ page-home {
     }
 
     .settings-button {
+      margin-right: 1rem;
+
       img {
         opacity: 0.6;
       }
@@ -56,12 +68,6 @@ page-home {
       height: 24px;
       position: relative;
       top: 3px;
-    }
-
-    button.copay {
-      img {
-        filter: grayscale(100%);
-      }
     }
   }
 
@@ -238,19 +244,6 @@ page-home {
           color: color($colors, primary);
           font-size: 24px;
         }
-      }
-    }
-    .notifications-badge {
-      border-radius: 9px;
-      font-size: 13px;
-      padding-top: 2px;
-      font-weight: 600;
-      margin-left: 10px;
-    }
-    .wallet-group-dropdown {
-      display: flex;
-      ion-icon {
-        margin-left: 10px;
       }
     }
   }

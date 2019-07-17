@@ -122,6 +122,9 @@
 
       <ion-item-divider *ngIf="walletsGroups && walletsGroups[0]">
         {{'Profiles' | translate}}
+        <button ion-button clear item-right class="settings-list__divider-button" (click)="goToAddWalletPage()">
+          <img src="assets/img/plus.svg" width="14" />
+        </button>
       </ion-item-divider>
 
       <button ion-item *ngFor="let walletsGroup of walletsGroups" (click)="openWalletGroupSettings(walletsGroup)">

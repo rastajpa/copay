@@ -1,16 +1,19 @@
 <ion-header>
   <ion-navbar class="home-header" [ngClass]="{blur: isBlur}">
-    <ion-buttons left class="settings-button">
+    <div class="scan-button" *ngIf="wallets && wallets[0]" (click)="scan()">
+      <div class="scan-img"></div>
+    </div>
+    <ion-title>
+      <img class="home-logo" src="assets/img/app/logo.svg" />
+    </ion-title>
+    <ion-buttons right class="settings-button">
+      <button ion-button clear icon-only color="grey" *ngIf="txpsN > 0" (click)="openProposalsPage()">
+        <ion-badge class="notifications-badge">{{ txpsN }}</ion-badge>
+      </button>
       <button class="modal-close-button" (click)="settings()" ion-button>
         <img src="assets/img/settings.svg" />
       </button>
     </ion-buttons>
-    <ion-title>
-      <img class="home-logo" src="assets/img/app/logo.svg" />
-    </ion-title>
-    <div class="scan-button" *ngIf="wallets && wallets[0]" (click)="scan()">
-      <div class="scan-img"></div>
-    </div>
   </ion-navbar>
 </ion-header>
 
@@ -99,61 +102,57 @@
       </ion-card-content>
     </ion-card>
 
-    <div class="wallets-container">
+    <div *ngFor="let walletGroup of walletsGroups | keys; let i = index" class="wallets-container">
       <div class="section-header">
-        <span class="wallet-group-dropdown" *ngIf="selectedWalletGroup" (click)="openWalletGroupSelectorModal()">
-          <span class="ellipsis">{{selectedWalletGroup.name}}</span>
-          <ion-icon name="arrow-dropdown" color="light-grey"></ion-icon>
+        <span>
+          <span class="ellipsis">{{walletGroup.key}}</span>
         </span>
-        <div class="wallet-options" *ngIf="wallets && wallets.length">
-          <span *ngIf="!showReorder" (click)="reorder()" class="reorder-button" tappable>
+        <div class="wallet-options" *ngIf="walletGroup.value && walletGroup.value.length">
+          <span *ngIf="!showReorder || !showReorder[i]" (click)="reorder(i)" class="reorder-button" tappable>
             <ion-icon name="ios-create-outline"></ion-icon>
           </span>
-          <span *ngIf="showReorder" (click)="reorder()" class="reorder-done" tappable>
+          <span *ngIf="showReorder && showReorder[i]" (click)="reorder(i)" class="reorder-done" tappable>
             {{'Done' | translate}}
-          </span>
-          <span icon-only color="grey" *ngIf="txpsN > 0" (click)="openProposalsPage()">
-            <ion-badge class="notifications-badge">{{ txpsN }}</ion-badge>
           </span>
         </div>
       </div>
 
-      <div *ngIf="showReorder || !(wallets && wallets.length)" class="add-card-button" (click)="goToAddView()" translate>Add Wallet</div>
+      <div *ngIf="(showReorder && showReorder[i]) || !(walletGroup.value && walletGroup.value.length)" class="add-card-button" (click)="goToAddView(walletGroup.value[0].credentials.keyId)" translate>Add Wallet</div>
 
-      <label-tip class="no-arrowhead" type="warn" *ngIf="!showReorder && selectedWalletGroup && selectedWalletGroup.needsBackup" margin-top>
+      <label-tip class="no-arrowhead" type="warn" *ngIf="(!showReorder || !showReorder[i]) && walletGroup.value && walletGroup.value[0].needsBackup" margin-top>
         <span label-tip-title translate>Profile Needs Backup</span>
         <div label-tip-body>
           <span translate>Before retrieving your wallets addresses, it's recommended that you first write down your recovery phrase and store it securely so that your wallet can be recovered in the case your device was lost or stolen.</span>
         </div>
       </label-tip>
 
-      <ion-list class="sliding-container wallets" reorder="{{showReorder}}" (ionItemReorder)="reorderWallets($event)" *ngIf="showReorder">
-        <ion-item-sliding *ngFor="let wallet of wallets" #slidingItem>
-          <button ion-item detail-none (click)="onWalletAction(wallet, 'view', slidingItem)">
-            <wallet-item-content [wallet]="wallet"></wallet-item-content>
+      <ion-list class="sliding-container wallets" reorder="{{showReorderWallets}}" (ionItemReorder)="reorderWallets($event)" *ngIf="showReorder && showReorder[i]">
+        <ion-item-sliding *ngFor="let wallet of walletGroup.value | keys" #slidingItem>
+          <button ion-item detail-none (click)="onWalletAction(wallet.value, 'view', slidingItem)">
+            <wallet-item-content [wallet]="wallet.value"></wallet-item-content>
           </button>
         </ion-item-sliding>
       </ion-list>
-      <ion-list class="sliding-container wallets" reorder="{{showReorder}}" (ionItemReorder)="reorderWallets($event)" *ngIf="!showReorder">
-        <div *ngFor="let wallet of wallets">
+      <ion-list class="sliding-container wallets" reorder="{{hideReorderWallets}}" (ionItemReorder)="reorderWallets($event)" *ngIf="!showReorder || !showReorder[i]">
+        <div *ngFor="let wallet of walletGroup.value | keys">
           <ion-item-sliding #slidingItem>
-            <button ion-item detail-none (click)="onWalletAction(wallet, 'view', slidingItem)">
-              <wallet-item-content [wallet]="wallet"></wallet-item-content>
+            <button ion-item detail-none (click)="onWalletAction(wallet.value, 'view', slidingItem)">
+              <wallet-item-content [wallet]="wallet.value"></wallet-item-content>
             </button>
             <ion-item-options side="left">
-              <button class="action action--send" ion-button (click)="onWalletAction(wallet, 'send', slidingItem)">
+              <button class="action action--send" ion-button (click)="onWalletAction(wallet.value, 'send', slidingItem)">
                 <div class="action__icon"><img src="assets/img/send.svg" /></div>
                 <div class="action__text">Send</div>
               </button>
             </ion-item-options>
             <ion-item-options side="right">
-              <button class="action action--receive" ion-button (click)="onWalletAction(wallet, 'receive', slidingItem)">
+              <button class="action action--receive" ion-button (click)="onWalletAction(wallet.value, 'receive', slidingItem)">
                 <div class="action__icon"><img src="assets/img/receive.svg" /></div>
                 <div class="action__text">Receive</div>
               </button>
             </ion-item-options>
           </ion-item-sliding>
-          <label-tip type="info" *ngIf="!wallet.isComplete()">
+          <label-tip type="info" *ngIf="!wallet.value.isComplete()">
             <span label-tip-title translate>Wallet Incomplete</span>
             <div label-tip-body>
               <span translate>This wallet is waiting for authorized users/devices to join.</span>
