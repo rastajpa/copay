@@ -105,9 +105,13 @@
     <div *ngFor="let walletGroup of walletsGroups; let i = index" class="wallets-container">
       <div class="section-header">
         <span>
-          <span class="ellipsis">{{walletGroup && walletGroup[0].groupName}}</span>
+          <span class="ellipsis">
+            <span *ngIf="walletsGroups.length === 1 && !walletGroup[0].groupName">Wallets</span>
+            <span *ngIf="walletsGroups.length > 1 && !walletGroup[0].groupName">Wallets #{{i + 1}}</span>
+            <span *ngIf="walletGroup[0].groupName">{{walletGroup[0].groupName}}</span>
+          </span>
         </span>
-        <div class="wallet-options" *ngIf="walletGroup && walletGroup.length">
+        <div class="wallet-options" *ngIf="walletGroup.length">
           <span *ngIf="!showReorder || !showReorder[i]" (click)="reorder(i)" class="reorder-button" tappable>
             <ion-icon name="ios-create-outline"></ion-icon>
           </span>
@@ -119,8 +123,8 @@
 
       <div *ngIf="(showReorder && showReorder[i]) && shouldShowAddWallet(walletGroup)" class="add-card-button" (click)="goToAddView(walletGroup[0].credentials.keyId)" translate>Add Wallet</div>
 
-      <label-tip class="no-arrowhead" type="warn" *ngIf="(!showReorder || !showReorder[i]) && walletGroup && walletGroup[0].needsBackup" margin-top>
-        <span label-tip-title translate>Profile Needs Backup</span>
+      <label-tip class="no-arrowhead" type="warn" *ngIf="(!showReorder || !showReorder[i]) && walletGroup[0].needsBackup" margin-top>
+        <span label-tip-title translate>Group of Wallets Needs Backup</span>
         <div label-tip-body>
           <span translate>Before retrieving your wallets addresses, it's recommended that you first write down your recovery phrase and store it securely so that your wallet can be recovered in the case your device was lost or stolen.</span>
         </div>

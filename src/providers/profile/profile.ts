@@ -97,6 +97,13 @@ export class ProfileProvider {
 
   public setWalletGroupName(keyId: string, name: string): void {
     this.persistenceProvider.setWalletGroupName(keyId, name);
+    const opts = {
+      keyId
+    };
+    const wallets = this.getWallets(opts);
+    _.forEach(wallets, wallet => {
+      this.wallet[wallet.id]['groupName'] = name;
+    });
     if (this.walletsGroups[keyId]) this.walletsGroups[keyId].name = name;
   }
 
@@ -301,11 +308,6 @@ export class ProfileProvider {
       groupBackupInfo = await this.getBackupGroupInfo(keyId, wallet);
       needsBackup = groupBackupInfo.needsBackup;
       name = await this.getWalletGroupName(keyId);
-      if (!name) {
-        // use wallets name for wallets group name at migration
-        name = wallet.name;
-        this.setWalletGroupName(keyId, wallet.name);
-      }
       isPrivKeyEncrypted = this.keyProvider.isPrivKeyEncrypted(keyId);
       canSign = true;
       isDeletedSeed = this.keyProvider.isDeletedSeed(keyId);

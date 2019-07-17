@@ -84,6 +84,7 @@ export class SettingsPage {
     this.currentLanguageName = this.language.getName(
       this.language.getCurrent()
     );
+
     const walletsGroups = _.values(
       _.mapValues(this.profileProvider.walletsGroups, (value: any, key) => {
         value.keyId = key;
