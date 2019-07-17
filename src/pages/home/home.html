@@ -1,8 +1,10 @@
 <ion-header>
   <ion-navbar class="home-header" [ngClass]="{blur: isBlur}">
-    <div class="scan-button" *ngIf="wallets && wallets[0]" (click)="scan()">
-      <div class="scan-img"></div>
-    </div>
+    <ion-buttons left class="scan-button" *ngIf="wallets && wallets[0]">
+      <button (click)="scan()" ion-button>
+        <div class="scan-img"></div>
+      </button>
+    </ion-buttons>
     <ion-title>
       <img class="home-logo" src="assets/img/app/logo.svg" />
     </ion-title>
