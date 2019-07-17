@@ -117,7 +117,7 @@
         </div>
       </div>
 
-      <div *ngIf="(showReorder && showReorder[i]) || !(walletGroup.value && walletGroup.value.length)" class="add-card-button" (click)="goToAddView(walletGroup.value[0].credentials.keyId)" translate>Add Wallet</div>
+      <div *ngIf="showReorder && showReorder[i] && shouldShowAddWallet(walletGroup)" class="add-card-button" (click)="goToAddView(walletGroup.value[0].credentials.keyId)" translate>Add Wallet</div>
 
       <label-tip class="no-arrowhead" type="warn" *ngIf="(!showReorder || !showReorder[i]) && walletGroup.value && walletGroup.value[0].needsBackup" margin-top>
         <span label-tip-title translate>Profile Needs Backup</span>

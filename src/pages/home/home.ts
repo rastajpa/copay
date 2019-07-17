@@ -25,12 +25,14 @@ import { AppProvider } from '../../providers/app/app';
 import { BitPayCardProvider } from '../../providers/bitpay-card/bitpay-card';
 import { BwcErrorProvider } from '../../providers/bwc-error/bwc-error';
 import { ClipboardProvider } from '../../providers/clipboard/clipboard';
+import { DerivationPathHelperProvider } from '../../providers/derivation-path-helper/derivation-path-helper';
 import { EmailNotificationsProvider } from '../../providers/email-notifications/email-notifications';
 import { ExternalLinkProvider } from '../../providers/external-link/external-link';
 import { FeedbackProvider } from '../../providers/feedback/feedback';
 import { HomeIntegrationsProvider } from '../../providers/home-integrations/home-integrations';
 import { IncomingDataProvider } from '../../providers/incoming-data/incoming-data';
 import { InvoiceProvider } from '../../providers/invoice/invoice';
+import { KeyProvider } from '../../providers/key/key';
 import { Logger } from '../../providers/logger/logger';
 import { PersistenceProvider } from '../../providers/persistence/persistence';
 import { PlatformProvider } from '../../providers/platform/platform';
@@ -69,7 +71,7 @@ export class HomePage {
   public showServerMessage: boolean;
 
   public showRateCard: boolean;
-  public showReorder;
+  public showReorder: any[];
   public showReorderWallets: boolean = true;
   public hideReorderWallets: boolean = false;
   public showPriceChart: boolean;
@@ -107,7 +109,9 @@ export class HomePage {
     private incomingDataProvider: IncomingDataProvider,
     private statusBar: StatusBar,
     private invoiceProvider: InvoiceProvider,
-    private modalCtrl: ModalController
+    private modalCtrl: ModalController,
+    private keyProvider: KeyProvider,
+    private derivationPathHelperProvider: DerivationPathHelperProvider
   ) {
     this.slideDown = false;
     this.isBlur = false;
@@ -476,8 +480,8 @@ export class HomePage {
             this.payProDetailsData.amount = selectedTransactionCurrency
               ? paymentTotals[selectedTransactionCurrency]
               : Coin[currency]
-              ? price / 1e-8
-              : price;
+                ? price / 1e-8
+                : price;
             this.clearCountDownInterval();
             this.paymentTimeControl(expirationTime);
           } catch (err) {
@@ -598,9 +602,9 @@ export class HomePage {
 
     this.logger.debug(
       'fetching status for: ' +
-        opts.walletId +
-        ' alsohistory:' +
-        opts.alsoUpdateHistory
+      opts.walletId +
+      ' alsohistory:' +
+      opts.alsoUpdateHistory
     );
     const wallet = this.profileProvider.getWallet(opts.walletId);
     if (!wallet) return;
@@ -793,6 +797,33 @@ export class HomePage {
 
   public reorder(i: string): void {
     this.showReorder[i] = !this.showReorder[i];
+  }
+
+  public shouldShowAddWallet(walletGroup): boolean {
+    /* Allow account creation only for wallets:
+    n=1
+    BIP44
+    P2PKH
+    BTC
+    BCH only if it is 145'
+    */
+
+    if (!walletGroup.value || !walletGroup.value.length) {
+      return false;
+    } else if (this.keyProvider.isDeletedSeed(walletGroup.value[0].credentials.keyId)) {
+      return false;
+    } else {
+      const derivationStrategy = this.derivationPathHelperProvider.getDerivationStrategy(
+        walletGroup.value[0].credentials.rootPath
+      );
+
+      const coinCode = this.derivationPathHelperProvider.parsePath(walletGroup.value[0].credentials.rootPath).coinCode;
+
+      if (walletGroup.value[0].n == 1 && walletGroup.value[0].credentials.addressType == 'P2PKH' && derivationStrategy == 'BIP44' && (walletGroup.value[0].coin == 'btc' || (walletGroup.value[0].coin == 'bch' && coinCode == '145\''))) {
+        return true
+      }
+      return false
+    }
   }
 
   public reorderWallets(indexes): void {
