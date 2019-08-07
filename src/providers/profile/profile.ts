@@ -351,11 +351,9 @@ export class ProfileProvider {
       const derivationStrategy = this.derivationPathHelperProvider.getDerivationStrategy(
         wallet.credentials.rootPath
       );
-
       const coinCode = this.derivationPathHelperProvider.parsePath(
         wallet.credentials.rootPath
       ).coinCode;
-
       if (
         wallet.n == 1 &&
         wallet.credentials.addressType == 'P2PKH' &&
@@ -1094,6 +1092,7 @@ export class ProfileProvider {
               coin: opts.coin,
               network,
               account: opts.account || 0,
+              addressType: opts.addressType,
               n: opts.n || 1
             })
           );
