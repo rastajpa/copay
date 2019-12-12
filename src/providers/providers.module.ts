@@ -27,6 +27,7 @@ import {
   DownloadProvider,
   ElectronProvider,
   EmailNotificationsProvider,
+  ExchangeRatesProvider,
   ExternalLinkProvider,
   FCMNG,
   FeedbackProvider,
@@ -48,7 +49,6 @@ import {
   PersistenceProvider,
   PlatformProvider,
   PopupProvider,
-  PriceProvider,
   ProfileProvider,
   PushNotificationsProvider,
   QRScanner,
@@ -114,7 +114,7 @@ import {
     OnGoingProcessProvider,
     PayproProvider,
     PlatformProvider,
-    PriceProvider,
+    ExchangeRatesProvider,
     ProfileProvider,
     PopupProvider,
     QRScanner,
@@ -144,4 +144,4 @@ import {
     WalletTabsProvider
   ]
 })
-export class ProvidersModule {}
+export class ProvidersModule { }
