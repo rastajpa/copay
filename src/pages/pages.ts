@@ -61,7 +61,6 @@ import { TxpPage } from '../pages/includes/txp/txp';
 /* Tabs */
 import { CardsPage } from '../pages/cards/cards';
 import { HomePage } from '../pages/home/home';
-import { ReceivePage } from '../pages/receive/receive';
 import { ScanPage } from '../pages/scan/scan';
 import { SendPage } from '../pages/send/send';
 import { SettingsPage } from '../pages/settings/settings';
@@ -177,7 +176,6 @@ export const PAGES = [
   PaperWalletPage,
   ...PIN_COMPONENTS,
   ProposalsNotificationsPage,
-  ReceivePage,
   ScanPage,
   SendPage,
   SettingsPage,
