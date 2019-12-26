@@ -515,7 +515,7 @@ export class WalletDetailsPage {
 
   public goToSendPage() {
     const modal = this.modalCtrl.create(SendPage, {
-      walletId: this.wallet.credentials.walletId
+      wallet: this.wallet
     });
     modal.present();
   }
