@@ -24,9 +24,6 @@
       <div class="subtitle-info">
         <span translate>It appears that you do not have any money to send.</span>
       </div>
-      <button ion-button class="button-standard" (click)="goToReceive()">
-        {{'Add funds' | translate}}
-      </button>
     </div>
   </div>
 
@@ -63,7 +60,7 @@
         </ion-list>
       </div>
 
-      <page-transfer-to [wallet]="wallet" [searchInput]="search" [useAsModal]="false" #transferTo></page-transfer-to>
+      <page-transfer-to [wallet]="wallet" [searchInput]="search" [useAsModal]="false" [fromWalletDetails]="true" #transferTo></page-transfer-to>
 
     </div>
     <div *ngIf="!hasWallets[wallet?.coin]" class="no-wallet-message">
