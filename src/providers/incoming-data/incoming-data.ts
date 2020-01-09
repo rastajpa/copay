@@ -21,6 +21,8 @@ export interface RedirParams {
 
 @Injectable()
 export class IncomingDataProvider {
+  private activePage: string;
+
   constructor(
     private actionSheetProvider: ActionSheetProvider,
     private events: Events,
@@ -60,7 +62,7 @@ export class IncomingDataProvider {
         name: 'PaperWalletPage',
         params: { privateKey: value }
       };
-      this.events.publish('IncomingDataRedir', nextView);
+      this.incomingDataRedir(nextView);
     } else {
       this.events.publish('finishIncomingDataMenuEvent', { redirTo, value });
     }
@@ -236,7 +238,7 @@ export class IncomingDataProvider {
           name: 'SelectInvoicePage',
           params: stateParams
         };
-        this.events.publish('IncomingDataRedir', nextView);
+        this.incomingDataRedir(nextView);
       }
     } catch (err) {
       this.events.publish('incomingDataError', err);
@@ -425,7 +427,7 @@ export class IncomingDataProvider {
       name: 'ImportWalletPage',
       params: stateParams
     };
-    this.events.publish('IncomingDataRedir', nextView);
+    this.incomingDataRedir(nextView);
   }
 
   private goToJoinWallet(data: string): void {
@@ -460,7 +462,7 @@ export class IncomingDataProvider {
     }
 
     if (this.isValidJoinCode(data) || this.isValidJoinLegacyCode(data)) {
-      this.events.publish('IncomingDataRedir', nextView);
+      this.incomingDataRedir(nextView);
     } else {
       this.logger.error('Incoming-data: Invalid code to join to a wallet');
     }
@@ -488,7 +490,7 @@ export class IncomingDataProvider {
           name: 'BitPayCardIntroPage',
           params: stateParams
         };
-        this.events.publish('IncomingDataRedir', nextView);
+        this.incomingDataRedir(nextView);
         break;
     }
   }
@@ -502,7 +504,7 @@ export class IncomingDataProvider {
       name: 'CoinbasePage',
       params: stateParams
     };
-    this.events.publish('IncomingDataRedir', nextView);
+    this.incomingDataRedir(nextView);
   }
 
   private goToShapeshift(data: string): void {
@@ -514,7 +516,7 @@ export class IncomingDataProvider {
       name: 'ShapeshiftPage',
       params: stateParams
     };
-    this.events.publish('IncomingDataRedir', nextView);
+    this.incomingDataRedir(nextView);
   }
 
   private goToSimplex(data: string): void {
@@ -531,10 +533,12 @@ export class IncomingDataProvider {
       name: 'SimplexPage',
       params: stateParams
     };
-    this.events.publish('IncomingDataRedir', nextView);
+    this.incomingDataRedir(nextView);
   }
 
   public redir(data: string, redirParams?: RedirParams): boolean {
+    this.activePage = redirParams.activePage;
+
     //  Handling of a bitpay invoice url
     if (this.isValidBitPayInvoice(data)) {
       this.handleBitPayInvoice(data);
@@ -848,7 +852,7 @@ export class IncomingDataProvider {
         name: 'ConfirmPage',
         params: stateParams
       };
-      this.events.publish('IncomingDataRedir', nextView);
+      this.incomingDataRedir(nextView);
     } else {
       let stateParams = {
         toAddress: addr,
@@ -859,7 +863,7 @@ export class IncomingDataProvider {
         name: 'AmountPage',
         params: stateParams
       };
-      this.events.publish('IncomingDataRedir', nextView);
+      this.incomingDataRedir(nextView);
     }
   }
 
@@ -872,7 +876,8 @@ export class IncomingDataProvider {
       name: 'AmountPage',
       params: stateParams
     };
-    this.events.publish('IncomingDataRedir', nextView);
+
+    this.incomingDataRedir(nextView);
   }
 
   public goToPayPro(url: string, coin: Coin, disableLoader?: boolean): void {
@@ -927,10 +932,18 @@ export class IncomingDataProvider {
         name: 'ConfirmPage',
         params: stateParams
       };
-      this.events.publish('IncomingDataRedir', nextView);
+      this.incomingDataRedir(nextView);
     } catch (err) {
       this.events.publish('incomingDataError', err);
       this.logger.error(err);
+    }
+  }
+
+  private incomingDataRedir(nextView) {
+    if (this.activePage === 'SendPage') {
+      this.events.publish('SendPageRedir', nextView);
+    } else {
+      this.events.publish('IncomingDataRedir', nextView);
     }
   }
 }
