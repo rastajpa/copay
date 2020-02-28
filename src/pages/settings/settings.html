@@ -80,6 +80,16 @@
         <ion-toggle [(ngModel)]="showTotalBalance" (ionChange)="toggleShowBalanceFlag()"></ion-toggle>
       </ion-item>
 
+      <ion-item class="align-with-button">
+        <ion-icon class="item-img icon-settings" name="ios-moon" item-start></ion-icon>
+        <ion-label>
+          <div class="main-label">
+            {{'Dark Mode' | translate}}
+          </div>
+        </ion-label>
+        <ion-toggle [(ngModel)]="appTheme" (ionChange)="toggleAppTheme()"></ion-toggle>
+      </ion-item>
+
       <ion-item-divider *ngIf="walletsGroups && walletsGroups[0]">
         {{ 'Crypto Wallets & Keys' | translate }}
         <button class="reorder-option" ion-button item-end clear *ngIf="!showReorder && walletsGroups?.length > 1" (click)="reorder()">

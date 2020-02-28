@@ -1,0 +1,36 @@
+// App background color
+$background-color: white;
+// Item list background color
+$list-background-color: #ffffff;
+$feather-dark: #f8f8f9;
+$feather: #fbfbff;
+
+// Main color
+$text-color: #000000;
+
+// Home Messages
+$message-background: #f9f9fb;
+.light-theme {
+  ion-content {
+    background-color: $background-color;
+    color: $text-color;
+  }
+  .toolbar-background-md {
+    background: $background-color;
+    color: $text-color;
+  }
+
+  .toolbar-title {
+    color: $text-color;
+  }
+
+  .header .toolbar-background {
+    background-color: $background-color;
+  }
+  .tabs-md,
+  .tabs-ios {
+    .tabbar {
+      background: $background-color;
+    }
+  }
+}
