@@ -79,6 +79,8 @@ export class SettingsPage {
   private user$: Observable<User>;
   public showBalance: boolean;
   public useLegacyQrCode: boolean;
+  private selectedTheme: string;
+  public appTheme: boolean;
 
   constructor(
     private navCtrl: NavController,
@@ -104,6 +106,7 @@ export class SettingsPage {
     this.appName = this.app.info.nameCase;
     this.isCordova = this.platformProvider.isCordova;
     this.user$ = this.iabCardProvider.user$;
+    this.app.getActiveTheme().subscribe(val => (this.selectedTheme = val));
   }
 
   ionViewDidLoad() {
@@ -114,6 +117,10 @@ export class SettingsPage {
     this.persistanceProvider
       .getBitpayIdPairingFlag()
       .then(res => (this.bitpayIdPairingEnabled = res === 'enabled'));
+
+    this.persistanceProvider
+      .getAppTheme()
+      .then(res => (this.appTheme = res === 'dark-theme'));
 
     this.cardIAB_Ref = this.iab.refs.card;
 
@@ -368,5 +375,11 @@ export class SettingsPage {
       useLegacyQrCode: this.useLegacyQrCode
     };
     this.configProvider.set(opts);
+  }
+
+  public toggleAppTheme(): void {
+    const theme = this.appTheme ? 'dark-theme' : 'light-theme';
+    this.persistanceProvider.setAppTheme(theme);
+    this.app.setActiveTheme(theme);
   }
 }
