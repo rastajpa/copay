@@ -73,6 +73,8 @@ export class SettingsPage {
   private user$: Observable<User>;
   public showReorder: boolean = false;
   public showTotalBalance: boolean;
+  public useLegacyQrCode: boolean;
+  public appTheme: boolean;
 
   constructor(
     private navCtrl: NavController,
@@ -108,7 +110,12 @@ export class SettingsPage {
       .getBitpayIdPairingFlag()
       .then(res => (this.bitpayIdPairingEnabled = res === 'enabled'));
 
+    this.persistanceProvider
+      .getAppTheme()
+      .then(res => (this.appTheme = res === 'dark-theme'));
+
     if (this.iabCardProvider.ref) {
+
       // check for user info
       this.persistanceProvider
         .getBitPayIdUserInfo(this.network)
@@ -357,5 +364,18 @@ export class SettingsPage {
     _.each(this.walletsGroups, (walletGroup, index: number) => {
       this.profileProvider.setWalletGroupOrder(walletGroup[0].keyId, index);
     });
+  }
+
+  public toggleQrCodeLegacyFlag(): void {
+    let opts = {
+      useLegacyQrCode: this.useLegacyQrCode
+    };
+    this.configProvider.set(opts);
+  }
+
+  public toggleAppTheme(): void {
+    const theme = this.appTheme ? 'dark-theme' : 'light-theme';
+    this.persistanceProvider.setAppTheme(theme);
+    this.app.setActiveTheme(theme);
   }
 }
