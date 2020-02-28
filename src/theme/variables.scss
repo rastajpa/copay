@@ -16,6 +16,9 @@ $app-direction: ltr;
 // To view all the possible Ionic variables, see:
 // http://ionicframework.com/docs/theming/overriding-ionic-variables/
 // Override - Homogenized ionic component styles
+
+@import 'light';
+@import 'dark';
 @import 'icons';
 @import 'lists';
 @import 'overrides';
@@ -44,12 +47,7 @@ $background-colors: (
   success: #bfffeb,
   info: #eff1f8
 );
-// App background color
-$background-color: white;
-// Item list background color
-$list-background-color: #ffffff;
-$feather-dark: #f8f8f9;
-$feather: #fbfbff;
+
 // Refresh color
 $refresher-icon-color: color($colors, primary);
 $refresher-icon-font-size: 12px;
@@ -57,8 +55,6 @@ $refresher-height: 120px;
 $refresher-border-color: none;
 // Toolbar
 $toolbar-text-color: color($colors, light);
-// Main color
-$text-color: color($colors, dark);
 // Border light
 $list-border-color: color($colors, light);
 // Toolbar

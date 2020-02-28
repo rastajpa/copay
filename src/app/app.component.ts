@@ -78,6 +78,7 @@ export class CopayApp {
   nav: NavController;
   cardIAB_Ref: InAppBrowser;
   NETWORK = 'livenet';
+  public selectedTheme: string;
   public rootPage:
     | typeof AmountPage
     | typeof DisclaimerPage
@@ -170,6 +171,9 @@ export class CopayApp {
       .load()
       .then(() => {
         this.onAppLoad(readySource);
+        this.appProvider
+          .getActiveTheme()
+          .subscribe(val => (this.selectedTheme = val));
       })
       .catch(err => {
         const title = 'Could not initialize the app';
