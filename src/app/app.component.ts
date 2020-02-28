@@ -38,6 +38,7 @@ import { ProfileProvider } from '../providers/profile/profile';
 import { PushNotificationsProvider } from '../providers/push-notifications/push-notifications';
 import { ShapeshiftProvider } from '../providers/shapeshift/shapeshift';
 import { SimplexProvider } from '../providers/simplex/simplex';
+import { ThemeProvider } from '../providers/theme/theme';
 import { TouchIdProvider } from '../providers/touchid/touchid';
 
 // Pages
@@ -138,7 +139,8 @@ export class CopayApp {
     private iab: InAppBrowserProvider,
     private iabCardProvider: IABCardProvider,
     private bitpayProvider: BitPayProvider,
-    private bitpayIdProvider: BitPayIdProvider
+    private bitpayIdProvider: BitPayIdProvider,
+    private themeProvider: ThemeProvider
   ) {
     this.imageLoaderConfig.setFileNameCachedWithExtension(true);
     this.imageLoaderConfig.useImageTag(true);
@@ -172,6 +174,7 @@ export class CopayApp {
       .load()
       .then(() => {
         this.onAppLoad(readySource);
+        this.themeProvider.apply();
       })
       .catch(err => {
         const title = 'Could not initialize the app';
@@ -223,7 +226,6 @@ export class CopayApp {
       // Only overlay for iOS
       if (this.platform.is('ios')) {
         this.statusBar.overlaysWebView(true);
-        this.statusBar.styleDefault();
       }
 
       this.splashScreen.hide();
