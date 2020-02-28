@@ -44,6 +44,11 @@ describe('ExpandableHeaderComponent', () => {
     ]).then(compiled => {
       fixture = compiled.fixture;
       instance = compiled.instance.expandableHeader;
+      instance.themeProvider = {
+        getThemeInfo: () => {
+          return 'light-theme';
+        }
+      };
       ionScrollSubject = new Subject<ScrollEvent>();
       contentMock = {
         ionScroll: ionScrollSubject.asObservable()

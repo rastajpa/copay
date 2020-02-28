@@ -56,6 +56,11 @@ page-about {
     }
   }
 
+  .count-note {
+    min-width: 85px;
+    text-align: center;
+  }
+
   .create-button {
     background: white;
     color: color($colors, primary);
@@ -64,6 +69,11 @@ page-about {
   }
 
   .ion-md-eye:before {
+    width: 20px;
+    opacity: 0.55;
+  }
+
+  .ion-ios-moon:before {
     width: 20px;
     opacity: 0.55;
   }
