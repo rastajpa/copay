@@ -73,7 +73,8 @@ const Keys = {
   SHAPESHIFT_TOKEN: network => 'shapeshiftToken-' + network,
   WALLET_GROUP_NAME: keyId => `Key-${keyId}`,
   BITPAY_ID_PAIRING_TOKEN: network => `bitpayIdToken-${network}`,
-  BITPAY_ID_USER_INFO: network => `bitpayIdUserInfo-${network}`
+  BITPAY_ID_USER_INFO: network => `bitpayIdUserInfo-${network}`,
+  APP_THEME: 'app-theme'
 };
 
 interface Storage {
@@ -729,6 +730,14 @@ export class PersistenceProvider {
 
   removeBitPayIdUserInfo(network: Network) {
     return this.storage.remove(Keys.BITPAY_ID_USER_INFO(network));
+  }
+
+  setAppTheme(value: string) {
+    return this.storage.set(Keys.APP_THEME, value);
+  }
+
+  getAppTheme() {
+    return this.storage.get(Keys.APP_THEME);
   }
 }
 

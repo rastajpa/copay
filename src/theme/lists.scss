@@ -94,6 +94,8 @@
     &.item-ios,
     &.item-md {
       border: 0;
+      background-color: $background-color;
+      color: $text-color;
 
       &.item-block,
       &:last-child {
@@ -124,7 +126,7 @@
     font-size: 16px;
     line-height: 30px;
     height: 30px;
-    color: black;
+    color: $text-color;
   }
 
   .secondary-label {
@@ -137,7 +139,7 @@
   }
 
   .main-note {
-    color: black;
+    color: $text-color;
     font-weight: 600;
     font-size: 16px;
     line-height: 24px;
