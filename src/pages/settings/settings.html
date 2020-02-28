@@ -80,6 +80,16 @@
         <ion-toggle [(ngModel)]="showTotalBalance" (ionChange)="toggleShowBalanceFlag()"></ion-toggle>
       </ion-item>
 
+      <ion-item class="align-with-button">
+        <ion-icon class="item-img icon-settings" name="ios-moon" item-start></ion-icon>
+        <ion-label>
+          <div class="main-label">
+            {{'Dark Mode' | translate}}
+          </div>
+        </ion-label>
+        <ion-toggle [(ngModel)]="isDarkTheme" (ionChange)="toggleAppTheme()"></ion-toggle>
+      </ion-item>
+
       <ion-item-divider *ngIf="walletsGroups && walletsGroups[0]">
         {{ 'Crypto Wallets & Keys' | translate }}
         <button class="reorder-option" ion-button item-end clear *ngIf="!showReorder && walletsGroups?.length > 1" (click)="reorder()">
@@ -107,6 +117,18 @@
           </div>
         </ion-label>
       </button>
+
+      <ion-item class="align-with-button">
+        <ion-icon class="item-img icon-settings" style="opacity: 0.3;" item-start>
+          <img class="icon-qrcode" src="assets/img/settings-icons/icon-qrcode.svg">
+        </ion-icon>
+        <ion-label>
+          <div class="main-label">
+            {{'Use Legacy QR Code' | translate}}
+          </div>
+        </ion-label>
+        <ion-toggle [(ngModel)]="useLegacyQrCode" (ionChange)="toggleQrCodeLegacyFlag()"></ion-toggle>
+      </ion-item>
 
       <ion-list reorder="{{showReorder}}" (ionItemReorder)="reorderAccounts($event)">
         <button ion-item [attr.detail-none]="showReorder ? true : null" *ngFor="let walletsGroup of walletsGroups; let i = index" (click)="openWalletGroupSettings(walletsGroup[0].keyId)">
@@ -143,6 +165,17 @@
           {{'{walletsGroupLength} Wallets' | translate:{walletsGroupLength: readOnlyWalletsGroup.length} }}
         </ion-note>
       </button>
+      <ion-item class="align-with-button">
+        <ion-icon class="item-img icon-settings" style="opacity: 0.3;" item-start>
+          <img class="icon-qrcode" src="assets/img/settings-icons/icon-qrcode.svg">
+        </ion-icon>
+        <ion-label>
+          <div class="main-label">
+            {{'Use Legacy QR Code' | translate}}
+          </div>
+        </ion-label>
+        <ion-toggle [(ngModel)]="useLegacyQrCode" (ionChange)="toggleQrCodeLegacyFlag()"></ion-toggle>
+      </ion-item>
 
       <button ion-item detail-none class="create-button" *ngIf="walletsGroups && walletsGroups[0]" (click)="goToAddView()">
         {{ 'Create or Import a Key' | translate }}

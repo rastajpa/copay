@@ -1,7 +1,6 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { ModalController, NavController } from 'ionic-angular';
-import { Logger } from '../../providers/logger/logger';
 
 import * as _ from 'lodash';
 
@@ -17,12 +16,14 @@ import { ConfigProvider } from '../../providers/config/config';
 import { ExternalLinkProvider } from '../../providers/external-link/external-link';
 import { HomeIntegrationsProvider } from '../../providers/home-integrations/home-integrations';
 import { LanguageProvider } from '../../providers/language/language';
+import { Logger } from '../../providers/logger/logger';
 import {
   Network,
   PersistenceProvider
 } from '../../providers/persistence/persistence';
 import { PlatformProvider } from '../../providers/platform/platform';
 import { ProfileProvider } from '../../providers/profile/profile';
+import { ThemeProvider } from '../../providers/theme/theme';
 import { TouchIdProvider } from '../../providers/touchid/touchid';
 
 // pages
@@ -74,6 +75,9 @@ export class SettingsPage {
   private user$: Observable<User>;
   public showReorder: boolean = false;
   public showTotalBalance: boolean;
+  public useLegacyQrCode: boolean;
+  public appTheme: boolean;
+  public isDarkTheme: boolean;
 
   constructor(
     private navCtrl: NavController,
@@ -90,10 +94,11 @@ export class SettingsPage {
     private modalCtrl: ModalController,
     private touchid: TouchIdProvider,
     private analyticsProvider: AnalyticsProvider,
-    private persistanceProvider: PersistenceProvider,
+    private persistenceProvider: PersistenceProvider,
     private bitPayIdProvider: BitPayIdProvider,
     private changeRef: ChangeDetectorRef,
-    private iabCardProvider: IABCardProvider
+    private iabCardProvider: IABCardProvider,
+    private themeProvider: ThemeProvider
   ) {
     this.appName = this.app.info.nameCase;
     this.isCordova = this.platformProvider.isCordova;
@@ -105,13 +110,15 @@ export class SettingsPage {
   }
 
   ionViewWillEnter() {
-    this.persistanceProvider
+    this.persistenceProvider
       .getBitpayIdPairingFlag()
       .then(res => (this.bitpayIdPairingEnabled = res === 'enabled'));
 
+    this.isDarkTheme = this.themeProvider.isDarkModeEnabled();
+
     if (this.iabCardProvider.ref) {
       // check for user info
-      this.persistanceProvider
+      this.persistenceProvider
         .getBitPayIdUserInfo(this.network)
         .then((user: User) => {
           this.bitPayIdUserInfo = user;
@@ -272,7 +279,7 @@ export class SettingsPage {
   }
 
   public openCardSettings(id): void {
-    this.persistanceProvider.getCardExperimentFlag().then(status => {
+    this.persistenceProvider.getCardExperimentFlag().then(status => {
       if (status === 'enabled') {
         const message = `openSettings?${id}`;
         this.iabCardProvider.sendMessage(
@@ -381,5 +388,16 @@ export class SettingsPage {
     _.each(this.walletsGroups, (walletGroup, index: number) => {
       this.profileProvider.setWalletGroupOrder(walletGroup[0].keyId, index);
     });
+  }
+
+  public toggleQrCodeLegacyFlag(): void {
+    let opts = {
+      useLegacyQrCode: this.useLegacyQrCode
+    };
+    this.configProvider.set(opts);
+  }
+
+  public toggleAppTheme(): void {
+    this.themeProvider.toggleTheme();
   }
 }

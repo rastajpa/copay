@@ -1,0 +1,49 @@
+.light-theme {
+  // Uses default values. This is just to make a smooth transition between themes
+  @mixin transition {
+    transition: background-color, color, 150ms cubic-bezier(0, 0, 0.3, 0.3) !important;
+  }
+
+  // General
+  page-settings {
+    .content {
+      @include transition();
+    }
+
+    .content-ios .toolbar-background-ios {
+      @include transition();
+    }
+
+    .toolbar-background-md {
+      @include transition();
+    }
+
+    .toolbar-title {
+      @include transition();
+    }
+
+    .header .toolbar-background {
+      @include transition();
+    }
+
+    // Lists
+    .bp-list {
+      .item {
+        &.item-ios,
+        &.item-md {
+          @include transition();
+        }
+      }
+      ion-note.note {
+        @include transition();
+      }
+    }
+  }
+
+  .tabs-md,
+  .tabs-ios {
+    .tabbar {
+      @include transition();
+    }
+  }
+}
