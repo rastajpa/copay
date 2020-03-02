@@ -12,6 +12,10 @@
   // Home Messages
   $message-background-dark-theme: #121212;
 
+  @mixin transition {
+    transition: background-color, color, 250ms cubic-bezier(0, 0, 0.3, 0.3) !important;
+  }
+
   // General -----
   ion-content {
     background-color: $background-color-dark-theme;
@@ -31,25 +35,34 @@
   .toolbar-background-md {
     background: $background-color-dark-theme;
     color: $text-color-dark-theme;
+    @include transition();
   }
 
   .toolbar-title {
     color: $text-color-dark-theme;
+    @include transition();
   }
 
   .header .toolbar-background {
     background-color: $background-color-dark-theme;
+    @include transition();
   }
   .tabs-md,
   .tabs-ios {
     .tabbar {
       background: $background-color-dark-theme;
+      @include transition();
     }
   }
   .swiper-pagination-bullet-active {
     background-color: #434c5a;
   }
   .swiper-pagination-bullet {
+    background-color: #4f4f4e;
+  }
+
+  button.item.activated,
+  .item-md.activated {
     background-color: #4f4f4e;
   }
 
@@ -64,6 +77,7 @@
       }
     }
   }
+
   // Lists -----
   .bp-list {
     .item {
@@ -72,6 +86,7 @@
         border: 0;
         background-color: $background-color-dark-theme;
         color: $text-color-dark-theme;
+        @include transition();
       }
     }
     .main-label {
