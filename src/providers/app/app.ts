@@ -84,7 +84,6 @@ export class AppProvider {
     this.persistence.load();
     await this.config.load();
     await this.persistence.getAppTheme().then(value => {
-      if (!value) this.persistence.setAppTheme('light-theme');
       this.appTheme = new BehaviorSubject(value);
     });
     this.language.load();
