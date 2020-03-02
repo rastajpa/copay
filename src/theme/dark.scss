@@ -69,15 +69,18 @@
   ion-searchbar {
     .searchbar-input-container {
       input.searchbar-input {
-        border: 1px solid rgba(0, 0, 0, 0.03);
         background: $message-background-dark-theme;
-        font-size: 16px;
-        box-shadow: none;
         color: $text-color-dark-theme;
       }
     }
   }
-
+  search-bar{
+    background: $background-color-dark-theme;
+    ion-input {
+    background: $message-background-dark-theme;
+    color: $text-color-dark-theme;
+    }
+  }
   // Lists -----
   .bp-list {
     .item {
@@ -130,16 +133,22 @@
 
   // Tab Settings ------
   page-settings,
-  page-about,
-  page-alt-currency {
+  page-about {
     .bp-list {
       ion-note.note {
         background: $background-secondary-dark-theme;
         color: color($colors, light-grey);
       }
     }
+  }
+  page-alt-currency,
+  page-key-settings,
+  page-wallet-information,
+  page-wallet-addresses,
+  page-wallet-settings {
     .bp-list.settings-list {
-      ion-item.item {
+      ion-item.item,
+      button.item {
         .item-inner {
           ion-note.note {
             background: $background-secondary-dark-theme;
@@ -147,6 +156,17 @@
           }
         }
       }
+    }
+  }
+  page-addressbook-add {
+    ion-item{
+      background: $background-color-dark-theme;
+      color: color($colors, light-grey);
+    }
+  }
+  page-wallet-addresses {
+      button.item {
+            background: $background-color-dark-theme;
     }
   }
 }
