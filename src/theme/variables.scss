@@ -17,8 +17,6 @@ $app-direction: ltr;
 // http://ionicframework.com/docs/theming/overriding-ionic-variables/
 // Override - Homogenized ionic component styles
 
-@import 'light';
-@import 'dark';
 @import 'icons';
 @import 'lists';
 @import 'overrides';
@@ -56,6 +54,12 @@ $list-background-color: #ffffff;
 $feather-dark: #f8f8f9;
 $feather: #fbfbff;
 
+// App background color
+$background-color: white;
+// Item list background color
+$list-background-color: #ffffff;
+$feather-dark: #f8f8f9;
+$feather: #fbfbff;
 // Refresh color
 $refresher-icon-color: color($colors, primary);
 $refresher-icon-font-size: 12px;
@@ -63,6 +67,8 @@ $refresher-height: 120px;
 $refresher-border-color: none;
 // Toolbar
 $toolbar-text-color: color($colors, light);
+// Main color
+$text-color: color($colors, dark);
 // Border light
 $list-border-color: color($colors, light);
 // Toolbar
@@ -86,7 +92,6 @@ $text-input-md-show-valid-highlight: transparent;
 // iOS only Sass variables can go here
 $tabs-ios-background: color($colors, blank);
 $tabs-ios-border-color: rgba(0, 0, 0, 0.1);
-$item-ios-divider-background: $background-color;
 $item-ios-divider-color: color($colors, grey);
 $item-ios-padding-top: 16px;
 $item-ios-padding-bottom: 16px;
@@ -104,7 +109,6 @@ $toolbar-ios-title-font-weight: 400;
 // App Material Design Variables
 // --------------------------------------------------
 // Material Design only Sass variables can go here
-$item-md-divider-background: $background-color;
 $item-md-divider-color: color($colors, grey);
 $item-md-padding-top: 16px;
 $item-md-padding-bottom: 16px;
@@ -134,6 +138,9 @@ $badge-md-border-radius: 9px;
 // so that the above variables are used and Ionic's
 // default are overridden.
 @import 'ionic.theme.default';
+@import 'dark';
+@import 'light';
+
 // Ionicons
 // --------------------------------------------------
 // The premium icon font for Ionic. For more info, please see:
