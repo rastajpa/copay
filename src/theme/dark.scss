@@ -47,12 +47,23 @@
     }
   }
   .swiper-pagination-bullet-active {
-    background-color: #03255c;
+    background-color: #434c5a;
   }
   .swiper-pagination-bullet {
     background-color: #4f4f4e;
   }
 
+  ion-searchbar {
+    .searchbar-input-container {
+      input.searchbar-input {
+        border: 1px solid rgba(0, 0, 0, 0.03);
+        background: $message-background-dark-theme;
+        font-size: 16px;
+        box-shadow: none;
+        color: $text-color-dark-theme;
+      }
+    }
+  }
   // Lists -----
   .bp-list {
     .item {
@@ -104,11 +115,22 @@
 
   // Tab Settings ------
   page-settings,
-  page-about {
+  page-about,
+  page-alt-currency {
     .bp-list {
       ion-note.note {
         background: $background-secondary-dark-theme;
         color: color($colors, light-grey);
+      }
+    }
+    .bp-list.settings-list {
+      ion-item.item {
+        .item-inner {
+          ion-note.note {
+            background: $background-secondary-dark-theme;
+            color: color($colors, light-grey);
+          }
+        }
       }
     }
   }
