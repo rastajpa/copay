@@ -5,31 +5,39 @@
   }
 
   // General -----
-  .toolbar-background-md {
-    @include transition();
+
+  page-settings {
+    .content-ios .toolbar-background-ios {
+      @include transition();
+    }
+
+    .toolbar-background-md {
+      @include transition();
+    }
+
+    .toolbar-title {
+      @include transition();
+    }
+
+    .header .toolbar-background {
+      @include transition();
+    }
+
+    // Lists -----
+    .bp-list {
+      .item {
+        &.item-ios,
+        &.item-md {
+          @include transition();
+        }
+      }
+    }
   }
 
-  .toolbar-title {
-    @include transition();
-  }
-
-  .header .toolbar-background {
-    @include transition();
-  }
   .tabs-md,
   .tabs-ios {
     .tabbar {
       @include transition();
-    }
-  }
-
-  // Lists -----
-  .bp-list {
-    .item {
-      &.item-ios,
-      &.item-md {
-        @include transition();
-      }
     }
   }
 }
