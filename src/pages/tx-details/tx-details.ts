@@ -17,6 +17,7 @@ import { CurrencyProvider } from '../../providers/currency/currency';
 import { ExternalLinkProvider } from '../../providers/external-link/external-link';
 import { FilterProvider } from '../../providers/filter/filter';
 import { OnGoingProcessProvider } from '../../providers/on-going-process/on-going-process';
+import { PersistenceProvider } from '../../providers/persistence/persistence';
 import { PlatformProvider } from '../../providers/platform/platform';
 import { PopupProvider } from '../../providers/popup/popup';
 import { ProfileProvider } from '../../providers/profile/profile';
@@ -66,12 +67,17 @@ export class TxDetailsModal {
     private rateProvider: RateProvider,
     private platformProvider: PlatformProvider,
     private statusBar: StatusBar,
-    private viewCtrl: ViewController
+    private viewCtrl: ViewController,
+    private persistenceProvider: PersistenceProvider
   ) {}
 
   ionViewWillEnter() {
     if (this.platformProvider.isCordova) {
-      this.statusBar.styleDefault();
+      this.persistenceProvider.getAppTheme().then(theme => {
+        if (!theme || theme !== 'dark-theme') {
+          this.statusBar.styleDefault();
+        }
+      });
     }
   }
 
