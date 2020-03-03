@@ -9,6 +9,7 @@ import { ConfigProvider } from '../../../../providers/config/config';
 import { ExternalLinkProvider } from '../../../../providers/external-link/external-link';
 import { HomeIntegrationsProvider } from '../../../../providers/home-integrations/home-integrations';
 import { Logger } from '../../../../providers/logger/logger';
+import { PersistenceProvider } from '../../../../providers/persistence/persistence';
 import { PopupProvider } from '../../../../providers/popup/popup';
 import { ShapeshiftProvider } from '../../../../providers/shapeshift/shapeshift';
 
@@ -36,7 +37,8 @@ export class ShapeshiftSettingsPage {
     private shapeshiftProvider: ShapeshiftProvider,
     private configProvider: ConfigProvider,
     private homeIntegrationsProvider: HomeIntegrationsProvider,
-    private externalLinkProvider: ExternalLinkProvider
+    private externalLinkProvider: ExternalLinkProvider,
+    private persistenceProvider: PersistenceProvider
   ) {
     this.service = _.filter(this.homeIntegrationsProvider.get(), {
       name: this.serviceName
@@ -53,7 +55,11 @@ export class ShapeshiftSettingsPage {
 
   ionViewWillLeave() {
     if (this.platform.is('cordova')) {
-      this.statusBar.styleDefault();
+      this.persistenceProvider.getAppTheme().then(theme => {
+        if (!theme || theme !== 'dark-theme') {
+          this.statusBar.styleDefault();
+        }
+      });
     }
   }
 
