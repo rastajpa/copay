@@ -18,6 +18,7 @@ import { ShapeshiftShiftPage } from './shapeshift-shift/shapeshift-shift';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ExternalLinkProvider } from '../../../providers/external-link/external-link';
 import { OnGoingProcessProvider } from '../../../providers/on-going-process/on-going-process';
+import { PersistenceProvider } from '../../../providers/persistence/persistence';
 import { PlatformProvider } from '../../../providers/platform/platform';
 import { PopupProvider } from '../../../providers/popup/popup';
 import { ShapeshiftProvider } from '../../../providers/shapeshift/shapeshift';
@@ -52,7 +53,8 @@ export class ShapeshiftPage {
     protected translate: TranslateService,
     private popupProvider: PopupProvider,
     private platformProvider: PlatformProvider,
-    private statusBar: StatusBar
+    private statusBar: StatusBar,
+    private persistenceProvider: PersistenceProvider
   ) {
     this.oauthCodeForm = this.formBuilder.group({
       code: [
@@ -87,7 +89,11 @@ export class ShapeshiftPage {
 
   ionViewWillLeave() {
     if (this.platformProvider.isCordova) {
-      this.statusBar.styleDefault();
+      this.persistenceProvider.getAppTheme().then(theme => {
+        if (!theme || theme !== 'dark-theme') {
+          this.statusBar.styleDefault();
+        }
+      });
     }
     this.events.unsubscribe('bwsEvent', this.bwsEventHandler);
   }

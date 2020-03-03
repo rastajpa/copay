@@ -125,7 +125,11 @@ export class WalletsPage {
 
   private _willEnter(shouldUpdate: boolean = false) {
     if (this.platformProvider.isIOS) {
-      this.statusBar.styleDefault();
+      this.persistenceProvider.getAppTheme().then(theme => {
+        if (!theme || theme !== 'dark-theme') {
+          this.statusBar.styleDefault();
+        }
+      });
     }
 
     // Update list of wallets, status and TXPs
