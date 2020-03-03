@@ -266,4 +266,41 @@
       color: $text-color-dark-theme;
     }
   }
+  page-add,
+  page-select-currency,
+  page-coin-selector,
+  select-invoice-page {
+    .list-button {
+      .item-title {
+        color: $text-color-dark-theme;
+      }
+      .item-subtitle {
+        color: color($colors, light-grey);
+      }
+    }
+  }
+  page-import-wallet,
+  page-create-wallet {
+    ion-item {
+      background: $background-color-dark-theme;
+      color: $text-color-dark-theme;
+    }
+  }
+  page-send-feedback {
+    .msg-to-user {
+      background: $background-color-dark-theme;
+      .feedback-title {
+        color: $text-color-dark-theme;
+      }
+      .feedback-msg {
+        color: $text-color-dark-theme;
+      }
+    }
+    .user-feedback-card {
+      background-color: $background-secondary-dark-theme;
+      .user-feedback-title {
+        color: $text-color-dark-theme;
+      }
+    }
+  }
 }
