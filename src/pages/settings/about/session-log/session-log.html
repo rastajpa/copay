@@ -8,7 +8,7 @@
     <div *ngIf="filteredLogs && filteredLogs.length == 0" class="no-entries-message">
       <span translate>No entries for this log level</span>.
     </div>
-    <ion-list>
+    <ion-list class="bp-list">
       <ion-item class="log-entry">
         <div *ngIf="filteredLogs && filteredLogs.length > 0">
           <div *ngFor="let l of filteredLogs">
