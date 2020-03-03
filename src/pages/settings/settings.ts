@@ -92,7 +92,7 @@ export class SettingsPage {
     private modalCtrl: ModalController,
     private touchid: TouchIdProvider,
     private analyticsProvider: AnalyticsProvider,
-    private persistanceProvider: PersistenceProvider,
+    private persistenceProvider: PersistenceProvider,
     private bitPayIdProvider: BitPayIdProvider,
     private changeRef: ChangeDetectorRef,
     private iabCardProvider: IABCardProvider,
@@ -108,18 +108,18 @@ export class SettingsPage {
   }
 
   ionViewWillEnter() {
-    this.persistanceProvider
+    this.persistenceProvider
       .getBitpayIdPairingFlag()
       .then(res => (this.bitpayIdPairingEnabled = res === 'enabled'));
 
-    this.persistanceProvider
+    this.persistenceProvider
       .getAppTheme()
       .then(res => (this.appTheme = res === 'dark-theme'));
 
     if (this.iabCardProvider.ref) {
 
       // check for user info
-      this.persistanceProvider
+      this.persistenceProvider
         .getBitPayIdUserInfo(this.network)
         .then((user: User) => {
           this.bitPayIdUserInfo = user;
@@ -377,7 +377,7 @@ export class SettingsPage {
 
   public toggleAppTheme(): void {
     const theme = this.appTheme ? 'dark-theme' : 'light-theme';
-    this.persistanceProvider.setAppTheme(theme);
+    this.persistenceProvider.setAppTheme(theme);
     if (this.platformProvider.isCordova) {
       if (theme === 'dark-theme') {
         this.statusBar.styleBlackOpaque();
