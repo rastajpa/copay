@@ -83,8 +83,14 @@
     background-color: $background-color-dark-theme;
   }
 
-  .toolbar-background-md {
+  .toolbar-background-md,
+  .toolbar-background-ios {
     background: $background-color-dark-theme;
+    color: $text-color-dark-theme;
+  }
+
+  .toolbar-content-md,
+  .toolbar-content-ios {
     color: $text-color-dark-theme;
   }
 
@@ -138,6 +144,24 @@
       color: $text-color-dark-theme;
     }
   }
+
+  // all content without menu
+  ion-content.add-bottom-safe-area {
+    .fixed-content,
+    .scroll-content {
+      background: $background-color-dark-theme;
+    }
+  }
+
+  // expandable views
+  ion-content.add-padding-bottom,
+  .add-padding-bottom ion-content {
+    .fixed-content,
+    .scroll-content {
+      background: $background-color-dark-theme;
+    }
+  }
+
   // Lists -----
   .bp-list {
     .item {
@@ -148,10 +172,9 @@
         color: $text-color-dark-theme;
       }
     }
-    .main-label {
-      color: $text-color-dark-theme;
-    }
-    .main-note {
+    .main-label,
+    .main-note,
+    .status .royal {
       color: $text-color-dark-theme;
     }
   }
@@ -235,6 +258,12 @@
           color: $toolbar-background-dark-theme;
         }
       }
+    }
+  }
+
+  page-simplex {
+    .buy-crypto-button {
+      color: $text-color-dark-theme;
     }
   }
 }
