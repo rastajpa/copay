@@ -1,4 +1,5 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
+import { StatusBar } from '@ionic-native/status-bar';
 import { TranslateService } from '@ngx-translate/core';
 import { ModalController, NavController } from 'ionic-angular';
 import { Logger } from '../../providers/logger/logger';
@@ -94,7 +95,8 @@ export class SettingsPage {
     private persistanceProvider: PersistenceProvider,
     private bitPayIdProvider: BitPayIdProvider,
     private changeRef: ChangeDetectorRef,
-    private iabCardProvider: IABCardProvider
+    private iabCardProvider: IABCardProvider,
+    private statusBar: StatusBar
   ) {
     this.appName = this.app.info.nameCase;
     this.isCordova = this.platformProvider.isCordova;
@@ -376,6 +378,13 @@ export class SettingsPage {
   public toggleAppTheme(): void {
     const theme = this.appTheme ? 'dark-theme' : 'light-theme';
     this.persistanceProvider.setAppTheme(theme);
+    if (this.platformProvider.isCordova) {
+      if (theme === 'dark-theme') {
+        this.statusBar.styleBlackOpaque();
+      } else {
+        this.statusBar.styleDefault();
+      }
+    }
     this.app.setActiveTheme(theme);
   }
 }
