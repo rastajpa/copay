@@ -221,7 +221,13 @@ export class CopayApp {
       // Only overlay for iOS
       if (this.platform.is('ios')) {
         this.statusBar.overlaysWebView(true);
-        this.statusBar.styleDefault();
+        this.persistenceProvider.getAppTheme().then(theme => {
+          if (theme && theme === 'dark-theme') {
+            this.statusBar.styleLightContent();
+          } else {
+            this.statusBar.styleDefault();
+          }
+        });
       }
 
       this.splashScreen.hide();
