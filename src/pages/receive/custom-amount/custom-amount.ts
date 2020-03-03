@@ -9,6 +9,7 @@ import { SocialSharing } from '@ionic-native/social-sharing';
 // providers
 import { ActionSheetProvider } from '../../../providers/action-sheet/action-sheet';
 import { Coin, CurrencyProvider } from '../../../providers/currency/currency';
+import { PersistenceProvider } from '../../../providers/persistence/persistence';
 import { PlatformProvider } from '../../../providers/platform/platform';
 import { ProfileProvider } from '../../../providers/profile/profile';
 import { TxFormatProvider } from '../../../providers/tx-format/tx-format';
@@ -38,7 +39,8 @@ export class CustomAmountPage {
     private socialSharing: SocialSharing,
     private txFormatProvider: TxFormatProvider,
     private actionSheetProvider: ActionSheetProvider,
-    private statusBar: StatusBar
+    private statusBar: StatusBar,
+    private persistenceProvider: PersistenceProvider
   ) {
     const walletId = this.navParams.data.id;
     this.showShareButton = this.platformProvider.isCordova;
@@ -115,7 +117,11 @@ export class CustomAmountPage {
 
   ionViewWillEnter() {
     if (this.platformProvider.isIOS) {
-      this.statusBar.styleDefault();
+      this.persistenceProvider.getAppTheme().then(theme => {
+        if (!theme || theme !== 'dark-theme') {
+          this.statusBar.styleDefault();
+        }
+      });
     }
   }
 
