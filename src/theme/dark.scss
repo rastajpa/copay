@@ -3,6 +3,8 @@
   $background-color-dark-theme: #000000;
   $background-secondary-dark-theme: #2b2a2a;
 
+  $toolbar-background-dark-theme: #000000;
+
   // Item list background color
   $list-background-color-dark-theme: #000000;
   $feather-dark: #f8f8f9;
@@ -16,15 +18,64 @@
     transition: background-color, color, 250ms cubic-bezier(0, 0, 0.3, 0.3) !important;
   }
 
+  // This is just to make a smooth transition between themes
+  page-settings {
+    .content-ios .toolbar-background-ios {
+      @include transition();
+    }
+
+    .toolbar-background-md {
+      @include transition();
+    }
+
+    .toolbar-title {
+      @include transition();
+    }
+
+    .header .toolbar-background {
+      @include transition();
+    }
+
+    // Lists -----
+    .bp-list {
+      .item {
+        &.item-ios,
+        &.item-md {
+          @include transition();
+        }
+      }
+    }
+  }
+
+  .tabs-md,
+  .tabs-ios {
+    .tabbar {
+      @include transition();
+    }
+  }
+
   // General -----
   ion-content {
     background-color: $background-color-dark-theme;
     color: $text-color-dark-theme;
   }
 
+  .content-ios .toolbar-background-ios {
+    background: $background-color-dark-theme;
+  }
+
   .wide-header__title {
     color: $text-color-dark-theme;
     background: $background-color-dark-theme;
+  }
+
+  wide-header-page,
+  card-catalog-page {
+    .wide-header {
+      .toolbar-background {
+        background: $toolbar-background-dark-theme;
+      }
+    }
   }
 
   .item-divider-md,
@@ -35,23 +86,19 @@
   .toolbar-background-md {
     background: $background-color-dark-theme;
     color: $text-color-dark-theme;
-    @include transition();
   }
 
   .toolbar-title {
     color: $text-color-dark-theme;
-    @include transition();
   }
 
   .header .toolbar-background {
     background-color: $background-color-dark-theme;
-    @include transition();
   }
   .tabs-md,
   .tabs-ios {
     .tabbar {
       background: $background-color-dark-theme;
-      @include transition();
     }
   }
   .swiper-pagination-bullet-active {
@@ -66,6 +113,16 @@
     background-color: #4f4f4e;
   }
 
+  .header-extend {
+    background: $toolbar-background-dark-theme;
+  }
+
+  .gift-card-content {
+    .header-extension {
+      background: $toolbar-background-dark-theme;
+    }
+  }
+
   ion-searchbar {
     .searchbar-input-container {
       input.searchbar-input {
@@ -74,11 +131,11 @@
       }
     }
   }
-  search-bar{
+  search-bar {
     background: $background-color-dark-theme;
     ion-input {
-    background: $message-background-dark-theme;
-    color: $text-color-dark-theme;
+      background: $message-background-dark-theme;
+      color: $text-color-dark-theme;
     }
   }
   // Lists -----
@@ -89,7 +146,6 @@
         border: 0;
         background-color: $background-color-dark-theme;
         color: $text-color-dark-theme;
-        @include transition();
       }
     }
     .main-label {
@@ -159,14 +215,26 @@
     }
   }
   page-addressbook-add {
-    ion-item{
+    ion-item {
       background: $background-color-dark-theme;
       color: color($colors, light-grey);
     }
   }
   page-wallet-addresses {
-      button.item {
-            background: $background-color-dark-theme;
+    button.item {
+      background: $background-color-dark-theme;
+    }
+  }
+
+  page-scan {
+    .page-scan-has-problems {
+      background-color: $toolbar-background-dark-theme;
+      .body {
+        background-color: $toolbar-background-dark-theme;
+        div {
+          color: $toolbar-background-dark-theme;
+        }
+      }
     }
   }
 }
