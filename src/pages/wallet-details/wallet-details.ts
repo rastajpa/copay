@@ -25,6 +25,7 @@ import { CardConfigMap } from '../../providers/gift-card/gift-card.types';
 import { ActionSheetProvider } from '../../providers/index';
 import { Logger } from '../../providers/logger/logger';
 import { OnGoingProcessProvider } from '../../providers/on-going-process/on-going-process';
+import { PersistenceProvider } from '../../providers/persistence/persistence';
 import { PlatformProvider } from '../../providers/platform/platform';
 import { ProfileProvider } from '../../providers/profile/profile';
 import { TimeProvider } from '../../providers/time/time';
@@ -104,7 +105,8 @@ export class WalletDetailsPage {
     private statusBar: StatusBar,
     private socialSharing: SocialSharing,
     private bwcErrorProvider: BwcErrorProvider,
-    private errorsProvider: ErrorsProvider
+    private errorsProvider: ErrorsProvider,
+    private persistenceProvider: PersistenceProvider
   ) {
     this.zone = new NgZone({ enableLongStackTrace: false });
     this.isCordova = this.platformProvider.isCordova;
@@ -175,7 +177,11 @@ export class WalletDetailsPage {
 
   ionViewWillLeave() {
     if (this.platformProvider.isIOS) {
-      this.statusBar.styleDefault();
+      this.persistenceProvider.getAppTheme().then(theme => {
+        if (!theme || theme !== 'dark-theme') {
+          this.statusBar.styleDefault();
+        }
+      });
     }
   }
 
