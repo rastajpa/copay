@@ -24,7 +24,7 @@ export class FixedScrollBgColor {
   ) {
     this.persistenceProvider.getAppTheme().then(theme => {
       this.bottomColor =
-        theme && theme === 'dark-theme' ? '#1b1b1e' : '#f8f8f9';
+        theme && theme === 'dark-theme' ? '#000000' : '#f8f8f9';
     });
   }
 
