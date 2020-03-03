@@ -1,4 +1,5 @@
 import { Directive, ElementRef, Input } from '@angular/core';
+import { PersistenceProvider } from '../../providers/persistence/persistence';
 
 /* 
 Sometimes the user can overshoot when scrolling, which can cause gaps to appear between
@@ -15,9 +16,17 @@ export class FixedScrollBgColor {
   @Input('fixed-scroll-bg-color')
   color: string;
   @Input()
-  bottomColor: string = '#f8f8f9';
+  bottomColor: string;
 
-  constructor(private element: ElementRef) {}
+  constructor(
+    private element: ElementRef,
+    private persistenceProvider: PersistenceProvider
+  ) {
+    this.persistenceProvider.getAppTheme().then(theme => {
+      this.bottomColor =
+        theme && theme === 'dark-theme' ? '#1b1b1e' : '#f8f8f9';
+    });
+  }
 
   ngOnChanges() {
     this.setFixedAndScrollContentBgColor(this.color);
