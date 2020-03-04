@@ -1,5 +1,5 @@
 import { Directive, ElementRef, Input } from '@angular/core';
-import { PersistenceProvider } from '../../providers/persistence/persistence';
+import { ThemeProvider } from '../../providers/theme/theme';
 
 /* 
 Sometimes the user can overshoot when scrolling, which can cause gaps to appear between
@@ -20,12 +20,9 @@ export class FixedScrollBgColor {
 
   constructor(
     private element: ElementRef,
-    private persistenceProvider: PersistenceProvider
+    private themeProvider: ThemeProvider
   ) {
-    this.persistenceProvider.getAppTheme().then(theme => {
-      this.bottomColor =
-        theme && theme === 'dark-theme' ? '#000000' : '#f8f8f9';
-    });
+    this.bottomColor = this.themeProvider.getThemeInfo().fixedScrollBgColor;
   }
 
   ngOnChanges() {

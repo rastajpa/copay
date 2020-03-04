@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { StatusBar } from '@ionic-native/status-bar';
 import { TranslateService } from '@ngx-translate/core';
 import {
   Events,
@@ -18,10 +17,10 @@ import { ShapeshiftShiftPage } from './shapeshift-shift/shapeshift-shift';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ExternalLinkProvider } from '../../../providers/external-link/external-link';
 import { OnGoingProcessProvider } from '../../../providers/on-going-process/on-going-process';
-import { PersistenceProvider } from '../../../providers/persistence/persistence';
 import { PlatformProvider } from '../../../providers/platform/platform';
 import { PopupProvider } from '../../../providers/popup/popup';
 import { ShapeshiftProvider } from '../../../providers/shapeshift/shapeshift';
+import { ThemeProvider } from '../../../providers/theme/theme';
 import { TimeProvider } from '../../../providers/time/time';
 
 @Component({
@@ -53,8 +52,7 @@ export class ShapeshiftPage {
     protected translate: TranslateService,
     private popupProvider: PopupProvider,
     private platformProvider: PlatformProvider,
-    private statusBar: StatusBar,
-    private persistenceProvider: PersistenceProvider
+    private themeProvider: ThemeProvider
   ) {
     this.oauthCodeForm = this.formBuilder.group({
       code: [
@@ -74,7 +72,7 @@ export class ShapeshiftPage {
 
   ionViewWillEnter() {
     if (this.platformProvider.isCordova) {
-      this.statusBar.styleBlackOpaque();
+      this.themeProvider.useDarkStatusBar();
     }
     if (this.navParams.data.code) {
       this.shapeshiftProvider.getStoredToken((at: string) => {
@@ -89,11 +87,7 @@ export class ShapeshiftPage {
 
   ionViewWillLeave() {
     if (this.platformProvider.isCordova) {
-      this.persistenceProvider.getAppTheme().then(theme => {
-        if (!theme || theme !== 'dark-theme') {
-          this.statusBar.styleDefault();
-        }
-      });
+      this.themeProvider.useDefaultStatusBar();
     }
     this.events.unsubscribe('bwsEvent', this.bwsEventHandler);
   }
