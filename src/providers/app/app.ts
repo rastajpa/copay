@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import { File } from '@ionic-native/file';
 
@@ -10,6 +9,7 @@ import { LanguageProvider } from '../../providers/language/language';
 import { Logger } from '../../providers/logger/logger';
 import { PersistenceProvider } from '../../providers/persistence/persistence';
 import { PlatformProvider } from '../platform/platform';
+import { ThemeProvider } from '../theme/theme';
 
 /* TODO: implement interface properly
 interface App {
@@ -51,7 +51,6 @@ export class AppProvider {
   public isLockModalOpen: boolean;
   private jsonPathApp: string = 'assets/appConfig.json';
   private jsonPathServices: string = 'assets/externalServices.json';
-  private appTheme: BehaviorSubject<string>;
 
   constructor(
     public http: HttpClient,
@@ -60,7 +59,8 @@ export class AppProvider {
     public config: ConfigProvider,
     private persistence: PersistenceProvider,
     private file: File,
-    private platformProvider: PlatformProvider
+    private platformProvider: PlatformProvider,
+    private themeProvider: ThemeProvider
   ) {
     this.logger.debug('AppProvider initialized');
   }
@@ -83,9 +83,7 @@ export class AppProvider {
   private async loadProviders() {
     this.persistence.load();
     await this.config.load();
-    await this.persistence.getAppTheme().then(value => {
-      this.appTheme = new BehaviorSubject(value);
-    });
+    this.themeProvider.init();
     this.language.load();
   }
 
@@ -109,13 +107,5 @@ export class AppProvider {
     } else {
       return this.http.get(this.jsonPathServices).toPromise();
     }
-  }
-
-  public setActiveTheme(val) {
-    this.appTheme.next(val);
-  }
-
-  public getActiveTheme() {
-    return this.appTheme.asObservable();
   }
 }

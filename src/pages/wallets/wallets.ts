@@ -1,5 +1,4 @@
 import { Component, NgZone, ViewChild } from '@angular/core';
-import { StatusBar } from '@ionic-native/status-bar';
 import { TranslateService } from '@ngx-translate/core';
 import {
   Events,
@@ -37,6 +36,7 @@ import { PlatformProvider } from '../../providers/platform/platform';
 import { PopupProvider } from '../../providers/popup/popup';
 import { ProfileProvider } from '../../providers/profile/profile';
 import { SimplexProvider } from '../../providers/simplex/simplex';
+import { ThemeProvider } from '../../providers/theme/theme';
 import { WalletProvider } from '../../providers/wallet/wallet';
 
 interface UpdateWalletOptsI {
@@ -92,10 +92,10 @@ export class WalletsPage {
     private emailProvider: EmailNotificationsProvider,
     private clipboardProvider: ClipboardProvider,
     private incomingDataProvider: IncomingDataProvider,
-    private statusBar: StatusBar,
     private simplexProvider: SimplexProvider,
     private modalCtrl: ModalController,
-    private actionSheetProvider: ActionSheetProvider
+    private actionSheetProvider: ActionSheetProvider,
+    private themeProvider: ThemeProvider
   ) {
     this.slideDown = false;
     this.isBlur = false;
@@ -123,11 +123,7 @@ export class WalletsPage {
 
   private _willEnter() {
     if (this.platformProvider.isIOS) {
-      this.persistenceProvider.getAppTheme().then(theme => {
-        if (!theme || theme !== 'dark-theme') {
-          this.statusBar.styleDefault();
-        }
-      });
+      this.themeProvider.useDefaultStatusBar();
     }
 
     // Update list of wallets, status and TXPs
