@@ -78,7 +78,6 @@ export class CopayApp {
   nav: NavController;
   cardIAB_Ref: InAppBrowser;
   NETWORK = 'livenet';
-  public selectedTheme: string;
   public rootPage:
     | typeof AmountPage
     | typeof DisclaimerPage
@@ -171,9 +170,15 @@ export class CopayApp {
       .load()
       .then(() => {
         this.onAppLoad(readySource);
-        this.appProvider
-          .getActiveTheme()
-          .subscribe(val => (this.selectedTheme = val));
+        this.appProvider.getActiveTheme().subscribe(val => {
+          const theme = val === 'dark-theme' ? 'dark-theme' : 'light-theme';
+          const previousTheme =
+            val !== 'dark-theme' ? 'dark-theme' : 'light-theme';
+          document
+            .getElementsByTagName('ion-app')[0]
+            .classList.remove(previousTheme);
+          document.getElementsByTagName('ion-app')[0].classList.add(theme);
+        });
       })
       .catch(err => {
         const title = 'Could not initialize the app';
