@@ -75,7 +75,7 @@ export class SettingsPage {
   public showBalance: boolean;
   public useLegacyQrCode: boolean;
   private selectedTheme: string;
-  public appTheme: boolean;
+  public isDarkTheme: boolean;
 
   constructor(
     private navCtrl: NavController,
@@ -115,7 +115,7 @@ export class SettingsPage {
 
     this.persistenceProvider
       .getAppTheme()
-      .then(res => (this.appTheme = res === 'dark-theme'));
+      .then(res => (this.isDarkTheme = res === 'dark-theme'));
 
     if (this.iabCardProvider.ref) {
 
@@ -368,14 +368,13 @@ export class SettingsPage {
   }
 
   public toggleAppTheme(): void {
-    const theme = this.appTheme ? 'dark-theme' : 'light-theme';
+    const theme = this.isDarkTheme ? 'dark-theme' : 'light-theme';
+
     this.persistenceProvider.setAppTheme(theme);
     if (this.platformProvider.isCordova) {
-      if (theme === 'dark-theme') {
-        this.statusBar.styleBlackOpaque();
-      } else {
-        this.statusBar.styleDefault();
-      }
+      this.isDarkTheme
+        ? this.statusBar.styleBlackOpaque()
+        : this.statusBar.styleDefault();
     }
     this.app.setActiveTheme(theme);
   }
