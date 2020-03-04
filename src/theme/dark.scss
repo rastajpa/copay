@@ -322,4 +322,36 @@
       }
     }
   }
+  page-backup-key,
+  page-backup-game {
+    ion-content.content {
+      background: $background-color-dark-theme;
+    }
+    .key-container,
+    .grid-container > .key-container {
+      .word-container,
+      .word-container > .word-slides {
+        .word-title {
+          color: $text-color-dark-theme;
+        }
+        .word {
+          background: $background-secondary-dark-theme;
+          color: $text-color-dark-theme;
+          .dash-line {
+            border-bottom: 1px color($colors, light-grey) dashed;
+          }
+        }
+      }
+    }
+    .grid-container > .mnemonic-words-container {
+      .mnemonic-words {
+        .words {
+          .button {
+            background-color: $background-secondary-dark-theme;
+            color: $text-color-dark-theme;
+          }
+        }
+      }
+    }
+  }
 }
