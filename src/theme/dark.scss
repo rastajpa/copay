@@ -207,6 +207,11 @@
   }
 
   // Tab Wallets ------
+  page-wallets {
+    .collapse > .collapse-btn {
+      background: $background-secondary-dark-theme;
+    }
+  }
 
   // Tab Cards ------
 
@@ -217,6 +222,12 @@
       ion-note.note {
         background: $background-secondary-dark-theme;
         color: color($colors, light-grey);
+      }
+      .icon-qrcode {
+        filter: invert(1);
+      }
+      .create-button {
+        color: color($colors, primary);
       }
     }
   }
