@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { StatusBar } from '@ionic-native/status-bar';
 import { NavParams } from 'ionic-angular';
 import { Logger } from '../../../providers/logger/logger';
 
@@ -10,9 +9,9 @@ import { SocialSharing } from '@ionic-native/social-sharing';
 import { ActionSheetProvider } from '../../../providers/action-sheet/action-sheet';
 import { ConfigProvider } from '../../../providers/config/config';
 import { Coin, CurrencyProvider } from '../../../providers/currency/currency';
-import { PersistenceProvider } from '../../../providers/persistence/persistence';
 import { PlatformProvider } from '../../../providers/platform/platform';
 import { ProfileProvider } from '../../../providers/profile/profile';
+import { ThemeProvider } from '../../../providers/theme/theme';
 import { TxFormatProvider } from '../../../providers/tx-format/tx-format';
 import { WalletProvider } from '../../../providers/wallet/wallet';
 
@@ -41,9 +40,8 @@ export class CustomAmountPage {
     private socialSharing: SocialSharing,
     private txFormatProvider: TxFormatProvider,
     private actionSheetProvider: ActionSheetProvider,
-    private statusBar: StatusBar,
     private configProvider: ConfigProvider,
-    private persistenceProvider: PersistenceProvider
+    private themeProvider: ThemeProvider
   ) {
     const walletId = this.navParams.data.id;
     this.showShareButton = this.platformProvider.isCordova;
@@ -121,11 +119,7 @@ export class CustomAmountPage {
 
   ionViewWillEnter() {
     if (this.platformProvider.isIOS) {
-      this.persistenceProvider.getAppTheme().then(theme => {
-        if (!theme || theme !== 'dark-theme') {
-          this.statusBar.styleDefault();
-        }
-      });
+      this.themeProvider.useDefaultStatusBar();
     }
   }
 
