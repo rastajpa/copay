@@ -1,8 +1,6 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
-import { StatusBar } from '@ionic-native/status-bar';
 import { TranslateService } from '@ngx-translate/core';
 import { ModalController, NavController } from 'ionic-angular';
-import { Logger } from '../../providers/logger/logger';
 
 import * as _ from 'lodash';
 
@@ -18,12 +16,14 @@ import { ConfigProvider } from '../../providers/config/config';
 import { ExternalLinkProvider } from '../../providers/external-link/external-link';
 import { HomeIntegrationsProvider } from '../../providers/home-integrations/home-integrations';
 import { LanguageProvider } from '../../providers/language/language';
+import { Logger } from '../../providers/logger/logger';
 import {
   Network,
   PersistenceProvider
 } from '../../providers/persistence/persistence';
 import { PlatformProvider } from '../../providers/platform/platform';
 import { ProfileProvider } from '../../providers/profile/profile';
+import { ThemeProvider } from '../../providers/theme/theme';
 import { TouchIdProvider } from '../../providers/touchid/touchid';
 
 // pages
@@ -97,7 +97,7 @@ export class SettingsPage {
     private bitPayIdProvider: BitPayIdProvider,
     private changeRef: ChangeDetectorRef,
     private iabCardProvider: IABCardProvider,
-    private statusBar: StatusBar
+    private themeProvider: ThemeProvider
   ) {
     this.appName = this.app.info.nameCase;
     this.isCordova = this.platformProvider.isCordova;
@@ -113,9 +113,7 @@ export class SettingsPage {
       .getBitpayIdPairingFlag()
       .then(res => (this.bitpayIdPairingEnabled = res === 'enabled'));
 
-    this.persistenceProvider
-      .getAppTheme()
-      .then(res => (this.isDarkTheme = res === 'dark-theme'));
+    this.isDarkTheme = this.themeProvider.isDarkModeEnabled();
 
     if (this.iabCardProvider.ref) {
 
@@ -377,14 +375,6 @@ export class SettingsPage {
   }
 
   public toggleAppTheme(): void {
-    const theme = this.isDarkTheme ? 'dark-theme' : 'light-theme';
-
-    this.persistenceProvider.setAppTheme(theme);
-    if (this.platformProvider.isCordova) {
-      this.isDarkTheme
-        ? this.statusBar.styleBlackOpaque()
-        : this.statusBar.styleDefault();
-    }
-    this.app.setActiveTheme(theme);
+    this.themeProvider.toggleTheme();
   }
 }
