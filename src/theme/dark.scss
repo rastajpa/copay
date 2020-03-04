@@ -237,7 +237,8 @@
       }
     }
   }
-  page-addressbook-add {
+  page-addressbook-add,
+  page-join-wallet {
     ion-item {
       background: $background-color-dark-theme;
       color: color($colors, light-grey);
@@ -300,6 +301,24 @@
       background-color: $background-secondary-dark-theme;
       .user-feedback-title {
         color: $text-color-dark-theme;
+      }
+    }
+  }
+  page-key-onboarding {
+    .key-onboarding-slides {
+      ion-slide {
+        background: linear-gradient(to bottom, #000000, #101010 80%);
+      }
+      .slide-info {
+        background: $background-color-dark-theme;
+        .info {
+          .title {
+            color: $text-color-dark-theme;
+          }
+          .text {
+            color: color($colors, light-grey);
+          }
+        }
       }
     }
   }
