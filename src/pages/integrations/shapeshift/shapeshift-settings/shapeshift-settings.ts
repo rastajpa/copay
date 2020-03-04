@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { StatusBar } from '@ionic-native/status-bar';
 import { NavController, Platform } from 'ionic-angular';
 
 import * as _ from 'lodash';
@@ -9,9 +8,9 @@ import { ConfigProvider } from '../../../../providers/config/config';
 import { ExternalLinkProvider } from '../../../../providers/external-link/external-link';
 import { HomeIntegrationsProvider } from '../../../../providers/home-integrations/home-integrations';
 import { Logger } from '../../../../providers/logger/logger';
-import { PersistenceProvider } from '../../../../providers/persistence/persistence';
 import { PopupProvider } from '../../../../providers/popup/popup';
 import { ShapeshiftProvider } from '../../../../providers/shapeshift/shapeshift';
+import { ThemeProvider } from '../../../../providers/theme/theme';
 
 @Component({
   selector: 'page-shapeshift-settings',
@@ -32,13 +31,12 @@ export class ShapeshiftSettingsPage {
     private navCtrl: NavController,
     private popupProvider: PopupProvider,
     private platform: Platform,
-    private statusBar: StatusBar,
     private logger: Logger,
     private shapeshiftProvider: ShapeshiftProvider,
     private configProvider: ConfigProvider,
     private homeIntegrationsProvider: HomeIntegrationsProvider,
     private externalLinkProvider: ExternalLinkProvider,
-    private persistenceProvider: PersistenceProvider
+    private themeProvider: ThemeProvider
   ) {
     this.service = _.filter(this.homeIntegrationsProvider.get(), {
       name: this.serviceName
@@ -49,17 +47,13 @@ export class ShapeshiftSettingsPage {
 
   ionViewWillEnter() {
     if (this.platform.is('cordova')) {
-      this.statusBar.styleBlackOpaque();
+      this.themeProvider.useDarkStatusBar();
     }
   }
 
   ionViewWillLeave() {
     if (this.platform.is('cordova')) {
-      this.persistenceProvider.getAppTheme().then(theme => {
-        if (!theme || theme !== 'dark-theme') {
-          this.statusBar.styleDefault();
-        }
-      });
+      this.themeProvider.useDefaultStatusBar();
     }
   }
 
