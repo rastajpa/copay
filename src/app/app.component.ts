@@ -37,6 +37,7 @@ import { ProfileProvider } from '../providers/profile/profile';
 import { PushNotificationsProvider } from '../providers/push-notifications/push-notifications';
 import { ShapeshiftProvider } from '../providers/shapeshift/shapeshift';
 import { SimplexProvider } from '../providers/simplex/simplex';
+import { ThemeProvider } from '../providers/theme/theme';
 import { TouchIdProvider } from '../providers/touchid/touchid';
 
 // Pages
@@ -132,7 +133,8 @@ export class CopayApp {
     private persistenceProvider: PersistenceProvider,
     private iab: InAppBrowserProvider,
     private iabCardProvider: IABCardProvider,
-    private bitpayProvider: BitPayProvider
+    private bitpayProvider: BitPayProvider,
+    private themeProvider: ThemeProvider
   ) {
     this.imageLoaderConfig.setFileNameCachedWithExtension(true);
     this.imageLoaderConfig.useImageTag(true);
@@ -166,15 +168,6 @@ export class CopayApp {
       .load()
       .then(() => {
         this.onAppLoad(readySource);
-        this.appProvider.getActiveTheme().subscribe(val => {
-          const theme = val === 'dark-theme' ? 'dark-theme' : 'light-theme';
-          const previousTheme =
-            val !== 'dark-theme' ? 'dark-theme' : 'light-theme';
-          document
-            .getElementsByTagName('ion-app')[0]
-            .classList.remove(previousTheme);
-          document.getElementsByTagName('ion-app')[0].classList.add(theme);
-        });
       })
       .catch(err => {
         const title = 'Could not initialize the app';
@@ -226,13 +219,7 @@ export class CopayApp {
       // Only overlay for iOS
       if (this.platform.is('ios')) {
         this.statusBar.overlaysWebView(true);
-        this.persistenceProvider.getAppTheme().then(theme => {
-          if (theme && theme === 'dark-theme') {
-            this.statusBar.styleLightContent();
-          } else {
-            this.statusBar.styleDefault();
-          }
-        });
+        this.themeProvider.useDefaultStatusBar();
       }
 
       this.splashScreen.hide();
