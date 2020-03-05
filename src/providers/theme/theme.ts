@@ -14,11 +14,15 @@ export class ThemeProvider {
   public themes = {
     'light-theme': {
       backgroundColor: '#ffffff',
-      fixedScrollBgColor: '#f8f8f9'
+      fixedScrollBgColor: '#f8f8f9',
+      walletDetailsBackgroundStart: '#0C204E',
+      walletDetailsBackgroundEnd: '#1C4386'
     },
     'dark-theme': {
       backgroundColor: '#000000',
-      fixedScrollBgColor: '#000000'
+      fixedScrollBgColor: '#000000',
+      walletDetailsBackgroundStart: '#000000',
+      walletDetailsBackgroundEnd: '#101010'
     }
   };
 
