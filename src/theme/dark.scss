@@ -325,6 +325,18 @@
   }
 
   // Tab Cards ------
+  buy-card-page {
+    .amount-box {
+      background-image: linear-gradient(-180deg, #000000 30%, #101010 100%);
+      .discount-header {
+        background-color: $background-secondary-dark-theme;
+        color: $text-color-dark-theme;
+      }
+    }
+    .buy-box {
+      background-color: $background-color-dark-theme;
+    }
+  }
 
   // Tab Settings ------
   page-settings,
@@ -403,9 +415,22 @@
     }
   }
   page-import-wallet,
-  page-create-wallet {
+  page-create-wallet,
+  page-bitpay-phase-one-card-intro {
     ion-item {
       background: $background-color-dark-theme;
+      color: $text-color-dark-theme;
+    }
+  }
+  email-component {
+    .title {
+      color: $text-color-dark-theme;
+    }
+    .sub-title {
+      color: color($colors, light-grey);
+    }
+    ion-item {
+      background: $background-secondary-dark-theme;
       color: $text-color-dark-theme;
     }
   }
@@ -493,6 +518,13 @@
           }
         }
       }
+    }
+  }
+  wallet-selector {
+    .item-divider-md,
+    .item-divider-ios {
+      background-color: $background-secondary-dark-theme;
+      border-bottom: 1px solid $background-secondary-dark-theme;
     }
   }
 }
