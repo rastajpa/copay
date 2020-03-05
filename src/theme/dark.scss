@@ -177,6 +177,18 @@
     .status .royal {
       color: $text-color-dark-theme;
     }
+
+    ion-item-divider {
+      background: $background-secondary-dark-theme;
+    }
+
+    .summary-item-detail {
+      color: $text-color-dark-theme;
+    }
+
+    .total-amount {
+      color: $text-color-dark-theme;
+    }
   }
 
   // Card
@@ -210,6 +222,60 @@
   page-wallets {
     .collapse > .collapse-btn {
       background: $background-secondary-dark-theme;
+    }
+    .section-header {
+      border-bottom: 1px solid #434d5a;
+    }
+  }
+  page-proposals-notifications {
+    .txps-status {
+      .card {
+        background-color: $background-secondary-dark-theme;
+        color: $text-color-dark-theme;
+      }
+    }
+  }
+  page-txp {
+    .item {
+      &.item-ios,
+      &.item-md {
+        background-color: $background-secondary-dark-theme;
+        color: $text-color-dark-theme;
+      }
+    }
+    ion-note .amount {
+      color: $text-color-dark-theme;
+    }
+  }
+  page-txp-details {
+    .proposal-deletion {
+      background-color: $background-color-dark-theme;
+    }
+
+    .proposal-rejection {
+      background-color: $background-color-dark-theme;
+    }
+    .timeline-item {
+      background-color: $background-color-dark-theme;
+    }
+    ion-note.note {
+      .wallet {
+        .note-container {
+          color: $text-color-dark-theme;
+        }
+      }
+      // background: $background-secondary-dark-theme;
+    }
+  }
+
+  page-confirm,
+  confirm-card-purchase-page,
+  page-txp-details,
+  page-tx-details,
+  page-bitpay-card-topup {
+    .payment-proposal-to {
+      background-color: $background-secondary-dark-theme;
+      color: $text-color-dark-theme;
     }
   }
 
@@ -358,6 +424,23 @@
       .mnemonic-words {
         .words {
           .button {
+            background-color: $background-secondary-dark-theme;
+            color: $text-color-dark-theme;
+          }
+        }
+      }
+    }
+  }
+
+  // Components -----
+
+  action-sheet {
+    .action-sheet {
+      background: $background-secondary-dark-theme;
+      .bp-list {
+        .item {
+          &.item-ios,
+          &.item-md {
             background-color: $background-secondary-dark-theme;
             color: $text-color-dark-theme;
           }
