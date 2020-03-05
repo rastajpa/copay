@@ -201,6 +201,14 @@
       }
     }
   }
+  action-card.card {
+    background: $background-secondary-dark-theme;
+    .action-card {
+      &__content {
+        background: $background-secondary-dark-theme;
+      }
+    }
+  }
 
   // Pages ----
   // Tab Home ----
@@ -381,8 +389,10 @@
       }
     }
   }
-  page-key-onboarding {
-    .key-onboarding-slides {
+  page-key-onboarding,
+  page-new-design-tour {
+    .key-onboarding-slides,
+    .new-design-tour-slides {
       ion-slide {
         background: linear-gradient(to bottom, #000000, #101010 80%);
       }
