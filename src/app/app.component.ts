@@ -172,6 +172,7 @@ export class CopayApp {
       .load()
       .then(() => {
         this.onAppLoad(readySource);
+        this.themeProvider.apply();
       })
       .catch(err => {
         const title = 'Could not initialize the app';
@@ -223,7 +224,7 @@ export class CopayApp {
       // Only overlay for iOS
       if (this.platform.is('ios')) {
         this.statusBar.overlaysWebView(true);
-        this.themeProvider.useDefaultStatusBar();
+        this.themeProvider.useDefaultStatusBar(true);
       }
 
       this.splashScreen.hide();
