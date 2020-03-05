@@ -6,6 +6,7 @@ import {
   Renderer
 } from '@angular/core';
 import { Content } from 'ionic-angular';
+import { ThemeProvider } from '../../providers/theme/theme';
 @Component({
   selector: 'expandable-header-primary',
   template: '<ng-content></ng-content>'
@@ -25,6 +26,7 @@ export class ExpandableHeaderFooterComponent {
   template: '<ng-content></ng-content>'
 })
 export class ExpandableHeaderComponent {
+  private theme: any;
   @ContentChild(ExpandableHeaderPrimaryComponent)
   primaryContent: ExpandableHeaderPrimaryComponent;
   @ContentChild(ExpandableHeaderFooterComponent)
@@ -52,7 +54,11 @@ export class ExpandableHeaderComponent {
    */
   headerHeight: number;
 
-  constructor(public element: ElementRef, public renderer: Renderer) {}
+  constructor(
+    public element: ElementRef,
+    public renderer: Renderer,
+    private themeProvider: ThemeProvider
+  ) {}
 
   ngOnInit() {
     if (this.disableFade) {
@@ -61,6 +67,8 @@ export class ExpandableHeaderComponent {
     this.scrollArea.ionScroll.subscribe(event =>
       event.domWrite(() => this.handleDomWrite(event.scrollTop))
     );
+
+    this.theme = this.themeProvider.getThemeInfo();
   }
 
   ngAfterViewInit() {
@@ -120,7 +128,9 @@ export class ExpandableHeaderComponent {
 
     backColorGradient = this.calculateBackColorGradient(opacity);
 
-    const linearGradient = `linear-gradient(180deg, #0C204E ${backColorGradient}% , #1C4386)`;
+    const linearGradient = `linear-gradient(180deg, ${
+      this.theme.walletDetailsBackgroundStart
+    } ${backColorGradient}% , ${this.theme.walletDetailsBackgroundEnd})`;
 
     this.renderer.setElementStyle(
       this.element.nativeElement,
