@@ -79,6 +79,7 @@ export class WalletDetailsPage {
   public txpsPending: any[];
   public lowUtxosWarning: boolean;
   public associatedWallet: string;
+  public backgroundColor: string;
   private isCordova: boolean;
 
   public supportedCards: Promise<CardConfigMap>;
@@ -169,6 +170,7 @@ export class WalletDetailsPage {
   }
 
   ionViewWillEnter() {
+    this.backgroundColor = this.themeProvider.getThemeInfo().walletDetailsBackgroundStart;
     if (this.platformProvider.isIOS) {
       this.themeProvider.useLightStatusBar();
     }
