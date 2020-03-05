@@ -145,6 +145,15 @@
     }
   }
 
+  .prompt-user {
+    .title-info {
+      color: $text-color-dark-theme;
+    }
+    .subtitle-info {
+      color: rgba(255, 255, 255, 0.8);
+    }
+  }
+
   // all content without menu
   ion-content.add-bottom-safe-area {
     .fixed-content,
@@ -324,10 +333,70 @@
     }
   }
 
+  page-wallet-details {
+    ion-content {
+      background: linear-gradient(
+        180deg,
+        $background-color-dark-theme -0%,
+        #101010
+      );
+    }
+
+    .toolbar-background {
+      background: $background-color-dark-theme !important;
+    }
+
+    .balance-card {
+      background: linear-gradient(
+        180deg,
+        $background-color-dark-theme -0%,
+        #101010
+      );
+    }
+
+    .tx-history {
+      .tx-history-header {
+        &.item {
+          background: #212121;
+        }
+      }
+
+      .item {
+        background-color: $background-secondary-dark-theme;
+        color: $text-color-dark-theme;
+        .item-inner {
+          border-bottom: 1px solid #d8d8d8;
+          opacity: 0.6;
+        }
+      }
+
+      .amount {
+        color: $text-color-dark-theme;
+      }
+
+      .date {
+        color: #d8d8d8;
+      }
+    }
+
+    .icon-services {
+      border: 1px solid #d7d7d7;
+    }
+
+    .white-card {
+      background: $background-secondary-dark-theme;
+      color: $text-color-dark-theme;
+    }
+  }
+
   // Tab Cards ------
   buy-card-page {
     .amount-box {
-      background-image: linear-gradient(-180deg, #000000 30%, #101010 100%);
+      background-image: linear-gradient(
+        -180deg,
+        $background-color-dark-theme 30%,
+        #101010 100%
+      );
       .discount-header {
         background-color: $background-secondary-dark-theme;
         color: $text-color-dark-theme;
@@ -456,7 +525,11 @@
     .key-onboarding-slides,
     .new-design-tour-slides {
       ion-slide {
-        background: linear-gradient(to bottom, #000000, #101010 80%);
+        background: linear-gradient(
+          to bottom,
+          $background-color-dark-theme,
+          #101010 80%
+        );
       }
       .slide-info {
         background: $background-color-dark-theme;
