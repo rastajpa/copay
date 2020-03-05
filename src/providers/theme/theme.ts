@@ -34,7 +34,6 @@ export class ThemeProvider {
   public init() {
     return this.persistenceProvider.getAppTheme().then(theme => {
       this.currentAppTheme = new BehaviorSubject(theme);
-      this.apply();
     });
   }
 
@@ -46,7 +45,6 @@ export class ThemeProvider {
         ? this.statusBar.styleBlackOpaque()
         : this.statusBar.styleDefault();
     }
-
     if (this.isDarkModeEnabled()) {
       newTheme = 'dark-theme';
       previousTheme = 'light-theme';
@@ -96,9 +94,11 @@ export class ThemeProvider {
     this.statusBar.styleLightContent();
   }
 
-  public useDefaultStatusBar() {
+  public useDefaultStatusBar(preferLightContent?: boolean) {
     if (this.isDarkModeEnabled()) {
-      this.statusBar.styleBlackOpaque();
+      preferLightContent
+        ? this.statusBar.styleLightContent()
+        : this.statusBar.styleBlackOpaque();
     } else {
       this.statusBar.styleDefault();
     }
