@@ -209,6 +209,43 @@
       }
     }
   }
+  page-cards {
+    .card-item {
+      background: $background-color-dark-theme;
+
+      &.light {
+        color: $text-color-dark-theme;
+
+        .card {
+          .funds {
+            color: $text-color-dark-theme;
+          }
+
+          box-shadow: 0 1px 12px rgba(255, 255, 255, 0.07);
+        }
+
+        .slit {
+          box-shadow: 0 2px 24px 0 rgba(255, 255, 255, 0.09);
+        }
+      }
+
+      .slit {
+        box-shadow: 0 -3px 24px 0 rgba(255, 255, 255, 0.26);
+      }
+    }
+  }
+
+  add-button {
+    .add-button {
+      &__icon {
+        filter: invert(1);
+      }
+
+      &__text {
+        color: rgba(255, 255, 255, 0.5);
+      }
+    }
+  }
 
   // Pages ----
   // Tab Home ----
