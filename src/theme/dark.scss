@@ -20,6 +20,10 @@
 
   // This is just to make a smooth transition between themes
   page-settings {
+    .content {
+      @include transition();
+    }
+
     .content-ios .toolbar-background-ios {
       @include transition();
     }
@@ -43,6 +47,9 @@
         &.item-md {
           @include transition();
         }
+      }
+      ion-note.note {
+        @include transition();
       }
     }
   }
@@ -104,7 +111,7 @@
   .tabs-md,
   .tabs-ios {
     .tabbar {
-      background: $background-color-dark-theme;
+      background-color: $background-color-dark-theme;
     }
   }
   .swiper-pagination-bullet-active {

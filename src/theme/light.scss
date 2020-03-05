@@ -5,8 +5,11 @@
   }
 
   // General -----
-
   page-settings {
+    .content {
+      @include transition();
+    }
+
     .content-ios .toolbar-background-ios {
       @include transition();
     }
@@ -30,6 +33,9 @@
         &.item-md {
           @include transition();
         }
+      }
+      ion-note.note {
+        @include transition();
       }
     }
   }
