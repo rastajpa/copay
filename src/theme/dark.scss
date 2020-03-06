@@ -5,6 +5,11 @@
 
   $toolbar-background-dark-theme: #000000;
 
+  $background-color-warning: #ffe7d9;
+  $background-color-danger: #ffd9de;
+  $background-color-success: #d9fff3;
+  $background-color-info: #dde1f0;
+
   // Item list background color
   $list-background-color-dark-theme: #000000;
   $feather-dark: #f8f8f9;
@@ -136,6 +141,16 @@
     }
   }
 
+  .box-notification {
+    &.success,
+    &.info,
+    &.warning,
+    &.error {
+      background: none;
+      border: 1px solid;
+    }
+  }
+
   ion-searchbar {
     .searchbar-input-container {
       input.searchbar-input {
@@ -204,6 +219,28 @@
 
     .total-amount {
       color: $text-color-dark-theme;
+    }
+  }
+
+  // Label tip
+  label-tip {
+    &[type='info'] {
+      background-color: $background-color-info;
+      &:before {
+        border-bottom-color: $background-color-info;
+      }
+    }
+    &[type='warn'] {
+      background-color: $background-color-warning;
+      &:before {
+        border-bottom-color: $background-color-warning;
+      }
+    }
+    &[type='danger'] {
+      background-color: $background-color-danger;
+      &:before {
+        border-bottom-color: $background-color-danger;
+      }
     }
   }
 
@@ -293,6 +330,12 @@
       .card {
         background-color: $background-secondary-dark-theme;
         color: $text-color-dark-theme;
+        .txp-container {
+          background-color: $background-secondary-dark-theme;
+          ion-checkbox .checkbox-icon {
+            background-color: $background-secondary-dark-theme;
+          }
+        }
       }
     }
   }
@@ -475,6 +518,15 @@
   page-simplex {
     .buy-crypto-button {
       color: $text-color-dark-theme;
+    }
+  }
+  page-simplex-buy {
+    .bp-list {
+      ion-note.note {
+        .note-container {
+          color: $text-color-dark-theme;
+        }
+      }
     }
   }
   page-add,
