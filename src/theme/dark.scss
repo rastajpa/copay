@@ -176,6 +176,10 @@
     }
   }
 
+  .gravatar-img {
+    filter: invert(1);
+  }
+
   // all content without menu
   ion-content.add-bottom-safe-area {
     .fixed-content,
@@ -439,6 +443,61 @@
     }
   }
 
+  wallet-receive,
+  page-choose-fee-level {
+    .addr-header {
+      .addr-title {
+        color: $text-color-dark-theme;
+      }
+    }
+    .addr-content {
+      .addr-container {
+        .text-address {
+          background-color: $background-secondary-dark-theme;
+          color: color($colors, light-grey);
+        }
+      }
+      .qr-container {
+        .lines-background {
+          background: url(../assets/img/curved-lines-background.png) center
+            center no-repeat #ececec;
+          opacity: 0.1;
+        }
+      }
+    }
+    .close-btn {
+      button {
+        color: $text-color-dark-theme;
+      }
+    }
+  }
+
+  page-send,
+  page-multi-send {
+    .send-header-wrapper {
+      background-color: $background-color-dark-theme;
+    }
+    .search-wrapper {
+      background-color: $background-secondary-dark-theme;
+      color: color($colors, light-grey);
+      .scan-icon {
+        border-left: 1px solid rgba(151, 151, 151, 0.2);
+      }
+    }
+    .invalid {
+      border: 1px solid color($colors, error);
+      color: color($colors, error);
+      background-color: #fff6f7;
+    }
+    .card {
+      background-color: $background-secondary-dark-theme;
+      ion-item-divider {
+        background-color: $background-secondary-dark-theme;
+        color: $text-color-dark-theme;
+      }
+    }
+  }
+
   // Tab Cards ------
   buy-card-page {
     .amount-box {
@@ -639,6 +698,11 @@
   // Components -----
 
   action-sheet {
+    ion-icon {
+      img {
+        filter: invert(1);
+      }
+    }
     .action-sheet {
       background: $background-secondary-dark-theme;
       .bp-list {
