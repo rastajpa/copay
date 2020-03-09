@@ -197,6 +197,28 @@
     }
   }
 
+  .alertTheme {
+    color: $text-color-dark-theme;
+    .alert-message {
+      color: $text-color-dark-theme;
+    }
+    .alert-wrapper {
+      background-color: $background-secondary-dark-theme;
+    }
+  }
+  .alertDanger {
+    .alert-message {
+      color: color($colors, danger);
+    }
+    color: $text-color-dark-theme;
+    .alert-wrapper {
+      background-color: $background-secondary-dark-theme;
+    }
+    .alert-input {
+      color: $text-color-dark-theme;
+    }
+  }
+
   // Lists -----
   .bp-list {
     .item {
@@ -787,5 +809,34 @@
       rgba(0, 0, 0, 1),
       rgba(0, 0, 0, 1)
     );
+  }
+  page-fingerprint {
+    ion-content {
+      background-color: $background-color-dark-theme !important;
+    }
+    .fingerprint-header {
+      border-bottom: 1px solid color($colors, light-grey);
+      background-color: $background-secondary-dark-theme;
+      .title {
+        color: $text-color-dark-theme;
+      }
+    }
+  }
+  page-pin {
+    ion-header {
+      .toolbar-background {
+        background-color: $background-secondary-dark-theme;
+      }
+    }
+    ion-content {
+      background-color: $background-color-dark-theme !important;
+    }
+    .pin-header {
+      border-bottom: 1px solid color($colors, light-grey);
+      background-color: $background-secondary-dark-theme;
+    }
+    .content {
+      background-color: color($colors, blank);
+    }
   }
 }
