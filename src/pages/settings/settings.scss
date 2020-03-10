@@ -56,6 +56,11 @@ page-about {
     }
   }
 
+  .count-note {
+    min-width: 85px;
+    text-align: center;
+  }
+
   .create-button {
     background: white;
     color: color($colors, primary);
