@@ -1,29 +1,55 @@
+/* Index
+1 - Definitions
+1.1 - Backgrounds
+1.2 - Text
+1.3 - Messages
+
+2 - Transition between themes
+
+3 - General
+3.1 - Lists
+3.2 - Label tip
+3.3 - Card
+3.4 - Expandable header
+
+4 - Components
+
+5 - Tabs
+5.1 - Tab Home
+5.2 - Tab Wallets
+5.3 - Tab Cards
+5.4 - Tab Settings
+
+6 - Other Pages
+*/
+
 .dark-theme {
-  // App background color
-  $background-color-dark-theme: #000000;
-  $background-secondary-dark-theme: #2b2a2a;
+  // 1 - Definitions
+  // 1.1 - Backgrounds
+  $bg-color-dark-theme: #000000;
+  $bg-color-dark-theme-2: #2b2a2a;
 
-  $toolbar-background-dark-theme: #000000;
+  $bg-color-dark-theme-toolbar: #000000;
+  $bg-color-dark-theme-message: #121212;
 
-  $background-color-warning: #ffe7d9;
-  $background-color-danger: #ffd9de;
-  $background-color-success: #d9fff3;
-  $background-color-info: #dde1f0;
+  // 1.2 - Text
+  $text-color-dark-theme: #ffffff;
 
-  // Item list background color
-  $list-background-color-dark-theme: #000000;
-  $feather-dark: #f8f8f9;
-  $feather: #fbfbff;
-  // Main color
-  $text-color-dark-theme: white;
-  // Home Messages
-  $message-background-dark-theme: #121212;
+  // 1.3 - Messages
+  $bg-color-warning: #ffe7d9;
+  $bg-color-danger: #ffd9de;
+  $bg-color-success: #d9fff3;
+  $bg-color-info: #dde1f0;
 
+  // 1.4 - Messages
+  $border-color-dark-theme: #4c4c4c;
+
+  // 2 - Transition between themes
+  // This is just to make a smooth transition between themes
   @mixin transition {
     transition: background-color, color, 250ms cubic-bezier(0, 0, 0.3, 0.3) !important;
   }
 
-  // This is just to make a smooth transition between themes
   page-settings {
     .content {
       @include transition();
@@ -45,7 +71,7 @@
       @include transition();
     }
 
-    // Lists -----
+    // Lists
     .bp-list {
       .item {
         &.item-ios,
@@ -66,40 +92,22 @@
     }
   }
 
-  // General -----
+  // 3 - General
   ion-content {
-    background-color: $background-color-dark-theme;
+    background-color: $bg-color-dark-theme;
     color: $text-color-dark-theme;
-  }
-
-  .content-ios .toolbar-background-ios {
-    background: $background-color-dark-theme;
   }
 
   ion-loading {
     .loading-wrapper {
-      background-color: $background-secondary-dark-theme;
+      background-color: $bg-color-dark-theme-2;
       color: $text-color-dark-theme;
-    }
-  }
-
-  .wide-header__title {
-    color: $text-color-dark-theme;
-    background: $background-color-dark-theme;
-  }
-
-  wide-header-page,
-  card-catalog-page {
-    .wide-header {
-      .toolbar-background {
-        background: $toolbar-background-dark-theme;
-      }
     }
   }
 
   coin-icon {
     ion-icon.item-img.icon.background_xrp {
-      background-color: #000000;
+      background-color: color($colors, dark);
       border: 1px solid color($colors, light-grey);
       &.testnet {
         filter: invert(0.2);
@@ -109,31 +117,23 @@
 
   .item-divider-md,
   .item-divider-ios {
-    background-color: $background-color-dark-theme;
+    background-color: $bg-color-dark-theme;
   }
 
-  .toolbar-background-md,
-  .toolbar-background-ios {
-    background: $background-color-dark-theme;
-    color: $text-color-dark-theme;
-  }
-
-  .toolbar-content-md,
-  .toolbar-content-ios {
-    color: $text-color-dark-theme;
-  }
-
-  .toolbar-title {
-    color: $text-color-dark-theme;
-  }
-
-  .header .toolbar-background {
-    background-color: $background-color-dark-theme;
-  }
   .tabs-md,
   .tabs-ios {
     .tabbar {
-      background-color: $background-color-dark-theme;
+      background-color: $bg-color-dark-theme;
+    }
+  }
+  .back-button,
+  .close-container {
+    background-color: $bg-color-dark-theme-2;
+    color: $text-color-dark-theme;
+    &.button-default,
+    &.button-md.activated,
+    &.button-ios.activated {
+      background-color: $bg-color-dark-theme-2;
     }
   }
   .swiper-pagination-bullet-active {
@@ -148,13 +148,9 @@
     background-color: #4f4f4e;
   }
 
-  .header-extend {
-    background: $toolbar-background-dark-theme;
-  }
-
   .gift-card-content {
     .header-extension {
-      background: $toolbar-background-dark-theme;
+      background: $bg-color-dark-theme-toolbar;
     }
   }
 
@@ -171,16 +167,27 @@
   ion-searchbar {
     .searchbar-input-container {
       input.searchbar-input {
-        background: $message-background-dark-theme;
+        background: $bg-color-dark-theme-message;
         color: $text-color-dark-theme;
       }
     }
   }
   search-bar {
-    background: $background-color-dark-theme;
+    background: $bg-color-dark-theme;
     ion-input {
-      background: $message-background-dark-theme;
+      background: $bg-color-dark-theme-message;
       color: $text-color-dark-theme;
+    }
+  }
+  add-button {
+    .add-button {
+      &__icon {
+        filter: invert(1);
+      }
+
+      &__text {
+        color: rgba(255, 255, 255, 0.5);
+      }
     }
   }
 
@@ -197,53 +204,50 @@
     filter: invert(1);
   }
 
-  // all content without menu
-  ion-content.add-bottom-safe-area {
-    .fixed-content,
-    .scroll-content {
-      background: $background-color-dark-theme;
-    }
-  }
-
-  // expandable views
-  ion-content.add-padding-bottom,
-  .add-padding-bottom ion-content {
-    .fixed-content,
-    .scroll-content {
-      background: $background-color-dark-theme;
-    }
-  }
-
   .alertTheme {
     color: $text-color-dark-theme;
     .alert-message {
       color: $text-color-dark-theme;
     }
     .alert-wrapper {
-      background-color: $background-secondary-dark-theme;
+      background-color: $bg-color-dark-theme-2;
     }
   }
+
   .alertDanger {
     .alert-message {
       color: color($colors, danger);
     }
     color: $text-color-dark-theme;
     .alert-wrapper {
-      background-color: $background-secondary-dark-theme;
+      background-color: $bg-color-dark-theme-2;
     }
     .alert-input {
       color: $text-color-dark-theme;
     }
   }
 
-  // Lists -----
+  // all content without menu
+  ion-content.add-bottom-safe-area {
+    .fixed-content,
+    .scroll-content {
+      background: $bg-color-dark-theme;
+    }
+  }
+
+  // 3.1 Lists
   .bp-list {
     .item {
       &.item-ios,
       &.item-md {
         border: 0;
-        background-color: $background-color-dark-theme;
-        color: $text-color-dark-theme;
+        background-color: $bg-color-dark-theme;
+      }
+      &:not(.create-button) {
+        &.item-ios,
+        &.item-md {
+          color: $text-color-dark-theme;
+        }
       }
     }
     .main-label,
@@ -251,47 +255,44 @@
     .status .royal {
       color: $text-color-dark-theme;
     }
-
     ion-item-divider {
-      background: $background-secondary-dark-theme;
+      background: $bg-color-dark-theme-2;
     }
-
     .summary-item-detail {
       color: $text-color-dark-theme;
     }
-
     .total-amount {
       color: $text-color-dark-theme;
     }
   }
 
-  // Label tip
+  // 3.2 - Label tip
   label-tip {
     &[type='info'] {
-      background-color: $background-color-info;
+      background-color: $bg-color-info;
       &:before {
-        border-bottom-color: $background-color-info;
+        border-bottom-color: $bg-color-info;
       }
     }
     &[type='warn'] {
-      background-color: $background-color-warning;
+      background-color: $bg-color-warning;
       &:before {
-        border-bottom-color: $background-color-warning;
+        border-bottom-color: $bg-color-warning;
       }
     }
     &[type='danger'] {
-      background-color: $background-color-danger;
+      background-color: $bg-color-danger;
       &:before {
-        border-bottom-color: $background-color-danger;
+        border-bottom-color: $bg-color-danger;
       }
     }
   }
 
-  // Card
+  // 3.3 - Card
   action-card-v4.card {
-    background-color: $background-secondary-dark-theme;
+    background-color: $bg-color-dark-theme-2;
     .action-card__content {
-      background-color: $background-secondary-dark-theme;
+      background-color: $bg-color-dark-theme-2;
       .action-card__title {
         color: $text-color-dark-theme;
       }
@@ -302,16 +303,16 @@
     }
   }
   action-card.card {
-    background: $background-secondary-dark-theme;
+    background: $bg-color-dark-theme-2;
     .action-card {
       &__content {
-        background: $background-secondary-dark-theme;
+        background: $bg-color-dark-theme-2;
       }
     }
   }
   page-cards {
     .card-item {
-      background: $background-color-dark-theme;
+      background: $bg-color-dark-theme;
 
       &.light {
         color: $text-color-dark-theme;
@@ -335,20 +336,234 @@
     }
   }
 
-  add-button {
-    .add-button {
-      &__icon {
-        filter: invert(1);
-      }
+  // 3.4 - Expandable header
+  ion-content.add-padding-bottom,
+  .add-padding-bottom ion-content {
+    .fixed-content,
+    .scroll-content {
+      background: $bg-color-dark-theme;
+    }
+  }
 
-      &__text {
-        color: rgba(255, 255, 255, 0.5);
+  .wide-header__title {
+    color: $text-color-dark-theme;
+    background: $bg-color-dark-theme;
+  }
+
+  wide-header-page,
+  card-catalog-page {
+    .wide-header {
+      .toolbar-background {
+        background: $bg-color-dark-theme-toolbar;
       }
     }
   }
 
-  // Pages ----
-  // Tab Home ----
+  .header-extend {
+    background: $bg-color-dark-theme-toolbar;
+  }
+
+  // 3.5 - Toolbar
+  .content-ios .toolbar-background-ios {
+    background: $bg-color-dark-theme;
+  }
+  .toolbar-background-md,
+  .toolbar-background-ios {
+    background: $bg-color-dark-theme;
+    color: $text-color-dark-theme;
+  }
+
+  .toolbar-content-md,
+  .toolbar-content-ios {
+    color: $text-color-dark-theme;
+  }
+
+  .toolbar-title {
+    color: $text-color-dark-theme;
+  }
+
+  .header .toolbar-background {
+    background-color: $bg-color-dark-theme;
+  }
+
+  // 4 - Components
+  action-sheet {
+    .action-sheet {
+      background: $bg-color-dark-theme-2;
+      .bp-list {
+        .item {
+          &.item-ios,
+          &.item-md {
+            background-color: $bg-color-dark-theme-2;
+            color: $text-color-dark-theme;
+          }
+        }
+      }
+    }
+  }
+  info-sheet {
+    .info-container {
+      background-color: $bg-color-dark-theme-2;
+      info-sheet-template {
+        .confirm-sheet {
+          background-color: $bg-color-dark-theme-2;
+          color: $text-color-dark-theme;
+          .sheet-title {
+            color: $text-color-dark-theme;
+          }
+          .sheet-text {
+            color: color($colors, light-grey);
+          }
+          .sheet-btn-group {
+            border-top: 1px solid color($colors, light-grey);
+
+            .sheet-btn.default,
+            .sheet-second-btn {
+              color: color($colors, light-grey);
+            }
+          }
+        }
+      }
+    }
+  }
+  wallet-selector {
+    .item-divider-md,
+    .item-divider-ios {
+      background-color: $bg-color-dark-theme-2;
+      border-bottom: 1px solid $bg-color-dark-theme-2;
+    }
+  }
+  memo-component {
+    .text-input {
+      background-color: $bg-color-dark-theme;
+      color: $text-color-dark-theme;
+    }
+    .title {
+      color: $text-color-dark-theme;
+    }
+  }
+  page-choose-fee-level {
+    .testnet-warning {
+      background-color: color($colors, warning);
+    }
+
+    .fee {
+      &-speed-name {
+        color: $text-color-dark-theme;
+      }
+      &-speed-satByte {
+        color: $text-color-dark-theme;
+      }
+      &-avg-label {
+        color: $text-color-dark-theme;
+      }
+      &-avg-time {
+        color: $text-color-dark-theme;
+      }
+      &-card {
+        background-color: $bg-color-dark-theme;
+        .item {
+          &.item-ios,
+          &.item-md {
+            background: $bg-color-dark-theme;
+            color: $text-color-dark-theme;
+          }
+        }
+      }
+    }
+  }
+  page-slide-to-accept {
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0),
+      rgba(0, 0, 0, 1),
+      rgba(0, 0, 0, 1)
+    );
+    background: -webkit-linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0),
+      rgba(0, 0, 0, 1),
+      rgba(0, 0, 0, 1)
+    );
+  }
+  page-fingerprint {
+    ion-content {
+      background-color: $bg-color-dark-theme !important;
+    }
+    .fingerprint-header {
+      border-bottom: 1px solid color($colors, light-grey);
+      background-color: $bg-color-dark-theme-2;
+      .title {
+        color: $text-color-dark-theme;
+      }
+    }
+  }
+  page-pin {
+    ion-header {
+      .toolbar-background {
+        background-color: $bg-color-dark-theme-2;
+      }
+    }
+    ion-content {
+      background-color: $bg-color-dark-theme !important;
+    }
+    .pin-header {
+      border-bottom: 1px solid color($colors, light-grey);
+      background-color: $bg-color-dark-theme-2;
+    }
+    .content {
+      background-color: color($colors, blank);
+    }
+  }
+  .clipboard-card {
+    background: $bg-color-dark-theme-message;
+    .item-divider {
+      background: $bg-color-dark-theme-message;
+      border-bottom: 1px solid $bg-color-dark-theme-2;
+    }
+    page-clipboard-card {
+      .clipboard-paypro-container {
+        background: $bg-color-dark-theme-message;
+        color: $text-color-dark-theme;
+        .item-inner {
+          background: $bg-color-dark-theme-message;
+          color: $text-color-dark-theme;
+          border-bottom: 1px solid $bg-color-dark-theme-2;
+        }
+        ion-note {
+          .amount {
+            color: $text-color-dark-theme;
+          }
+        }
+        .loader {
+          background-color: #666;
+          &:after {
+            background-color: #2b2a2a;
+          }
+          &.gradient {
+            background-image: linear-gradient(to right, #666, #2b2a2a);
+            &:after {
+              background-color: #2a2929;
+            }
+          }
+        }
+      }
+      .clipboard {
+        background: $bg-color-dark-theme-message;
+        color: $text-color-dark-theme;
+        ion-label {
+          background: $bg-color-dark-theme-2;
+          color: $text-color-dark-theme;
+        }
+        img {
+          border-right: 1px solid $bg-color-dark-theme-message;
+        }
+      }
+    }
+  }
+
+  // 5 - Tabs
+  // 5.1 Tab Home
   page-home {
     .total-amount-container {
       .total-amount-value {
@@ -357,20 +572,20 @@
     }
 
     .section-header .date-label {
-      background-color: $background-secondary-dark-theme;
+      background-color: $bg-color-dark-theme-2;
     }
 
     .message {
       &-background {
-        background-color: $message-background-dark-theme;
+        background-color: $bg-color-dark-theme-message;
       }
     }
   }
 
-  // Tab Wallets ------
+  // 5.2 - Tab Wallets
   page-wallets {
     .collapse > .collapse-btn {
-      background: $background-secondary-dark-theme;
+      background: $bg-color-dark-theme-2;
     }
     .section-header {
       border-bottom: 1px solid #434d5a;
@@ -379,12 +594,12 @@
   page-proposals-notifications {
     .txps-status {
       .card {
-        background-color: $background-secondary-dark-theme;
+        background-color: $bg-color-dark-theme-2;
         color: $text-color-dark-theme;
         .txp-container {
-          background-color: $background-secondary-dark-theme;
+          background-color: $bg-color-dark-theme-2;
           ion-checkbox .checkbox-icon {
-            background-color: $background-secondary-dark-theme;
+            background-color: $bg-color-dark-theme-2;
           }
         }
       }
@@ -394,7 +609,7 @@
     .item {
       &.item-ios,
       &.item-md {
-        background-color: $background-secondary-dark-theme;
+        background-color: $bg-color-dark-theme-2;
         color: $text-color-dark-theme;
       }
     }
@@ -404,14 +619,11 @@
   }
   page-txp-details {
     .proposal-deletion {
-      background-color: $background-color-dark-theme;
+      background-color: $bg-color-dark-theme;
     }
 
     .proposal-rejection {
-      background-color: $background-color-dark-theme;
-    }
-    .timeline-item {
-      background-color: $background-color-dark-theme;
+      background-color: $bg-color-dark-theme;
     }
     ion-note.note {
       .wallet {
@@ -419,7 +631,14 @@
           color: $text-color-dark-theme;
         }
       }
-      // background: $background-secondary-dark-theme;
+    }
+  }
+
+  page-copayers,
+  page-txp-details,
+  page-tx-details {
+    .timeline-item {
+      background-color: $bg-color-dark-theme;
     }
   }
 
@@ -429,7 +648,7 @@
   page-tx-details,
   page-bitpay-card-topup {
     .payment-proposal-to {
-      background-color: $background-secondary-dark-theme;
+      background-color: $bg-color-dark-theme-2;
       color: $text-color-dark-theme;
     }
     .wallet,
@@ -445,26 +664,21 @@
         }
       }
     }
+    .background-button-content {
+      background-color: $bg-color-dark-theme-2;
+    }
   }
   page-wallet-details {
     ion-content {
-      background: linear-gradient(
-        180deg,
-        $background-color-dark-theme -0%,
-        #101010
-      );
+      background: linear-gradient(180deg, $bg-color-dark-theme -0%, #101010);
     }
 
     .toolbar-background {
-      background: $background-color-dark-theme !important;
+      background: $bg-color-dark-theme !important;
     }
 
     .balance-card {
-      background: linear-gradient(
-        180deg,
-        $background-color-dark-theme -0%,
-        #101010
-      );
+      background: linear-gradient(180deg, $bg-color-dark-theme -0%, #101010);
     }
 
     .tx-history {
@@ -475,30 +689,31 @@
       }
 
       .item {
-        background-color: $background-secondary-dark-theme;
+        background-color: $bg-color-dark-theme-2;
         color: $text-color-dark-theme;
         .item-inner {
-          border-bottom: 1px solid #d8d8d8;
+          border-bottom: 1px solid $border-color-dark-theme;
           opacity: 0.6;
         }
       }
-
-      .amount {
-        color: $text-color-dark-theme;
-      }
-
-      .date {
-        color: #d8d8d8;
-      }
-    }
-
-    .icon-services {
-      border: 1px solid #d7d7d7;
     }
 
     .white-card {
-      background: $background-secondary-dark-theme;
+      background: $bg-color-dark-theme-2;
       color: $text-color-dark-theme;
+    }
+  }
+
+  .tx-history {
+    .icon-services {
+      border: 1px solid #d7d7d7;
+    }
+    .amount {
+      color: $text-color-dark-theme;
+    }
+
+    .date {
+      color: #d8d8d8;
     }
   }
 
@@ -512,7 +727,7 @@
     .addr-content {
       .addr-container {
         .text-address {
-          background-color: $background-secondary-dark-theme;
+          background-color: $bg-color-dark-theme-2;
           color: color($colors, light-grey);
         }
       }
@@ -534,10 +749,10 @@
   page-send,
   page-multi-send {
     .send-header-wrapper {
-      background-color: $background-color-dark-theme;
+      background-color: $bg-color-dark-theme;
     }
     .search-wrapper {
-      background-color: $background-secondary-dark-theme;
+      background-color: $bg-color-dark-theme-2;
       color: color($colors, light-grey);
       .scan-icon {
         border-left: 1px solid rgba(151, 151, 151, 0.2);
@@ -549,45 +764,42 @@
       background-color: #fff6f7;
     }
     .card {
-      background-color: $background-secondary-dark-theme;
+      background-color: $bg-color-dark-theme-2;
       ion-item-divider {
-        background-color: $background-secondary-dark-theme;
+        background-color: $bg-color-dark-theme-2;
         color: $text-color-dark-theme;
       }
     }
   }
 
-  // Tab Cards ------
+  // 5.3 - Tab Cards
   buy-card-page {
     .amount-box {
       background-image: linear-gradient(
         -180deg,
-        $background-color-dark-theme 30%,
+        $bg-color-dark-theme 30%,
         #101010 100%
       );
       .discount-header {
-        background-color: $background-secondary-dark-theme;
+        background-color: $bg-color-dark-theme-2;
         color: $text-color-dark-theme;
       }
     }
     .buy-box {
-      background-color: $background-color-dark-theme;
+      background-color: $bg-color-dark-theme;
     }
   }
 
-  // Tab Settings ------
+  // 5.4 - Tab Settings
   page-settings,
   page-about {
     .bp-list {
       ion-note.note {
-        background: $background-secondary-dark-theme;
+        background: $bg-color-dark-theme-2;
         color: color($colors, light-grey);
       }
       .icon-qrcode {
         filter: invert(1);
-      }
-      .create-button {
-        color: color($colors, primary);
       }
     }
   }
@@ -601,7 +813,7 @@
       button.item {
         .item-inner {
           ion-note.note {
-            background: $background-secondary-dark-theme;
+            background: $bg-color-dark-theme-2;
             color: color($colors, light-grey);
           }
         }
@@ -611,28 +823,29 @@
   page-addressbook-add,
   page-join-wallet {
     ion-item {
-      background: $background-color-dark-theme;
+      background: $bg-color-dark-theme;
       color: color($colors, light-grey);
     }
   }
   page-wallet-addresses {
     button.item {
-      background: $background-color-dark-theme;
+      background: $bg-color-dark-theme;
     }
   }
 
   page-scan {
     .page-scan-has-problems {
-      background-color: $toolbar-background-dark-theme;
+      background-color: $bg-color-dark-theme-toolbar;
       .body {
-        background-color: $toolbar-background-dark-theme;
+        background-color: $bg-color-dark-theme-toolbar;
         div {
-          color: $toolbar-background-dark-theme;
+          color: $bg-color-dark-theme-toolbar;
         }
       }
     }
   }
 
+  // 6 - Other Pages
   page-simplex {
     .buy-crypto-button {
       color: $text-color-dark-theme;
@@ -664,7 +877,7 @@
   page-create-wallet,
   page-bitpay-phase-one-card-intro {
     ion-item {
-      background: $background-color-dark-theme;
+      background: $bg-color-dark-theme;
       color: $text-color-dark-theme;
     }
   }
@@ -676,13 +889,13 @@
       color: color($colors, light-grey);
     }
     ion-item {
-      background: $background-secondary-dark-theme;
+      background: $bg-color-dark-theme-2;
       color: $text-color-dark-theme;
     }
   }
   page-send-feedback {
     .msg-to-user {
-      background: $background-color-dark-theme;
+      background: $bg-color-dark-theme;
       .feedback-title {
         color: $text-color-dark-theme;
       }
@@ -691,7 +904,7 @@
       }
     }
     .user-feedback-card {
-      background-color: $background-secondary-dark-theme;
+      background-color: $bg-color-dark-theme-2;
       .user-feedback-title {
         color: $text-color-dark-theme;
       }
@@ -704,12 +917,12 @@
       ion-slide {
         background: linear-gradient(
           to bottom,
-          $background-color-dark-theme,
+          $bg-color-dark-theme,
           #101010 80%
         );
       }
       .slide-info {
-        background: $background-color-dark-theme;
+        background: $bg-color-dark-theme;
         .info {
           .title {
             color: $text-color-dark-theme;
@@ -724,7 +937,7 @@
   page-backup-key,
   page-backup-game {
     ion-content.content {
-      background: $background-color-dark-theme;
+      background: $bg-color-dark-theme;
     }
     .key-container,
     .grid-container > .key-container {
@@ -734,7 +947,7 @@
           color: $text-color-dark-theme;
         }
         .word {
-          background: $background-secondary-dark-theme;
+          background: $bg-color-dark-theme-2;
           color: $text-color-dark-theme;
           .dash-line {
             border-bottom: 1px color($colors, light-grey) dashed;
@@ -746,187 +959,9 @@
       .mnemonic-words {
         .words {
           .button {
-            background-color: $background-secondary-dark-theme;
+            background-color: $bg-color-dark-theme-2;
             color: $text-color-dark-theme;
           }
-        }
-      }
-    }
-  }
-
-  // Components -----
-
-  action-sheet {
-    .action-sheet {
-      background: $background-secondary-dark-theme;
-      .bp-list {
-        .item {
-          &.item-ios,
-          &.item-md {
-            background-color: $background-secondary-dark-theme;
-            color: $text-color-dark-theme;
-          }
-        }
-      }
-    }
-  }
-  info-sheet {
-    .info-container {
-      background-color: $background-secondary-dark-theme;
-      info-sheet-template {
-        .confirm-sheet {
-          background-color: $background-secondary-dark-theme;
-          color: $text-color-dark-theme;
-          .sheet-title {
-            color: $text-color-dark-theme;
-          }
-          .sheet-text {
-            color: color($colors, light-grey);
-          }
-          .sheet-btn-group {
-            border-top: 1px solid color($colors, light-grey);
-
-            .sheet-btn.default,
-            .sheet-second-btn {
-              color: color($colors, light-grey);
-            }
-          }
-        }
-      }
-    }
-  }
-  wallet-selector {
-    .item-divider-md,
-    .item-divider-ios {
-      background-color: $background-secondary-dark-theme;
-      border-bottom: 1px solid $background-secondary-dark-theme;
-    }
-  }
-  memo-component {
-    .text-input {
-      background-color: $background-color-dark-theme;
-      color: $text-color-dark-theme;
-    }
-    .title {
-      color: $text-color-dark-theme;
-    }
-  }
-  page-choose-fee-level {
-    .testnet-warning {
-      background-color: color($colors, warning);
-    }
-
-    .fee {
-      &-speed-name {
-        color: $text-color-dark-theme;
-      }
-      &-speed-satByte {
-        color: $text-color-dark-theme;
-      }
-      &-avg-label {
-        color: $text-color-dark-theme;
-      }
-      &-avg-time {
-        color: $text-color-dark-theme;
-      }
-      &-card {
-        background-color: $background-color-dark-theme;
-        .item {
-          &.item-ios,
-          &.item-md {
-            background: $background-color-dark-theme;
-            color: $text-color-dark-theme;
-          }
-        }
-      }
-    }
-  }
-  page-slide-to-accept {
-    background: linear-gradient(
-      to bottom,
-      rgba(0, 0, 0, 0),
-      rgba(0, 0, 0, 1),
-      rgba(0, 0, 0, 1)
-    );
-    background: -webkit-linear-gradient(
-      to bottom,
-      rgba(0, 0, 0, 0),
-      rgba(0, 0, 0, 1),
-      rgba(0, 0, 0, 1)
-    );
-  }
-  page-fingerprint {
-    ion-content {
-      background-color: $background-color-dark-theme !important;
-    }
-    .fingerprint-header {
-      border-bottom: 1px solid color($colors, light-grey);
-      background-color: $background-secondary-dark-theme;
-      .title {
-        color: $text-color-dark-theme;
-      }
-    }
-  }
-  page-pin {
-    ion-header {
-      .toolbar-background {
-        background-color: $background-secondary-dark-theme;
-      }
-    }
-    ion-content {
-      background-color: $background-color-dark-theme !important;
-    }
-    .pin-header {
-      border-bottom: 1px solid color($colors, light-grey);
-      background-color: $background-secondary-dark-theme;
-    }
-    .content {
-      background-color: color($colors, blank);
-    }
-  }
-
-  .clipboard-card {
-    background: $message-background-dark-theme;
-    .item-divider {
-      background: $message-background-dark-theme;
-      border-bottom: 1px solid $background-secondary-dark-theme;
-    }
-    page-clipboard-card {
-      .clipboard-paypro-container {
-        background: $message-background-dark-theme;
-        color: $text-color-dark-theme;
-        .item-inner {
-          background: $message-background-dark-theme;
-          color: $text-color-dark-theme;
-          border-bottom: 1px solid $background-secondary-dark-theme;
-        }
-        ion-note {
-          .amount {
-            color: $text-color-dark-theme;
-          }
-        }
-        .loader {
-          background-color: #666;
-          &:after {
-            background-color: #2b2a2a;
-          }
-          &.gradient {
-            background-image: linear-gradient(to right, #666, #2b2a2a);
-            &:after {
-              background-color: #2a2929;
-            }
-          }
-        }
-      }
-      .clipboard {
-        background: $message-background-dark-theme;
-        color: $text-color-dark-theme;
-        ion-label {
-          background: $background-secondary-dark-theme;
-          color: $text-color-dark-theme;
-        }
-        img {
-          border-right: 1px solid $message-background-dark-theme;
         }
       }
     }

@@ -14,7 +14,7 @@
     <ion-searchbar placeholder="{{'Search Transactions' | translate}}" [(ngModel)]="search" (ngModelChange)="updateSearchInput(search)"></ion-searchbar>
   </div>
 
-  <ion-list *ngIf="txHistorySearchResults && txHistorySearchResults[0]" class="tx-history">
+  <ion-list *ngIf="txHistorySearchResults && txHistorySearchResults[0]" class="bp-list tx-history">
     <div>
       <div *ngFor="let tx of txHistorySearchResults; trackBy: trackByFn; let i = index;">
         <button ion-item (click)="close(tx.txid)">
