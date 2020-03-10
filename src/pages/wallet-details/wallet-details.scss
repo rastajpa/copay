@@ -155,13 +155,17 @@ page-wallet-details {
 
   .history-wrapper {
     padding: 0rem 1.3rem;
+    ion-list:first-child {
+      .tx-history-header {
+        border-radius: 5px 5px 0 0;
+      }
+    }
   }
 
   .tx-history {
     .tx-history-header {
       height: 5rem;
       border-bottom: 0;
-      border-radius: 5px 5px 0 0;
 
       .ng-star-inserted {
         font-size: 18px;
@@ -188,6 +192,7 @@ page-wallet-details {
 
         .item-inner {
           padding: 0 !important;
+          border: none;
         }
       }
 
@@ -368,7 +373,6 @@ page-wallet-details {
   .locked-balance.item {
     background-color: color($background-colors, warning);
     cursor: pointer;
-    border-radius: 0 0 5px 5px;
 
     .item-inner {
       padding-bottom: 5px;
