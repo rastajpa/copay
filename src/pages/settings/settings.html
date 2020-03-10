@@ -139,10 +139,10 @@
             Read Only Wallets
           </div>
         </ion-label>
-        <ion-note *ngIf="walletsGroup.length == 1" item-end>
+        <ion-note class="count-note" *ngIf="walletsGroup.length == 1" item-end>
           {{'{walletsGroupLength} Wallet' | translate:{walletsGroupLength: walletsGroup.length} }}
         </ion-note>
-        <ion-note *ngIf="walletsGroup.length > 1" item-end>
+        <ion-note class="count-note" *ngIf="walletsGroup.length > 1" item-end>
           {{'{walletsGroupLength} Wallets' | translate:{walletsGroupLength: walletsGroup.length} }}
         </ion-note>
       </button>
