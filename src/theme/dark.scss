@@ -732,11 +732,6 @@
   // Components -----
 
   action-sheet {
-    ion-icon {
-      img {
-        filter: invert(1);
-      }
-    }
     .action-sheet {
       background: $background-secondary-dark-theme;
       .bp-list {
@@ -837,6 +832,53 @@
     }
     .content {
       background-color: color($colors, blank);
+    }
+  }
+
+  .clipboard-card {
+    background: $message-background-dark-theme;
+    .item-divider {
+      background: $message-background-dark-theme;
+      border-bottom: 1px solid $background-secondary-dark-theme;
+    }
+    page-clipboard-card {
+      .clipboard-paypro-container {
+        background: $message-background-dark-theme;
+        color: $text-color-dark-theme;
+        .item-inner {
+          background: $message-background-dark-theme;
+          color: $text-color-dark-theme;
+          border-bottom: 1px solid $background-secondary-dark-theme;
+        }
+        ion-note {
+          .amount {
+            color: $text-color-dark-theme;
+          }
+        }
+        .loader {
+          background-color: #666;
+          &:after {
+            background-color: #2b2a2a;
+          }
+          &.gradient {
+            background-image: linear-gradient(to right, #666, #2b2a2a);
+            &:after {
+              background-color: #2a2929;
+            }
+          }
+        }
+      }
+      .clipboard {
+        background: $message-background-dark-theme;
+        color: $text-color-dark-theme;
+        ion-label {
+          background: $background-secondary-dark-theme;
+          color: $text-color-dark-theme;
+        }
+        img {
+          border-right: 1px solid $message-background-dark-theme;
+        }
+      }
     }
   }
 }
