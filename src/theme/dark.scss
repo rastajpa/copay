@@ -76,6 +76,13 @@
     background: $background-color-dark-theme;
   }
 
+  ion-loading {
+    .loading-wrapper {
+      background-color: $background-secondary-dark-theme;
+      color: $text-color-dark-theme;
+    }
+  }
+
   .wide-header__title {
     color: $text-color-dark-theme;
     background: $background-color-dark-theme;
@@ -86,6 +93,16 @@
     .wide-header {
       .toolbar-background {
         background: $toolbar-background-dark-theme;
+      }
+    }
+  }
+
+  coin-icon {
+    ion-icon.item-img.icon.background_xrp {
+      background-color: #000000;
+      border: 1px solid color($colors, light-grey);
+      &.testnet {
+        filter: invert(0.2);
       }
     }
   }
@@ -279,6 +296,10 @@
         color: $text-color-dark-theme;
       }
     }
+    .bitpay-card-header,
+    .home-gift-card-header {
+      background-color: #3e3c3c;
+    }
   }
   action-card.card {
     background: $background-secondary-dark-theme;
@@ -333,6 +354,10 @@
       .total-amount-value {
         color: $text-color-dark-theme;
       }
+    }
+
+    .section-header .date-label {
+      background-color: $background-secondary-dark-theme;
     }
 
     .message {
@@ -740,6 +765,31 @@
           &.item-md {
             background-color: $background-secondary-dark-theme;
             color: $text-color-dark-theme;
+          }
+        }
+      }
+    }
+  }
+  info-sheet {
+    .info-container {
+      background-color: $background-secondary-dark-theme;
+      info-sheet-template {
+        .confirm-sheet {
+          background-color: $background-secondary-dark-theme;
+          color: $text-color-dark-theme;
+          .sheet-title {
+            color: $text-color-dark-theme;
+          }
+          .sheet-text {
+            color: color($colors, light-grey);
+          }
+          .sheet-btn-group {
+            border-top: 1px solid color($colors, light-grey);
+
+            .sheet-btn.default,
+            .sheet-second-btn {
+              color: color($colors, light-grey);
+            }
           }
         }
       }
