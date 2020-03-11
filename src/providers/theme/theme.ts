@@ -19,9 +19,9 @@ export class ThemeProvider {
       walletDetailsBackgroundEnd: '#1C4386'
     },
     'dark-theme': {
-      backgroundColor: '#000000',
-      fixedScrollBgColor: '#000000',
-      walletDetailsBackgroundStart: '#000000',
+      backgroundColor: '#121212',
+      fixedScrollBgColor: '#121212',
+      walletDetailsBackgroundStart: '#121212',
       walletDetailsBackgroundEnd: '#101010'
     }
   };
