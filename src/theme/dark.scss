@@ -26,24 +26,32 @@
 .dark-theme {
   // 1 - Definitions
   // 1.1 - Backgrounds
-  $bg-color-dark-theme: #000000;
-  $bg-color-dark-theme-2: #2b2a2a;
-
-  $bg-color-dark-theme-toolbar: #000000;
-  $bg-color-dark-theme-message: #121212;
-
+  $bg-color-dark-theme: #121212;
+  $bg-color-dark-theme-2: #1d1d1d;
+  $bg-color-dark-theme-3: #383838;
+  
+  $bg-color-dark-theme-toolbar: #121212;
+  $bg-color-dark-theme-message: #1d1d1d;
+  $gradient-dark-theme: #101010;
+  
   // 1.2 - Text
-  $text-color-dark-theme: #ffffff;
-
+  $text-color-dark-theme: rgba(255, 255, 255, 0.87);
+  $text-color-dark-theme-2: rgba(255, 255, 255, 0.60);
+  $text-color-dark-theme-3: rgba(255, 255, 255, 0.38);
+  
   // 1.3 - Messages
   $bg-color-warning: #ffe7d9;
   $bg-color-danger: #ffd9de;
   $bg-color-success: #d9fff3;
   $bg-color-info: #dde1f0;
-
+  
   // 1.4 - Messages
   $border-color-dark-theme: #4c4c4c;
-
+  
+  // 1.5 - Slides
+  $swiper-pagination-bullet-active: #434c5a;
+  $swiper-pagination-bullet: #4f4f4e;
+  
   // 2 - Transition between themes
   // This is just to make a smooth transition between themes
   @mixin transition {
@@ -108,7 +116,7 @@
   coin-icon {
     ion-icon.item-img.icon.background_xrp {
       background-color: color($colors, dark);
-      border: 1px solid color($colors, light-grey);
+      border: 1px solid $border-color-dark-theme;
       &.testnet {
         filter: invert(0.2);
       }
@@ -137,15 +145,15 @@
     }
   }
   .swiper-pagination-bullet-active {
-    background-color: #434c5a;
+    background-color: $swiper-pagination-bullet-active;
   }
   .swiper-pagination-bullet {
-    background-color: #4f4f4e;
+    background-color: $swiper-pagination-bullet;
   }
 
   button.item.activated,
   .item-md.activated {
-    background-color: #4f4f4e;
+    background-color: $bg-color-dark-theme-3;
   }
 
   .gift-card-content {
@@ -186,7 +194,7 @@
       }
 
       &__text {
-        color: rgba(255, 255, 255, 0.5);
+        color: $text-color-dark-theme-2;
       }
     }
   }
@@ -196,7 +204,7 @@
       color: $text-color-dark-theme;
     }
     .subtitle-info {
-      color: rgba(255, 255, 255, 0.8);
+      color: $text-color-dark-theme-2;
     }
   }
 
@@ -299,7 +307,7 @@
     }
     .bitpay-card-header,
     .home-gift-card-header {
-      background-color: #3e3c3c;
+      background-color: $bg-color-dark-theme-3;
     }
   }
   action-card.card {
@@ -322,16 +330,8 @@
             color: $text-color-dark-theme;
           }
 
-          box-shadow: 0 1px 12px rgba(255, 255, 255, 0.07);
         }
 
-        .slit {
-          box-shadow: 0 2px 24px 0 rgba(255, 255, 255, 0.09);
-        }
-      }
-
-      .slit {
-        box-shadow: 0 -3px 24px 0 rgba(255, 255, 255, 0.26);
       }
     }
   }
@@ -412,14 +412,14 @@
             color: $text-color-dark-theme;
           }
           .sheet-text {
-            color: color($colors, light-grey);
+            color: $text-color-dark-theme-2;
           }
           .sheet-btn-group {
-            border-top: 1px solid color($colors, light-grey);
+            border-top: 1px solid $border-color-dark-theme;
 
             .sheet-btn.default,
             .sheet-second-btn {
-              color: color($colors, light-grey);
+              color: $text-color-dark-theme-2;
             }
           }
         }
@@ -475,15 +475,15 @@
   page-slide-to-accept {
     background: linear-gradient(
       to bottom,
-      rgba(0, 0, 0, 0),
-      rgba(0, 0, 0, 1),
-      rgba(0, 0, 0, 1)
+      rgba(18, 18, 18, 0),
+      rgba(18, 18, 18, 1),
+      rgba(18, 18, 18, 1)
     );
     background: -webkit-linear-gradient(
       to bottom,
-      rgba(0, 0, 0, 0),
-      rgba(0, 0, 0, 1),
-      rgba(0, 0, 0, 1)
+      rgba(18, 18, 18, 0),
+      rgba(18, 18, 18, 1),
+      rgba(18, 18, 18, 1)
     );
   }
   page-fingerprint {
@@ -491,7 +491,7 @@
       background-color: $bg-color-dark-theme !important;
     }
     .fingerprint-header {
-      border-bottom: 1px solid color($colors, light-grey);
+      border-bottom: 1px solid $border-color-dark-theme;
       background-color: $bg-color-dark-theme-2;
       .title {
         color: $text-color-dark-theme;
@@ -508,7 +508,7 @@
       background-color: $bg-color-dark-theme !important;
     }
     .pin-header {
-      border-bottom: 1px solid color($colors, light-grey);
+      border-bottom: 1px solid $border-color-dark-theme;
       background-color: $bg-color-dark-theme-2;
     }
     .content {
@@ -588,7 +588,7 @@
       background: $bg-color-dark-theme-2;
     }
     .section-header {
-      border-bottom: 1px solid #434d5a;
+      border-bottom: 1px solid $border-color-dark-theme;
     }
   }
   page-proposals-notifications {
@@ -668,9 +668,10 @@
       background-color: $bg-color-dark-theme-2;
     }
   }
-  page-wallet-details {
+  page-wallet-details,
+  page-bitpay-card {
     ion-content {
-      background: linear-gradient(180deg, $bg-color-dark-theme -0%, #101010);
+      background: linear-gradient(180deg, $bg-color-dark-theme -0%, $gradient-dark-theme);
     }
 
     .toolbar-background {
@@ -678,7 +679,7 @@
     }
 
     .balance-card {
-      background: linear-gradient(180deg, $bg-color-dark-theme -0%, #101010);
+      background: linear-gradient(180deg, $bg-color-dark-theme -0%, $gradient-dark-theme);
     }
 
     .tx-history {
@@ -706,14 +707,14 @@
 
   .tx-history {
     .icon-services {
-      border: 1px solid #d7d7d7;
+      border: 1px solid $border-color-dark-theme;
     }
     .amount {
       color: $text-color-dark-theme;
     }
 
     .date {
-      color: #d8d8d8;
+      color: $text-color-dark-theme-2;
     }
   }
 
@@ -728,13 +729,13 @@
       .addr-container {
         .text-address {
           background-color: $bg-color-dark-theme-2;
-          color: color($colors, light-grey);
+          color: $text-color-dark-theme-2;
         }
       }
       .qr-container {
         .lines-background {
           background: url(../assets/img/curved-lines-background.png) center
-            center no-repeat #ececec;
+            center no-repeat $bg-color-warning;
           opacity: 0.1;
         }
       }
@@ -753,7 +754,7 @@
     }
     .search-wrapper {
       background-color: $bg-color-dark-theme-2;
-      color: color($colors, light-grey);
+      color: $text-color-dark-theme-2;
       .scan-icon {
         border-left: 1px solid rgba(151, 151, 151, 0.2);
       }
@@ -761,7 +762,7 @@
     .invalid {
       border: 1px solid color($colors, error);
       color: color($colors, error);
-      background-color: #fff6f7;
+      background-color: $bg-color-warning;
     }
     .card {
       background-color: $bg-color-dark-theme-2;
@@ -778,7 +779,7 @@
       background-image: linear-gradient(
         -180deg,
         $bg-color-dark-theme 30%,
-        #101010 100%
+        $gradient-dark-theme 100%
       );
       .discount-header {
         background-color: $bg-color-dark-theme-2;
@@ -796,7 +797,7 @@
     .bp-list {
       ion-note.note {
         background: $bg-color-dark-theme-2;
-        color: color($colors, light-grey);
+        color: $text-color-dark-theme-2;
       }
       .icon-qrcode {
         filter: invert(1);
@@ -814,7 +815,7 @@
         .item-inner {
           ion-note.note {
             background: $bg-color-dark-theme-2;
-            color: color($colors, light-grey);
+            color: $text-color-dark-theme-2;
           }
         }
       }
@@ -824,7 +825,7 @@
   page-join-wallet {
     ion-item {
       background: $bg-color-dark-theme;
-      color: color($colors, light-grey);
+      color: $text-color-dark-theme-2;
     }
   }
   page-wallet-addresses {
@@ -869,7 +870,7 @@
         color: $text-color-dark-theme;
       }
       .item-subtitle {
-        color: color($colors, light-grey);
+        color: $text-color-dark-theme-2;
       }
     }
   }
@@ -886,7 +887,7 @@
       color: $text-color-dark-theme;
     }
     .sub-title {
-      color: color($colors, light-grey);
+      color: $text-color-dark-theme-2;
     }
     ion-item {
       background: $bg-color-dark-theme-2;
@@ -918,7 +919,7 @@
         background: linear-gradient(
           to bottom,
           $bg-color-dark-theme,
-          #101010 80%
+          $gradient-dark-theme 80%
         );
       }
       .slide-info {
@@ -928,7 +929,7 @@
             color: $text-color-dark-theme;
           }
           .text {
-            color: color($colors, light-grey);
+            color: $text-color-dark-theme-2;
           }
         }
       }
@@ -950,7 +951,7 @@
           background: $bg-color-dark-theme-2;
           color: $text-color-dark-theme;
           .dash-line {
-            border-bottom: 1px color($colors, light-grey) dashed;
+            border-bottom: 1px $border-color-dark-theme dashed;
           }
         }
       }
