@@ -28,7 +28,7 @@
 
     <ion-spinner *ngIf="loading"></ion-spinner>
 
-    <ion-list *ngIf="coinbaseAccount && coinbaseAccount.balance">
+    <ion-list class="bp-list" *ngIf="coinbaseAccount && coinbaseAccount.balance">
       <ion-item-divider>Account</ion-item-divider>
       <ion-item>
         <span>ID</span>
@@ -50,7 +50,7 @@
       </ion-item>
     </ion-list>
 
-    <ion-list *ngIf="coinbaseUser">
+    <ion-list class="bp-list" *ngIf="coinbaseUser">
       <ion-item-divider>User Information</ion-item-divider>
       <ion-item>
         <span>ID</span>
