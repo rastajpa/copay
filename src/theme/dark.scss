@@ -582,6 +582,12 @@
       }
     }
   }
+  page-feedback-card {
+    ion-card.card {
+      background-color: $bg-color-dark-theme-2;
+      color: $text-color-dark-theme;
+    }
+  }
 
   // 5 - Tabs
   // 5.1 Tab Home
@@ -1012,6 +1018,13 @@
             color: $text-color-dark-theme;
           }
         }
+      }
+    }
+  }
+  page-coinbase {
+    ion-content {
+      .center-header .button-clear-md-dark {
+        color: $text-color-dark-theme;
       }
     }
   }
