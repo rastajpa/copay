@@ -692,23 +692,42 @@
   page-wallet-details,
   page-bitpay-card {
     ion-content {
-      background: linear-gradient(
-        180deg,
-        $bg-color-dark-theme -0%,
-        $gradient-dark-theme
-      );
+      background: $text-color-dark-theme;
     }
 
     .toolbar-background {
       background: $bg-color-dark-theme !important;
     }
 
+    .search-button {
+      filter: invert(1);
+    }
+
+    .wallet-info {
+      .left-buttons {
+        .encrypted,
+        .testnet {
+          filter: invert(1);
+        }
+        .read-only {
+          filter: invert(0);
+        }
+        .square-border {
+          span {
+            border: 1px solid $text-color-dark-theme;
+          }
+        }
+      }
+    }
+
+    .action-buttons {
+      .button-standard {
+        color: $text-color-dark-theme;
+      }
+    }
+
     .balance-card {
-      background: linear-gradient(
-        180deg,
-        $bg-color-dark-theme -0%,
-        $gradient-dark-theme
-      );
+      background: $bg-color-dark-theme;
     }
 
     .tx-history {
