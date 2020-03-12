@@ -80,7 +80,6 @@ export class WalletDetailsPage {
   public lowUtxosWarning: boolean;
   public associatedWallet: string;
   public backgroundColor: string;
-  public isDarkTheme: boolean;
   private isCordova: boolean;
 
   public supportedCards: Promise<CardConfigMap>;
@@ -107,7 +106,7 @@ export class WalletDetailsPage {
     private socialSharing: SocialSharing,
     private bwcErrorProvider: BwcErrorProvider,
     private errorsProvider: ErrorsProvider,
-    public themeProvider: ThemeProvider
+    private themeProvider: ThemeProvider
   ) {
     this.zone = new NgZone({ enableLongStackTrace: false });
     this.isCordova = this.platformProvider.isCordova;
@@ -115,8 +114,6 @@ export class WalletDetailsPage {
   }
 
   async ionViewDidLoad() {
-    this.isDarkTheme = this.themeProvider.isDarkModeEnabled();
-
     this.wallet = this.profileProvider.getWallet(this.navParams.data.walletId);
     this.supportedCards = this.giftCardProvider.getSupportedCardMap();
 
