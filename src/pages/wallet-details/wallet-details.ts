@@ -80,10 +80,10 @@ export class WalletDetailsPage {
   public lowUtxosWarning: boolean;
   public associatedWallet: string;
   public backgroundColor: string;
+  public isDarkTheme: boolean;
   private isCordova: boolean;
 
   public supportedCards: Promise<CardConfigMap>;
-
   constructor(
     private currencyProvider: CurrencyProvider,
     private navParams: NavParams,
@@ -107,7 +107,7 @@ export class WalletDetailsPage {
     private socialSharing: SocialSharing,
     private bwcErrorProvider: BwcErrorProvider,
     private errorsProvider: ErrorsProvider,
-    private themeProvider: ThemeProvider
+    public themeProvider: ThemeProvider
   ) {
     this.zone = new NgZone({ enableLongStackTrace: false });
     this.isCordova = this.platformProvider.isCordova;
@@ -115,6 +115,8 @@ export class WalletDetailsPage {
   }
 
   async ionViewDidLoad() {
+    this.isDarkTheme = this.themeProvider.isDarkModeEnabled();
+
     this.wallet = this.profileProvider.getWallet(this.navParams.data.walletId);
     this.supportedCards = this.giftCardProvider.getSupportedCardMap();
 
@@ -171,19 +173,10 @@ export class WalletDetailsPage {
 
   ionViewWillEnter() {
     this.backgroundColor = this.themeProvider.getThemeInfo().walletDetailsBackgroundStart;
-    if (this.platformProvider.isIOS) {
-      this.themeProvider.useLightStatusBar();
-    }
     this.onResumeSubscription = this.platform.resume.subscribe(() => {
       this.profileProvider.setFastRefresh(this.wallet);
       this.subscribeEvents();
     });
-  }
-
-  ionViewWillLeave() {
-    if (this.platformProvider.isIOS) {
-      this.themeProvider.useDefaultStatusBar();
-    }
   }
 
   // Start by firing a walletFocus event.
