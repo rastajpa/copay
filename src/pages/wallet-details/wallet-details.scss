@@ -7,6 +7,7 @@ page-wallet-details {
 
   .balance-card {
     overflow: hidden;
+    background-color: white;
   }
 
   .balance-header {
@@ -81,6 +82,8 @@ page-wallet-details {
   }
 
   .action-buttons {
+    transform: inherit;
+    opacity: inherit;
     display: flex;
     justify-content: space-between;
     width: 100%;
@@ -235,6 +238,10 @@ page-wallet-details {
     text-align: center;
   }
 
+  .search-button {
+    padding: 0 6px 0 0;
+  }
+
   .wallet-info {
     transform: inherit;
     opacity: inherit;
@@ -269,6 +276,7 @@ page-wallet-details {
     .read-only {
       height: 3rem;
       width: 1.8rem;
+      filter: invert(1);
     }
 
     .encrypted {
@@ -296,11 +304,6 @@ page-wallet-details {
         letter-spacing: -0.2px;
         white-space: nowrap;
       }
-    }
-
-    .search-button {
-      cursor: pointer;
-      padding: 0 6px 0 0;
     }
 
     ion-spinner {
