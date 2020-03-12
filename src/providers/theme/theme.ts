@@ -15,8 +15,8 @@ export class ThemeProvider {
     'light-theme': {
       backgroundColor: '#ffffff',
       fixedScrollBgColor: '#f8f8f9',
-      walletDetailsBackgroundStart: '#0C204E',
-      walletDetailsBackgroundEnd: '#1C4386'
+      walletDetailsBackgroundStart: '#ffffff',
+      walletDetailsBackgroundEnd: '#ffffff'
     },
     'dark-theme': {
       backgroundColor: '#121212',
