@@ -5,7 +5,7 @@
 </ion-header>
 
 <ion-content>
-  <ion-list *ngIf="fromWallets.length > 0 && toWallets.length > 0">
+  <ion-list class="bp-list" *ngIf="fromWallets.length > 0 && toWallets.length > 0">
     <div *ngIf="fromWallets.length > 0">
       <div class="title">
         <span translate>From</span>
@@ -67,7 +67,7 @@
   </ion-list>
 
   <div *ngIf="fromWallets.length > 0 && toWallets.length > 0">
-    <ion-list margin-bottom>
+    <ion-list class="bp-list" margin-bottom>
       <ion-item-divider></ion-item-divider>
       <ion-item>
         <ion-label>
