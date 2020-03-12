@@ -96,8 +96,7 @@
       <expandable-header-footer>
         <div class="wallet-info" *ngIf="wallet">
           <div class="left-buttons">
-            <img class="testnet" *ngIf="isDarkTheme && wallet?.network == 'testnet'" src="assets/img/icon-wallet-testnet-white.svg">
-            <img class="testnet" *ngIf="!isDarkTheme && wallet?.network == 'testnet'" src="assets/img/icon-wallet-testnet.svg">
+            <img class="testnet" *ngIf="wallet?.network == 'testnet'" src="assets/img/icon-wallet-testnet.svg">
             <span class="square-border" *ngIf="wallet?.network == 'testnet' && wallet?.coin == 'eth'">
               <span>KOVAN TESTNET</span>
             </span>
