@@ -11,7 +11,7 @@
 3 - General
 3.1 - Lists
 3.2 - Label tip
-3.3 - Card
+3.3 - General cards
 3.4 - Expandable header
 
 4 - Components
@@ -48,7 +48,8 @@
   $bg-color-info: #dde1f0;
 
   // 1.4 - Borders
-  $border-color-dark-theme: #4c4c4c;
+  $border-color-dark-theme: rgb(76, 76, 76);
+  $border-color-dark-theme-2: rgba(76, 76, 76, 0.3);
 
   // 1.5 - Slides
   $swiper-pagination-bullet-active: #434c5a;
@@ -74,6 +75,16 @@
   .bp-list .secondary-label,
   .bp-list .secondary-note {
     opacity: 1;
+  }
+
+  page-add-wallet,
+  options-sheet {
+    .bp-list ion-icon.item-img.icon.item-icon.icon-settings {
+      &.icon-md,
+      &.icon-ios {
+        opacity: 1;
+      }
+    }
   }
 
   page-settings {
@@ -134,11 +145,20 @@
   coin-icon {
     ion-icon.item-img.icon.background_xrp {
       background-color: color($colors, dark);
-      border: 1px solid $border-color-dark-theme;
       &.testnet {
         filter: invert(0.2);
       }
     }
+  }
+
+  form {
+    .item-md.item-block .item-inner {
+      border-bottom: 1px solid $border-color-dark-theme;
+    }
+  }
+
+  .line-divider {
+    border: 0.5px solid $border-color-dark-theme-2;
   }
 
   .royal,
@@ -301,9 +321,16 @@
     }
     ion-item-divider {
       background: $bg-color-dark-theme-2;
+      .label {
+        color: $text-color-dark-theme-3;
+      }
     }
     .summary-item-detail {
       color: $text-color-dark-theme;
+      .text-input {
+        color: $text-color-dark-theme;
+        opacity: 1;
+      }
     }
     .total-amount {
       color: $text-color-dark-theme;
@@ -312,6 +339,7 @@
 
   // 3.2 - Label tip
   label-tip {
+    opacity: 0.7;
     &[type='info'] {
       background-color: $bg-color-info;
       &:before {
@@ -332,7 +360,7 @@
     }
   }
 
-  // 3.3 - Card
+  // 3.3 - General cards
   action-card-v4.card {
     background-color: $bg-color-dark-theme-2;
     .action-card__content {
@@ -354,18 +382,10 @@
       }
     }
   }
-  page-cards {
-    .card-item {
-      background: $bg-color-dark-theme;
-
-      &.light {
-        color: $text-color-dark-theme;
-
-        .card {
-          .funds {
-            color: $text-color-dark-theme;
-          }
-        }
+  .card {
+    page-txp {
+      .proposal-container .item-inner {
+        border-bottom: 1px solid $border-color-dark-theme-2;
       }
     }
   }
@@ -410,6 +430,12 @@
   .toolbar-content-md,
   .toolbar-content-ios {
     color: $text-color-dark-theme;
+    .bar-buttons-md,
+    .bar-buttons-ios {
+      .bar-button .button-inner {
+        color: $text-color-dark-theme-2;
+      }
+    }
   }
 
   .toolbar-title {
@@ -431,6 +457,19 @@
         &.button-md.activated,
         &.button-ios.activated {
           background-color: $bg-color-dark-theme-2;
+        }
+      }
+    }
+  }
+
+  page-shapeshift,
+  page-bitpay-card,
+  page-shapeshift-settings {
+    .toolbar {
+      &.toolbar-md,
+      &.toolbar-ios {
+        .back-button {
+          background-color: rgba(155, 163, 174, 0.12);
         }
       }
     }
@@ -819,6 +858,9 @@
       .addr-title {
         color: $text-color-dark-theme;
       }
+      .addr-buttons .addr-update {
+        background-color: $bg-color-dark-theme-3;
+      }
     }
     .addr-content {
       .addr-container {
@@ -857,7 +899,7 @@
     .invalid {
       border: 1px solid color($colors, error);
       color: color($colors, error);
-      background-color: $bg-color-warning;
+      // background-color: $bg-color-warning;
     }
     .card {
       background-color: $bg-color-dark-theme-2;
@@ -869,6 +911,22 @@
   }
 
   // 5.3 - Tab Cards
+  page-cards {
+    .card-item {
+      background: $bg-color-dark-theme;
+
+      &.light {
+        color: $text-color-dark-theme;
+
+        .card {
+          .funds {
+            color: $text-color-dark-theme;
+          }
+        }
+      }
+    }
+  }
+
   buy-card-page {
     .amount-box {
       background-image: linear-gradient(
@@ -921,6 +979,11 @@
     ion-item {
       background: $bg-color-dark-theme;
       color: $text-color-dark-theme-2;
+    }
+  }
+  page-addressbook {
+    .zero-state-icon {
+      background-color: $bg-color-dark-theme-3;
     }
   }
   page-wallet-addresses {
