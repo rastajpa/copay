@@ -1069,4 +1069,35 @@
       }
     }
   }
+  page-custom-amount {
+    .scroll-content {
+      background-color: $bg-color-dark-theme-2;
+      margin-top: 0rem;
+      .wrapper {
+        display: flex;
+        flex-direction: column;
+        background-color: white;
+      }
+    }
+
+    .qr-container {
+      background-color: $bg-color-dark-theme-2;
+
+      div.qr-card.card {
+        background-color: $bg-color-dark-theme-2;
+      }
+      .qr-card {
+        background-color: white;
+      }
+    }
+    .receive-content {
+      background-color: $bg-color-dark-theme;
+      .address-container {
+        .text-address {
+          background: $bg-color-dark-theme-2;
+          color: $text-color-dark-theme-2;
+        }
+      }
+    }
+  }
 }
