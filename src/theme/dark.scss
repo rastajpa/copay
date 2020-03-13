@@ -763,6 +763,14 @@
       background-color: $bg-color-dark-theme-2;
     }
   }
+  page-bitpay-card-topup {
+    ion-content {
+      ion-item {
+        background-color: $bg-color-dark-theme;
+        color: $text-color-dark-theme;
+      }
+    }
+  }
   page-wallet-details,
   page-bitpay-card {
     ion-content {
@@ -1161,6 +1169,11 @@
           color: $text-color-dark-theme-2;
         }
       }
+    }
+  }
+  card-terms {
+    .terms * {
+      color: $text-color-dark-theme-3;
     }
   }
 }
