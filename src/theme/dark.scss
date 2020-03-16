@@ -227,14 +227,9 @@
       }
     }
   }
-
-  ion-searchbar {
-    .searchbar-input-container {
-      input.searchbar-input {
-        background: $bg-color-dark-theme-message;
-        color: $text-color-dark-theme;
-      }
-    }
+  .search-wrapper {
+    background-color: $bg-color-dark-theme-2;
+    color: $text-color-dark-theme-2;
   }
   search-bar {
     background: $bg-color-dark-theme;
@@ -898,8 +893,6 @@
       background-color: $bg-color-dark-theme;
     }
     .search-wrapper {
-      background-color: $bg-color-dark-theme-2;
-      color: $text-color-dark-theme-2;
       .scan-icon {
         border-left: 1px solid rgba(151, 151, 151, 0.2);
       }
