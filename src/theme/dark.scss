@@ -1037,6 +1037,40 @@
       }
     }
   }
+  card-details-page {
+    background-color: $bg-color-dark-theme;
+    .gift-card-content .scroll-content > div.wrapper {
+      background-color: $bg-color-dark-theme;
+    }
+
+    .card-image {
+      img {
+        background: $bg-color-dark-theme;
+      }
+    }
+
+    .card-info {
+      background-color: $bg-color-dark-theme-3;
+      border: 1px solid $border-color-dark-theme;
+      &__title {
+        color: $text-color-dark-theme-2;
+      }
+
+      &__body {
+        color: $text-color-dark-theme;
+      }
+
+      &__date {
+        color: $text-color-dark-theme-3;
+      }
+
+      &.has-pin {
+        .separator {
+          border-top: 1px solid $border-color-dark-theme;
+        }
+      }
+    }
+  }
 
   // 6 - Other Pages
   page-simplex {
