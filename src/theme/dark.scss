@@ -918,6 +918,12 @@
     }
   }
 
+  create-new-wallet {
+    .zero-state-wallets {
+      background-color: $bg-color-dark-theme-3;
+    }
+  }
+
   // 5.3 - Tab Cards
   page-cards {
     .card-item {
@@ -949,6 +955,33 @@
     }
     .buy-box {
       background-color: $bg-color-dark-theme;
+    }
+  }
+
+  page-bitpay-phase-one-card-intro {
+    .phaseOne {
+      &__content {
+        &__title {
+          color: $text-color-dark-theme;
+        }
+
+        &__description {
+          color: $text-color-dark-theme-3;
+        }
+      }
+
+      &__form {
+        &__link {
+          color: color($colors, primary);
+        }
+      }
+      &__form-toggle {
+        &__label {
+          color: $text-color-dark-theme-3;
+          font-size: 14px;
+          line-height: 18px;
+        }
+      }
     }
   }
 
