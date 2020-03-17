@@ -659,6 +659,11 @@
       color: $text-color-dark-theme;
     }
   }
+  incoming-data-menu {
+    img {
+      filter: invert(0.7);
+    }
+  }
 
   // 5 - Tabs
   // 5.1 Tab Home
