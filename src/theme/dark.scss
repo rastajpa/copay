@@ -1084,6 +1084,11 @@
       }
     }
   }
+  page-share {
+    .share-buttons {
+      background-color: $bg-color-dark-theme;
+    }
+  }
 
   // 6 - Other Pages
   page-simplex {
