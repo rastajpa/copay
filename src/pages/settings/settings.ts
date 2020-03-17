@@ -116,7 +116,6 @@ export class SettingsPage {
     this.isDarkTheme = this.themeProvider.isDarkModeEnabled();
 
     if (this.iabCardProvider.ref) {
-
       // check for user info
       this.persistenceProvider
         .getBitPayIdUserInfo(this.network)
