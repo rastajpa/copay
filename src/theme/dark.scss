@@ -334,6 +334,29 @@
       color: $text-color-dark-theme;
     }
   }
+  .button-secondary {
+    background-color: $bg-color-dark-theme-3;
+    color: $text-color-dark-theme-2;
+
+    &:hover,
+    &:focus,
+    &:active {
+      &.button-md,
+      &.button-ios {
+        background-color: $bg-color-dark-theme-2;
+        color: $text-color-dark-theme-2;
+      }
+    }
+
+    &:active,
+    &.activated {
+      &.button-md,
+      &.button-ios {
+        background-color: $bg-color-dark-theme-2;
+        color: $text-color-dark-theme-2;
+      }
+    }
+  }
 
   // 3.2 - Label tip
   label-tip {
