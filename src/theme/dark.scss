@@ -469,6 +469,14 @@
       }
     }
   }
+  page-shapeshift-details {
+    .header-modal {
+      background-color: $bg-color-dark-theme;
+      .title-modal {
+        color: $text-color-dark-theme-2;
+      }
+    }
+  }
 
   // 4 - Components
   action-sheet {
