@@ -47,7 +47,7 @@ export class ShapeshiftSettingsPage {
 
   ionViewWillEnter() {
     if (this.platform.is('cordova')) {
-      this.themeProvider.useDarkStatusBar();
+      this.themeProvider.useCustomStatusBar(this.headerColor);
     }
   }
 
