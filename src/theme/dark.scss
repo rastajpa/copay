@@ -58,7 +58,7 @@
   // 2 - Transition between themes
   // This is just to make a smooth transition between themes
   @mixin transition {
-    transition: background-color, color, 250ms cubic-bezier(0, 0, 0.3, 0.3) !important;
+    transition: background-color, color, 150ms cubic-bezier(0, 0, 0.3, 0.3) !important;
   }
 
   // TODO: Remove text opacity from default styles
@@ -288,6 +288,12 @@
       color: $text-color-dark-theme;
     }
   }
+
+  // page-wallet-details, page-search-tx-modal {
+  //   .icon-services {
+  //     border: 1px solid $text-color-dark-theme-2;
+  //   }
+  // }
 
   // all content without menu
   ion-content.add-bottom-safe-area {
@@ -883,7 +889,7 @@
 
   .tx-history {
     .icon-services {
-      border: 1px solid $border-color-dark-theme;
+      border: 1px solid $text-color-dark-theme-2;
     }
     .amount {
       color: $text-color-dark-theme;

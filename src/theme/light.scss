@@ -1,7 +1,7 @@
 .light-theme {
   // Uses default values. This is just to make a smooth transition between themes
   @mixin transition {
-    transition: background-color, color, 250ms cubic-bezier(0, 0, 0.3, 0.3) !important;
+    transition: background-color, color, 150ms cubic-bezier(0, 0, 0.3, 0.3) !important;
   }
 
   // General

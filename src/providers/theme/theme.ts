@@ -45,11 +45,13 @@ export class ThemeProvider {
     let newTheme, previousTheme: string;
 
     if (this.platformProvider.isCordova) {
-      if (this.isDarkModeEnabled()) {
-        this.useDarkStatusBar();
-      } else {
-        this.useLightStatusBar();
-      }
+      setTimeout(() => {
+        if (this.isDarkModeEnabled()) {
+          this.useDarkStatusBar();
+        } else {
+          this.useLightStatusBar();
+        }
+      }, 150);
     }
     if (this.isDarkModeEnabled()) {
       newTheme = 'dark-theme';
