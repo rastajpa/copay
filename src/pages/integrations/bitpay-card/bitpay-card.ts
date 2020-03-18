@@ -81,8 +81,8 @@ export class BitPayCardPage {
   }
 
   ionViewWillEnter() {
-    if (this.platformProvider.isIOS) {
-      this.themeProvider.useLightStatusBar();
+    if (this.platformProvider.isCordova) {
+      this.themeProvider.useCustomStatusBar('#0c204e');
     }
   }
 
@@ -91,7 +91,7 @@ export class BitPayCardPage {
   }
 
   ionViewWillLeave() {
-    if (this.platformProvider.isIOS) {
+    if (this.platformProvider.isCordova) {
       this.themeProvider.useDefaultStatusBar();
     }
   }

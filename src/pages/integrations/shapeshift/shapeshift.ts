@@ -72,7 +72,7 @@ export class ShapeshiftPage {
 
   ionViewWillEnter() {
     if (this.platformProvider.isCordova) {
-      this.themeProvider.useDarkStatusBar();
+      this.themeProvider.useCustomStatusBar(this.headerColor);
     }
     if (this.navParams.data.code) {
       this.shapeshiftProvider.getStoredToken((at: string) => {

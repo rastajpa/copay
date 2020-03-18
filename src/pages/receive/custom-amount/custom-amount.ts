@@ -10,7 +10,6 @@ import { ActionSheetProvider } from '../../../providers/action-sheet/action-shee
 import { Coin, CurrencyProvider } from '../../../providers/currency/currency';
 import { PlatformProvider } from '../../../providers/platform/platform';
 import { ProfileProvider } from '../../../providers/profile/profile';
-import { ThemeProvider } from '../../../providers/theme/theme';
 import { TxFormatProvider } from '../../../providers/tx-format/tx-format';
 import { WalletProvider } from '../../../providers/wallet/wallet';
 
@@ -37,8 +36,7 @@ export class CustomAmountPage {
     private logger: Logger,
     private socialSharing: SocialSharing,
     private txFormatProvider: TxFormatProvider,
-    private actionSheetProvider: ActionSheetProvider,
-    private themeProvider: ThemeProvider
+    private actionSheetProvider: ActionSheetProvider
   ) {
     const walletId = this.navParams.data.id;
     this.showShareButton = this.platformProvider.isCordova;
@@ -111,12 +109,6 @@ export class CustomAmountPage {
 
   ionViewDidLoad() {
     this.logger.info('Loaded: CustomAmountPage');
-  }
-
-  ionViewWillEnter() {
-    if (this.platformProvider.isIOS) {
-      this.themeProvider.useDefaultStatusBar();
-    }
   }
 
   public shareAddress(): void {

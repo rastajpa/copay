@@ -37,7 +37,6 @@ import { PlatformProvider } from '../../providers/platform/platform';
 import { PopupProvider } from '../../providers/popup/popup';
 import { ProfileProvider } from '../../providers/profile/profile';
 import { SimplexProvider } from '../../providers/simplex/simplex';
-import { ThemeProvider } from '../../providers/theme/theme';
 import { WalletProvider } from '../../providers/wallet/wallet';
 
 interface UpdateWalletOptsI {
@@ -96,8 +95,7 @@ export class WalletsPage {
     private incomingDataProvider: IncomingDataProvider,
     private simplexProvider: SimplexProvider,
     private modalCtrl: ModalController,
-    private actionSheetProvider: ActionSheetProvider,
-    private themeProvider: ThemeProvider
+    private actionSheetProvider: ActionSheetProvider
   ) {
     this.slideDown = false;
     this.isBlur = false;
@@ -124,10 +122,6 @@ export class WalletsPage {
   }
 
   private _willEnter(shouldUpdate: boolean = false) {
-    if (this.platformProvider.isIOS) {
-      this.themeProvider.useDefaultStatusBar();
-    }
-
     // Update list of wallets, status and TXPs
     this.setWallets(shouldUpdate);
   }
