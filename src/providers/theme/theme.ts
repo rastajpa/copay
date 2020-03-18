@@ -45,9 +45,11 @@ export class ThemeProvider {
     let newTheme, previousTheme: string;
 
     if (this.platformProvider.isCordova) {
-      this.isDarkModeEnabled()
-        ? this.statusBar.styleBlackOpaque()
-        : this.statusBar.styleDefault();
+      if (this.isDarkModeEnabled()) {
+        this.useDarkStatusBar();
+      } else {
+        this.useLightStatusBar();
+      }
     }
     if (this.isDarkModeEnabled()) {
       newTheme = 'dark-theme';
@@ -90,21 +92,30 @@ export class ThemeProvider {
     return Boolean(this.currentAppTheme.value === 'dark-theme');
   }
 
-  public useDarkStatusBar() {
+  private useDarkStatusBar() {
+    this.statusBar.backgroundColorByHexString(
+      this.themes['dark-theme'].backgroundColor
+    );
     this.statusBar.styleBlackOpaque();
   }
 
-  public useLightStatusBar() {
-    this.statusBar.styleLightContent();
+  private useLightStatusBar() {
+    this.statusBar.backgroundColorByHexString(
+      this.themes['light-theme'].backgroundColor
+    );
+    this.statusBar.styleDefault();
   }
 
-  public useDefaultStatusBar(preferLightContent?: boolean) {
+  public useCustomStatusBar(color) {
+    this.statusBar.backgroundColorByHexString(color);
+    this.statusBar.styleBlackOpaque();
+  }
+
+  public useDefaultStatusBar() {
     if (this.isDarkModeEnabled()) {
-      preferLightContent
-        ? this.statusBar.styleLightContent()
-        : this.statusBar.styleBlackOpaque();
+      this.useDarkStatusBar();
     } else {
-      this.statusBar.styleDefault();
+      this.useLightStatusBar();
     }
   }
 }

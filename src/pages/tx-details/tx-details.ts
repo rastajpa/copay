@@ -16,11 +16,9 @@ import { CurrencyProvider } from '../../providers/currency/currency';
 import { ExternalLinkProvider } from '../../providers/external-link/external-link';
 import { FilterProvider } from '../../providers/filter/filter';
 import { OnGoingProcessProvider } from '../../providers/on-going-process/on-going-process';
-import { PlatformProvider } from '../../providers/platform/platform';
 import { PopupProvider } from '../../providers/popup/popup';
 import { ProfileProvider } from '../../providers/profile/profile';
 import { RateProvider } from '../../providers/rate/rate';
-import { ThemeProvider } from '../../providers/theme/theme';
 import { TxConfirmNotificationProvider } from '../../providers/tx-confirm-notification/tx-confirm-notification';
 import { TxFormatProvider } from '../../providers/tx-format/tx-format';
 import { WalletProvider } from '../../providers/wallet/wallet';
@@ -64,22 +62,8 @@ export class TxDetailsModal {
     private translate: TranslateService,
     private filter: FilterProvider,
     private rateProvider: RateProvider,
-    private platformProvider: PlatformProvider,
-    private viewCtrl: ViewController,
-    private themeProvider: ThemeProvider
+    private viewCtrl: ViewController
   ) {}
-
-  ionViewWillEnter() {
-    if (this.platformProvider.isCordova) {
-      this.themeProvider.useDefaultStatusBar();
-    }
-  }
-
-  ionViewWillLeave() {
-    if (this.platformProvider.isCordova) {
-      this.themeProvider.useDarkStatusBar();
-    }
-  }
 
   ionViewDidLoad() {
     this.config = this.configProvider.get();
