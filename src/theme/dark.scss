@@ -448,6 +448,12 @@
     color: $text-color-dark-theme;
   }
 
+  .bar-button-default-md,
+  .bar-button-default.bar-button-md-default,
+  .bar-button-clear-md-default {
+    color: $text-color-dark-theme !important;
+  }
+
   .toolbar-content-md,
   .toolbar-content-ios {
     color: $text-color-dark-theme;
