@@ -289,12 +289,6 @@
     }
   }
 
-  // page-wallet-details, page-search-tx-modal {
-  //   .icon-services {
-  //     border: 1px solid $text-color-dark-theme-2;
-  //   }
-  // }
-
   // all content without menu
   ion-content.add-bottom-safe-area {
     .fixed-content,
@@ -864,7 +858,6 @@
         color: $text-color-dark-theme;
         .item-inner {
           border-bottom: 1px solid $border-color-dark-theme;
-          opacity: 0.6;
         }
       }
     }
@@ -1284,6 +1277,15 @@
   card-terms {
     .terms * {
       color: $text-color-dark-theme-3;
+    }
+  }
+  page-card-item {
+    .card-icon {
+      .houston {
+        img {
+          filter: invert(1);
+        }
+      }
     }
   }
 }
