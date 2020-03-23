@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { StatusBar } from '@ionic-native/status-bar';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 // providers
 import { Logger } from '../logger/logger';
@@ -9,7 +8,7 @@ import { PlatformProvider } from '../platform/platform';
 
 @Injectable()
 export class ThemeProvider {
-  private currentAppTheme: BehaviorSubject<string>;
+  private currentAppTheme: string;
 
   public themes = {
     'light-theme': {
@@ -37,7 +36,7 @@ export class ThemeProvider {
 
   public init() {
     return this.persistenceProvider.getAppTheme().then(theme => {
-      this.currentAppTheme = new BehaviorSubject(theme);
+      this.currentAppTheme = theme;
     });
   }
 
@@ -67,13 +66,8 @@ export class ThemeProvider {
 
   public setActiveTheme(theme) {
     this.persistenceProvider.setAppTheme(theme);
-    this.currentAppTheme.next(theme);
+    this.currentAppTheme = theme;
     this.apply();
-  }
-
-  public getActiveTheme() {
-    // Example of use: this.themeProvider.getActiveTheme().subscribe(theme => (this.selectedTheme = themes));
-    return this.currentAppTheme.asObservable();
   }
 
   public toggleTheme() {
@@ -85,13 +79,13 @@ export class ThemeProvider {
   public getThemeInfo(theme?: string) {
     // If no theme provided returns current theme info
     if (theme && this.themes[theme]) return this.themes[theme];
-    else if (this.themes[this.currentAppTheme.value])
-      return this.themes[this.currentAppTheme.value];
+    else if (this.themes[this.currentAppTheme])
+      return this.themes[this.currentAppTheme];
     else return this.themes['light-theme'];
   }
 
   public isDarkModeEnabled(): boolean {
-    return Boolean(this.currentAppTheme.value === 'dark-theme');
+    return Boolean(this.currentAppTheme === 'dark-theme');
   }
 
   private useDarkStatusBar() {
