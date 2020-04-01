@@ -43,6 +43,7 @@
 
   // 1.3 - Messages
   $bg-color-warning: #ffe7d9;
+  $bg-color-warning-2: #947143;
   $bg-color-danger: #ffd9de;
   $bg-color-success: #d9fff3;
   $bg-color-info: #dde1f0;
@@ -874,6 +875,13 @@
       .item {
         background-color: $bg-color-dark-theme-2;
         color: $text-color-dark-theme;
+        &.speed-up-bg {
+          background-color: $bg-color-warning-2;
+          ion-note.note > .amount > .received,
+          .action {
+            color: color($colors, warning);
+          }
+        }
         .item-inner {
           border-bottom: 1px solid $border-color-dark-theme;
         }
