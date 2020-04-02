@@ -85,6 +85,9 @@
       &.icon-md,
       &.icon-ios {
         opacity: 1;
+        img {
+          filter: invert(1);
+        }
       }
     }
   }
@@ -953,7 +956,8 @@
   }
 
   page-send,
-  page-multi-send {
+  page-multi-send,
+  page-select-inputs {
     .send-header-wrapper {
       background-color: $bg-color-dark-theme;
     }
@@ -965,13 +969,23 @@
     .invalid {
       border: 1px solid color($colors, error);
       color: color($colors, error);
-      // background-color: $bg-color-warning;
     }
     .card {
       background-color: $bg-color-dark-theme-2;
       ion-item-divider {
         background-color: $bg-color-dark-theme-2;
         color: $text-color-dark-theme;
+        border-bottom: 1px solid $border-color-dark-theme;
+        > .item-inner {
+          border-bottom: 0px;
+        }
+      }
+      ion-item.item {
+        background-color: $bg-color-dark-theme-2;
+        color: $text-color-dark-theme;
+        > .item-inner {
+          border-bottom: 1px solid $border-color-dark-theme;
+        }
       }
     }
   }
