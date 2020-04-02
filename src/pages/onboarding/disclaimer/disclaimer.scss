@@ -4,7 +4,6 @@ page-disclaimer {
       height: 100%;
     }
     ion-slide {
-      background: linear-gradient(to bottom, #ffffff, #ebedf8 80%);
       .img-container {
         display: flex;
         padding-top: 10vh;
@@ -32,7 +31,6 @@ page-disclaimer {
         }
       }
       .slide-info {
-        background: white;
         height: 100%;
         .title {
           color: #060606;
@@ -108,7 +106,6 @@ page-disclaimer {
   }
   .footer-container {
     padding-bottom: 0;
-    background-color: color($colors, blank);
   }
   .swiper-container-horizontal > .swiper-pagination-bullets {
     position: fixed;

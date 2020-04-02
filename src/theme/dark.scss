@@ -13,6 +13,7 @@
 3.2 - Label tip
 3.3 - General cards
 3.4 - Expandable header
+3.5 - Toolbar
 
 4 - Components
 
@@ -1207,9 +1208,11 @@
     }
   }
   page-key-onboarding,
-  page-new-design-tour {
+  page-new-design-tour,
+  page-disclaimer {
     .key-onboarding-slides,
-    .new-design-tour-slides {
+    .new-design-tour-slides,
+    .onboarding-slides {
       ion-slide {
         background: linear-gradient(
           to bottom,
@@ -1219,15 +1222,18 @@
       }
       .slide-info {
         background: $bg-color-dark-theme;
-        .info {
-          .title {
-            color: $text-color-dark-theme;
-          }
-          .text {
-            color: $text-color-dark-theme-2;
-          }
+        .info .title,
+        .title {
+          color: $text-color-dark-theme;
+        }
+        .info .text,
+        .text {
+          color: $text-color-dark-theme-2;
         }
       }
+    }
+    .next-slide-button .text {
+      color: $text-color-dark-theme-2;
     }
   }
   page-backup-key,
