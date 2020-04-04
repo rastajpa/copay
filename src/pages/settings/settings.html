@@ -87,7 +87,7 @@
             {{'Dark Mode' | translate}}
           </div>
         </ion-label>
-        <ion-toggle [(ngModel)]="isDarkTheme" (ionChange)="toggleAppTheme()"></ion-toggle>
+        <ion-toggle [checked]="isDarkTheme" (ionChange)="toggleAppTheme($event)"></ion-toggle>
       </ion-item>
 
       <ion-item-divider *ngIf="walletsGroups && walletsGroups[0]">

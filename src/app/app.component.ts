@@ -233,7 +233,7 @@ export class CopayApp {
         this.openLockModal();
 
         // Set Theme (light or dark mode)
-        await this.themeProvider.init();
+        await this.themeProvider.load();
         this.themeProvider.apply();
 
         // Clear all notifications

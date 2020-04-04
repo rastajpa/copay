@@ -36,56 +36,61 @@ export class ThemeProvider {
     this.logger.debug('ThemeProvider initialized');
   }
 
-  public init() {
-    this.persistenceProvider.getAppTheme().then(theme => {
-      if (theme == 'dark-theme' || theme == 'light-theme') {
-        this.currentAppTheme = theme;
-      } else {
-        if (this.platformProvider.isCordova) {
-          this.setMobileAppTheme();
-        } else {
-          this.currentAppTheme =
-            window.matchMedia &&
-            window.matchMedia('(prefers-color-scheme: dark)').matches
-              ? 'dark-theme'
-              : 'light-theme';
+  public load() {
+    return new Promise(resolve => {
+      this.persistenceProvider.getAppTheme().then(theme => {
+        if (theme == 'dark-theme' || theme == 'light-theme') {
+          this.currentAppTheme = theme;
           this.logger.debug(
-            'Set Desktop App Theme to: ' + this.currentAppTheme
+            'Set App Theme from storage: ' + this.currentAppTheme
           );
+          return resolve();
+        } else {
+          if (this.platformProvider.isCordova) {
+            cordova.plugins.ThemeDetection.isAvailable(
+              res => {
+                if (res && res.value) {
+                  cordova.plugins.ThemeDetection.isDarkModeEnabled(
+                    success => {
+                      this.currentAppTheme =
+                        success && success.value ? 'dark-theme' : 'light-theme';
+                      this.logger.debug(
+                        'Set Mobile App Theme to: ' + this.currentAppTheme
+                      );
+                      return resolve();
+                    },
+                    _ => {
+                      this.currentAppTheme = 'light-theme';
+                      return resolve();
+                    }
+                  );
+                } else {
+                  this.currentAppTheme = 'light-theme';
+                  return resolve();
+                }
+              },
+              _ => {
+                this.currentAppTheme = 'light-theme';
+                return resolve();
+              }
+            );
+          } else {
+            this.currentAppTheme =
+              window.matchMedia &&
+              window.matchMedia('(prefers-color-scheme: dark)').matches
+                ? 'dark-theme'
+                : 'light-theme';
+            this.logger.debug(
+              'Set Desktop App Theme to: ' + this.currentAppTheme
+            );
+            return resolve();
+          }
         }
-      }
+      });
     });
   }
 
-  private setMobileAppTheme() {
-    cordova.plugins.ThemeDetection.isAvailable(
-      res => {
-        if (res && res.value) {
-          cordova.plugins.ThemeDetection.isDarkModeEnabled(
-            success => {
-              this.currentAppTheme =
-                success && success.value ? 'dark-theme' : 'light-theme';
-              this.logger.debug(
-                'Set Mobile App Theme to: ' + this.currentAppTheme
-              );
-            },
-            _ => {
-              this.currentAppTheme = 'light-theme';
-            }
-          );
-        } else {
-          this.currentAppTheme = 'light-theme';
-        }
-      },
-      _ => {
-        this.currentAppTheme = 'light-theme';
-      }
-    );
-  }
-
   public apply() {
-    let newTheme, previousTheme: string;
-
     if (this.platformProvider.isCordova) {
       setTimeout(() => {
         if (this.isDarkModeEnabled()) {
@@ -95,16 +100,14 @@ export class ThemeProvider {
         }
       }, 150);
     }
-    if (this.isDarkModeEnabled()) {
-      newTheme = 'dark-theme';
-      previousTheme = 'light-theme';
-    } else {
-      newTheme = 'light-theme';
-      previousTheme = 'dark-theme';
-    }
 
-    document.getElementsByTagName('ion-app')[0].classList.remove(previousTheme);
-    document.getElementsByTagName('ion-app')[0].classList.add(newTheme);
+    document
+      .getElementsByTagName('ion-app')[0]
+      .classList.remove('dark-theme', 'light-theme');
+    document
+      .getElementsByTagName('ion-app')[0]
+      .classList.add(this.isDarkModeEnabled() ? 'dark-theme' : 'light-theme');
+    this.logger.debug('Apply Theme: ' + this.currentAppTheme);
   }
 
   public setActiveTheme(theme) {
@@ -129,6 +132,10 @@ export class ThemeProvider {
 
   public isDarkModeEnabled(): boolean {
     return Boolean(this.currentAppTheme === 'dark-theme');
+  }
+
+  public getCurrentAppTheme() {
+    return this.currentAppTheme;
   }
 
   private useDarkStatusBar() {
