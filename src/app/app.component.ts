@@ -172,7 +172,6 @@ export class CopayApp {
       .load()
       .then(() => {
         this.onAppLoad(readySource);
-        this.themeProvider.apply();
       })
       .catch(err => {
         const title = 'Could not initialize the app';
@@ -229,13 +228,20 @@ export class CopayApp {
       this.splashScreen.hide();
 
       // Subscribe Resume
-      this.onResumeSubscription = this.platform.resume.subscribe(() => {
+      this.onResumeSubscription = this.platform.resume.subscribe(async () => {
         // Check PIN or Fingerprint on Resume
         this.openLockModal();
+
+        // Set Theme (light or dark mode)
+        await this.themeProvider.init();
+        this.themeProvider.apply();
 
         // Clear all notifications
         this.pushNotificationsProvider.clearAllNotifications();
       });
+
+      // Set Theme (light or dark mode)
+      this.themeProvider.apply();
 
       // Check PIN or Fingerprint
       this.openLockModal();
