@@ -76,7 +76,7 @@ export class SettingsPage {
   public showReorder: boolean = false;
   public showTotalBalance: boolean;
   public useLegacyQrCode: boolean;
-  public appTheme: boolean;
+  public appTheme: string;
   public isDarkTheme: boolean;
 
   constructor(
@@ -115,6 +115,7 @@ export class SettingsPage {
       .then(res => (this.bitpayIdPairingEnabled = res === 'enabled'));
 
     this.isDarkTheme = this.themeProvider.isDarkModeEnabled();
+    this.appTheme = this.themeProvider.getCurrentAppTheme();
 
     if (this.iabCardProvider.ref) {
       // check for user info
@@ -397,7 +398,8 @@ export class SettingsPage {
     this.configProvider.set(opts);
   }
 
-  public toggleAppTheme(): void {
-    this.themeProvider.toggleTheme();
+  public toggleAppTheme(event): void {
+    const appT = event.checked ? 'dark-theme' : 'light-theme';
+    if (appT != this.appTheme) this.themeProvider.toggleTheme();
   }
 }
