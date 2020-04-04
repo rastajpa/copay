@@ -6,6 +6,8 @@ import { Logger } from '../logger/logger';
 import { PersistenceProvider } from '../persistence/persistence';
 import { PlatformProvider } from '../platform/platform';
 
+declare var cordova: any;
+
 @Injectable()
 export class ThemeProvider {
   private currentAppTheme: string;
@@ -39,14 +41,46 @@ export class ThemeProvider {
       if (theme == 'dark-theme' || theme == 'light-theme') {
         this.currentAppTheme = theme;
       } else {
-        this.currentAppTheme =
-          window.matchMedia &&
-          window.matchMedia('(prefers-color-scheme: dark)').matches
-            ? 'dark-theme'
-            : 'light-theme';
+        if (this.platformProvider.isCordova) {
+          this.setMobileAppTheme();
+        } else {
+          this.currentAppTheme =
+            window.matchMedia &&
+            window.matchMedia('(prefers-color-scheme: dark)').matches
+              ? 'dark-theme'
+              : 'light-theme';
+          this.logger.debug(
+            'Set Desktop App Theme to: ' + this.currentAppTheme
+          );
+        }
       }
-      this.logger.debug('Set App Theme to: ' + this.currentAppTheme);
     });
+  }
+
+  private setMobileAppTheme() {
+    cordova.plugins.ThemeDetection.isAvailable(
+      res => {
+        if (res && res.value) {
+          cordova.plugins.ThemeDetection.isDarkModeEnabled(
+            success => {
+              this.currentAppTheme =
+                success && success.value ? 'dark-theme' : 'light-theme';
+              this.logger.debug(
+                'Set Mobile App Theme to: ' + this.currentAppTheme
+              );
+            },
+            _ => {
+              this.currentAppTheme = 'light-theme';
+            }
+          );
+        } else {
+          this.currentAppTheme = 'light-theme';
+        }
+      },
+      _ => {
+        this.currentAppTheme = 'light-theme';
+      }
+    );
   }
 
   public apply() {
