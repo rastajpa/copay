@@ -83,7 +83,7 @@ export class AppProvider {
   private async loadProviders() {
     this.persistence.load();
     await this.config.load();
-    await this.themeProvider.init();
+    await this.themeProvider.load();
     this.language.load();
   }
 
