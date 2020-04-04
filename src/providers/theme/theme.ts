@@ -36,7 +36,16 @@ export class ThemeProvider {
 
   public init() {
     this.persistenceProvider.getAppTheme().then(theme => {
-      this.currentAppTheme = theme;
+      if (theme == 'dark-theme' || theme == 'light-theme') {
+        this.currentAppTheme = theme;
+      } else {
+        this.currentAppTheme =
+          window.matchMedia &&
+          window.matchMedia('(prefers-color-scheme: dark)').matches
+            ? 'dark-theme'
+            : 'light-theme';
+      }
+      this.logger.debug('Set App Theme to: ' + this.currentAppTheme);
     });
   }
 
