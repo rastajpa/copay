@@ -111,11 +111,9 @@ describe('ExpandableHeaderComponent', () => {
     });
     describe('#applyTransforms', () => {
       it('should apply transforms to primary and footer content based on scroll position', () => {
-        const transformPrimarySpy = spyOn(instance, 'transformPrimaryContent');
-        const transformFooterSpy = spyOn(instance, 'transformFooterContent');
+        const transformSpy = spyOn(instance, 'transformContent');
         instance.applyTransforms(0, instance.headerHeight);
-        expect(transformPrimarySpy).toHaveBeenCalledWith([1, 1, 0], true);
-        expect(transformFooterSpy).toHaveBeenCalledWith([1, 1, 0]);
+        expect(transformSpy).toHaveBeenCalledWith([1, 1, 0]);
       });
     });
   });
