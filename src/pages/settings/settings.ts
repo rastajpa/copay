@@ -45,6 +45,7 @@ import { LanguagePage } from './language/language';
 import { LockPage } from './lock/lock';
 import { NotificationsPage } from './notifications/notifications';
 import { SharePage } from './share/share';
+import { ThemePage } from './theme/theme';
 import { WalletSettingsPage } from './wallet-settings/wallet-settings';
 
 @Component({
@@ -77,7 +78,6 @@ export class SettingsPage {
   public showTotalBalance: boolean;
   public useLegacyQrCode: boolean;
   public appTheme: string;
-  public isDarkTheme: boolean;
 
   constructor(
     private navCtrl: NavController,
@@ -114,7 +114,6 @@ export class SettingsPage {
       .getBitpayIdPairingFlag()
       .then(res => (this.bitpayIdPairingEnabled = res === 'enabled'));
 
-    this.isDarkTheme = this.themeProvider.isDarkModeEnabled();
     this.appTheme = this.themeProvider.getCurrentAppTheme();
 
     if (this.iabCardProvider.ref) {
@@ -226,6 +225,10 @@ export class SettingsPage {
 
   public openAboutPage(): void {
     this.navCtrl.push(AboutPage);
+  }
+
+  public openThemePage(): void {
+    this.navCtrl.push(ThemePage);
   }
 
   public openLockPage(): void {
@@ -396,10 +399,5 @@ export class SettingsPage {
       useLegacyQrCode: this.useLegacyQrCode
     };
     this.configProvider.set(opts);
-  }
-
-  public toggleAppTheme(event): void {
-    const appT = event.checked ? 'dark-theme' : 'light-theme';
-    if (appT != this.appTheme) this.themeProvider.toggleTheme();
   }
 }
