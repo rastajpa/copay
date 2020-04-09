@@ -46,7 +46,7 @@ describe('ExpandableHeaderComponent', () => {
       instance = compiled.instance.expandableHeader;
       instance.themeProvider = {
         getThemeInfo: () => {
-          return 'light-theme';
+          return 'light';
         }
       };
       ionScrollSubject = new Subject<ScrollEvent>();

@@ -21,6 +21,16 @@
     <ion-list class="bp-list">
       <ion-item-divider> {{ 'General' | translate }} </ion-item-divider>
 
+      <button ion-item (click)="openThemePage()" *ngIf="appTheme">
+        <ion-icon class="item-img icon-settings ionic-icon" name="ios-color-palette" item-start></ion-icon>
+        <ion-label>
+          <div class="main-label">{{ 'Theme' | translate }}</div>
+        </ion-label>
+        <ion-note item-end>
+          {{ appTheme }}
+        </ion-note>
+      </button>
+
       <button ion-item (click)="openAltCurrencyPage()">
         <ion-icon class="item-img icon-settings" item-start>
           <img src="assets/img/settings-icons/icon-currency.svg" />
@@ -78,16 +88,6 @@
           </div>
         </ion-label>
         <ion-toggle [(ngModel)]="showTotalBalance" (ionChange)="toggleShowBalanceFlag()"></ion-toggle>
-      </ion-item>
-
-      <ion-item class="align-with-button">
-        <ion-icon class="item-img icon-settings" name="ios-moon" item-start></ion-icon>
-        <ion-label>
-          <div class="main-label">
-            {{'Dark Mode' | translate}}
-          </div>
-        </ion-label>
-        <ion-toggle [checked]="isDarkTheme" (ionChange)="toggleAppTheme($event)"></ion-toggle>
       </ion-item>
 
       <ion-item-divider *ngIf="walletsGroups && walletsGroups[0]">

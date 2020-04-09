@@ -242,15 +242,15 @@ export class CopayApp {
         this.pushNotificationsProvider.clearAllNotifications();
       });
 
-      // Set Theme (light or dark mode)
-      this.themeProvider.apply();
-
       // Check PIN or Fingerprint
       this.openLockModal();
 
       // Clear all notifications
       this.pushNotificationsProvider.clearAllNotifications();
     }
+
+    // Set Theme (light or dark mode)
+    this.themeProvider.apply();
 
     const experiment = await this.persistenceProvider.getCardExperimentFlag();
     const experimentNetwork = await this.persistenceProvider.getCardExperimentNetwork();

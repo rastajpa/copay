@@ -40,6 +40,10 @@ page-about {
         &.icon-settings {
           opacity: 0.5;
         }
+        &.ionic-icon {
+          font-size: 25px;
+          filter: contrast(0.2);
+        }
         img {
           width: 20px;
           height: 20px;
