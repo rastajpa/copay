@@ -10,6 +10,7 @@ import { Logger, ThemeProvider } from '../../../providers';
 export class ThemePage {
   public availableThemes;
   public selectedTheme;
+  private autoDetectedTheme: string;
   constructor(private logger: Logger, private themeProvider: ThemeProvider) {
     this.selectedTheme = this.themeProvider.getSelectedTheme();
     this.availableThemes = this.themeProvider.availableThemes;
@@ -17,13 +18,12 @@ export class ThemePage {
 
   ionViewDidLoad() {
     this.logger.info('Loaded: ThemePage');
-  }
-
-  ionViewWillLeave() {
-    this.themeProvider.setConfigTheme();
+    this.themeProvider.getDetectedSystemTheme().then(theme => {
+      this.autoDetectedTheme = theme;
+    });
   }
 
   public save(theme: string) {
-    this.themeProvider.setActiveTheme(theme);
+    this.themeProvider.setActiveTheme(theme, this.autoDetectedTheme);
   }
 }

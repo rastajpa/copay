@@ -30,7 +30,6 @@ export class ThemeProvider {
   };
 
   public useSystemTheme: boolean = false;
-  public detectedSystemTheme: string = 'light';
 
   constructor(
     private logger: Logger,
@@ -47,52 +46,49 @@ export class ThemeProvider {
       if (!config.theme.system) {
         this.useSystemTheme = false;
         this.currentAppTheme = config.theme.name;
-        this.logger.debug(
-          'Set App Theme from storage: ' + this.currentAppTheme
-        );
+        this.logger.debug('Set Stored App Theme: ' + this.currentAppTheme);
         return resolve();
       } else {
-        if (this.platformProvider.isCordova) {
-          cordova.plugins.ThemeDetection.isAvailable(
-            res => {
-              if (res && res.value) {
-                cordova.plugins.ThemeDetection.isDarkModeEnabled(
-                  success => {
-                    this.useSystemTheme = true;
-                    this.currentAppTheme = this.detectedSystemTheme =
-                      success && success.value ? 'dark' : 'light';
-                    this.logger.debug(
-                      'Set Mobile App Theme to: ' + this.currentAppTheme
-                    );
-                    return resolve();
-                  },
-                  _ => {
-                    this.currentAppTheme = 'light';
-                    return resolve();
-                  }
-                );
-              } else {
-                this.currentAppTheme = 'light';
-                return resolve();
-              }
-            },
-            _ => {
-              this.currentAppTheme = 'light';
-              return resolve();
-            }
-          );
-        } else {
-          this.useSystemTheme = true;
-          this.currentAppTheme = this.detectedSystemTheme =
-            window.matchMedia &&
-            window.matchMedia('(prefers-color-scheme: dark)').matches
-              ? 'dark'
-              : 'light';
-          this.logger.debug(
-            'Set Desktop App Theme to: ' + this.currentAppTheme
-          );
+        // Auto-detect theme
+        this.useSystemTheme = true;
+        this.getDetectedSystemTheme().then(theme => {
+          this.currentAppTheme = theme;
+          this.logger.debug('Set System App Theme to: ' + this.currentAppTheme);
           return resolve();
-        }
+        });
+      }
+    });
+  }
+
+  public getDetectedSystemTheme(): Promise<string> {
+    return new Promise(resolve => {
+      if (this.platformProvider.isCordova) {
+        cordova.plugins.ThemeDetection.isAvailable(
+          res => {
+            if (res && res.value) {
+              cordova.plugins.ThemeDetection.isDarkModeEnabled(
+                success => {
+                  return resolve(success && success.value ? 'dark' : 'light');
+                },
+                _ => {
+                  return resolve('light');
+                }
+              );
+            } else {
+              return resolve('light');
+            }
+          },
+          _ => {
+            return resolve('light');
+          }
+        );
+      } else {
+        return resolve(
+          window.matchMedia &&
+            window.matchMedia('(prefers-color-scheme: dark)').matches
+            ? 'dark'
+            : 'light'
+        );
       }
     });
   }
@@ -117,20 +113,21 @@ export class ThemeProvider {
     this.logger.debug('Apply Theme: ' + this.currentAppTheme);
   }
 
-  public setActiveTheme(theme: string) {
+  public setActiveTheme(theme: string, detectedSystemTheme?: string) {
     switch (theme) {
       case 'system':
         this.useSystemTheme = true;
-        this.currentAppTheme = this.detectedSystemTheme;
+        this.currentAppTheme = detectedSystemTheme;
         break;
       default:
         this.useSystemTheme = false;
-        this.currentAppTheme = theme;
+        this.currentAppTheme = theme || detectedSystemTheme;
     }
     this.apply();
+    this.setConfigTheme();
   }
 
-  public setConfigTheme(): void {
+  private setConfigTheme(): void {
     let opts = {
       theme: { name: this.currentAppTheme, system: this.useSystemTheme }
     };

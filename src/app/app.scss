@@ -454,15 +454,6 @@ a.royal {
   }
 }
 
-// Set backgrounds transparent so the QR Scanner can be seen behind the app.
-html,
-body,
-.back-transparent,
-ion-app,
-.nav-decor {
-  background: transparent !important;
-}
-
 .button-standard {
   width: 90%;
   max-width: 300px;
