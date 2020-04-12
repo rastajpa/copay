@@ -10,7 +10,7 @@ declare var cordova: any;
 
 @Injectable()
 export class ThemeProvider {
-  private currentAppTheme: string;
+  public currentAppTheme: string;
 
   public availableThemes = {
     light: {

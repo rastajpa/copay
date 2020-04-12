@@ -251,6 +251,7 @@ export class CopayApp {
 
     // Set Theme (light or dark mode)
     this.themeProvider.apply();
+    if (this.platformProvider.isElectron) this.updateDesktopOnFocus();
 
     const experiment = await this.persistenceProvider.getCardExperimentFlag();
     const experimentNetwork = await this.persistenceProvider.getCardExperimentNetwork();
@@ -326,6 +327,19 @@ export class CopayApp {
           });
       });
     }
+  }
+
+  private updateDesktopOnFocus() {
+    const { remote } = (window as any).require('electron');
+    const win = remote.getCurrentWindow();
+    win.on('focus', () => {
+      if (this.themeProvider.useSystemTheme) {
+        this.themeProvider.getDetectedSystemTheme().then(theme => {
+          if (this.themeProvider.currentAppTheme == theme) return;
+          this.themeProvider.setActiveTheme('system', theme);
+        });
+      }
+    });
   }
 
   private onProfileLoad(profile) {
