@@ -17,6 +17,34 @@
       </ion-list>
     </div>
   </div>
+  <div *ngIf="showCoinbase && coinbaseLinked && coinbaseData">
+    <div class="key-divider">
+      <ion-icon class="item-img" item-start>
+        <img src="assets/img/coinbase/coinbase-icon.png" width="20" />
+      </ion-icon>
+      <span class="key-name">
+        <span *ngIf="!coinbaseData.user">...</span>
+        <span *ngIf="coinbaseData.user">{{ coinbaseData.user.name }}'s Coinbase Account</span>
+      </span>
+    </div>
+    <div *ngIf="!coinbaseData.accounts" translate>Loading accounts...</div>
+    <div *ngFor="let ac of coinbaseData.accounts">
+      <ion-list no-lines class="bp-list">
+        <button ion-item detail-none (click)="coinbaseAccountClicked(ac)">
+          <coin-icon [coin]="ac.currency.code.toLowerCase()" [network]="livenet" item-left></coin-icon>
+          <ion-label>
+            {{ac.name}}
+          </ion-label>
+          <ion-note item-end>
+            <div class="main-note">{{ac.balance.amount | number:'1.2-8'}}</div>
+            <div class="secondary-note" *ngIf="getNativeBalance(ac.balance.amount, ac.balance.currency)">
+              {{ getNativeBalance(ac.balance.amount, ac.balance.currency) | currency:' ':' ' }} {{ coinbaseData.user.native_currency }}
+            </div>
+          </ion-note>
+        </button>
+      </ion-list>
+    </div>
+  </div>
   <ng-template #noWallets>
     <div class="no-wallets">
       {{'No wallets available' | translate}}

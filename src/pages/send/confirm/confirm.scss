@@ -143,6 +143,12 @@ page-bitpay-card-topup {
         img {
           width: 20px;
         }
+        &.coinbase-icon{
+          padding: 0;
+          img {
+            width: 35px;
+          }
+        }
         &.rectangle {
           border-radius: 7px;
           justify-content: center;

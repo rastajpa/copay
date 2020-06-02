@@ -95,6 +95,9 @@ export class ConfirmPage {
   public mainTitle: string;
   public isSpeedUpTx: boolean;
 
+  public useCoinbaseAccount: boolean = false;
+  public coinbaseAccount: object = {};
+
   // // Card flags for zen desk chat support
   // private isCardPurchase: boolean;
   // private isHelpOpen: boolean = false;
@@ -301,7 +304,7 @@ export class ConfirmPage {
   private getAmountDetails() {
     this.amount = this.decimalPipe.transform(
       this.tx.amount /
-        this.currencyProvider.getPrecision(this.coin).unitToSatoshi,
+      this.currencyProvider.getPrecision(this.coin).unitToSatoshi,
       '1.2-6'
     );
   }
@@ -414,7 +417,7 @@ export class ConfirmPage {
     return (
       this.wallet.cachedStatus &&
       this.wallet.cachedStatus.balance.totalAmount >=
-        this.tx.amount + this.tx.feeRate &&
+      this.tx.amount + this.tx.feeRate &&
       !this.tx.spendUnconfirmed
     );
   }
@@ -509,11 +512,11 @@ export class ConfirmPage {
       this.onGoingProcessProvider.set('calculatingFee');
       this.feeProvider
         .getFeeRate(
-          wallet.coin,
-          tx.network,
-          this.usingMerchantFee
-            ? this.currencyProvider.getMaxMerchantFee(wallet.coin)
-            : this.tx.feeLevel
+        wallet.coin,
+        tx.network,
+        this.usingMerchantFee
+          ? this.currencyProvider.getMaxMerchantFee(wallet.coin)
+          : this.tx.feeLevel
         )
         .then(feeRate => {
           let msg;
@@ -524,7 +527,7 @@ export class ConfirmPage {
             const maxAllowedFee = feeRate * 5;
             this.logger.info(
               `Using Merchant Fee: ${
-                tx.feeRate
+              tx.feeRate
               } vs. referent level (5 * feeRate) ${maxAllowedFee}`
             );
             const isUtxo = this.currencyProvider.isUtxoCoin(wallet.coin);
@@ -707,9 +710,9 @@ export class ConfirmPage {
           this.tx = tx;
           this.logger.debug(
             'Confirm. TX Fully Updated for wallet:' +
-              wallet.id +
-              ' Txp:' +
-              txp.id
+            wallet.id +
+            ' Txp:' +
+            txp.id
           );
           return resolve();
         })
@@ -1200,9 +1203,9 @@ export class ConfirmPage {
       finishComment?: string;
       autoDismiss?: boolean;
     } = {
-      finishText: this.successText,
-      autoDismiss: !!redir
-    };
+        finishText: this.successText,
+        autoDismiss: !!redir
+      };
     if (onlyPublish) {
       const finishText = this.translate.instant('Payment Published');
       const finishComment = this.translate.instant(
@@ -1317,14 +1320,22 @@ export class ConfirmPage {
     const params = {
       wallets: this.wallets,
       selectedWalletId: id,
-      title: this.walletSelectorTitle
+      title: this.walletSelectorTitle,
+      coin: this.coin
     };
     const walletSelector = this.actionSheetProvider.createWalletSelector(
       params
     );
     walletSelector.present();
-    walletSelector.onDidDismiss(wallet => {
-      this.onSelectWalletEvent(wallet);
+    walletSelector.onDidDismiss(res => {
+      if (res.coinbaseSelected) {
+        this.useCoinbaseAccount = true;
+        this.coinbaseAccount = res.account;
+        this.payWithCoinbase();
+      } else {
+        this.useCoinbaseAccount = false;
+        this.onSelectWalletEvent(res);
+      }
     });
   }
 
@@ -1347,5 +1358,11 @@ export class ConfirmPage {
 
   public openScanner(): void {
     this.navCtrl.push(ScanPage, { fromConfirm: true });
+  }
+
+  public payWithCoinbase() {
+
+    this.isOpenSelector = false;
+    console.log("--------------,this.coinbaseaccount", this.coinbaseAccount);
   }
 }

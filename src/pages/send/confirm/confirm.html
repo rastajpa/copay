@@ -149,25 +149,39 @@
           </div>
         </ion-label>
         <ion-note item-end>
-          <ion-row align-items-center class="wallet" *ngIf="wallet">
-            <ion-col>
-              <coin-icon [coin]="wallet.coin" [network]="wallet.network"></coin-icon>
-            </ion-col>
+          <div *ngIf="!useCoinbaseAccount">
+            <ion-row align-items-center class="wallet" *ngIf="wallet">
+              <ion-col>
+                <coin-icon [coin]="wallet.coin" [network]="wallet.network"></coin-icon>
+              </ion-col>
 
-            <ion-col>
-              <span class="note-container ellipsis">{{wallet.name}}</span>
-            </ion-col>
-          </ion-row>
+              <ion-col>
+                <span class="note-container ellipsis">{{wallet.name}}</span>
+              </ion-col>
+            </ion-row>
 
-          <ion-row align-items-center class="wallet" *ngIf="!wallet">
-            <div translate>Select a wallet</div>
-            <div class="last-item" item-end>
-              <button ion-button clear color="grey" icon-only>
-                <ion-icon *ngIf="!isOpenSelector" name="ios-arrow-down-outline"></ion-icon>
-                <ion-icon *ngIf="isOpenSelector" name="ios-arrow-up-outline"></ion-icon>
-              </button>
-            </div>
-          </ion-row>
+            <ion-row align-items-center class="wallet" *ngIf="!wallet">
+              <div translate>Select a wallet</div>
+              <div class="last-item" item-end>
+                <button ion-button clear color="grey" icon-only>
+                  <ion-icon *ngIf="!isOpenSelector" name="ios-arrow-down-outline"></ion-icon>
+                  <ion-icon *ngIf="isOpenSelector" name="ios-arrow-up-outline"></ion-icon>
+                </button>
+              </div>
+            </ion-row>
+          </div>
+          <div *ngIf="useCoinbaseAccount">
+            <ion-row align-items-center class="wallet" *ngIf="coinbaseAccount">
+              <ion-col>
+                <ion-icon class="item-img coinbase-icon">
+                  <img src="assets/img/coinbase/coinbase-icon.png">
+                </ion-icon>
+              </ion-col>
+              <ion-col>
+                <span class="note-container ellipsis">{{coinbaseAccount.name}}</span>
+              </ion-col>
+            </ion-row>
+          </div>
         </ion-note>
       </button>
 

@@ -64,6 +64,7 @@ export interface WalletSelectorParams {
   wallets: any[];
   selectedWalletId: string;
   title: string;
+  coin?: string;
 }
 
 export interface WalletReceiveParams {
@@ -84,7 +85,7 @@ export interface ChooseFeeLevelParams {
 }
 @Injectable()
 export class ActionSheetProvider {
-  constructor(private domProvider: DomProvider) {}
+  constructor(private domProvider: DomProvider) { }
 
   public createOptionsSheet(
     type: OptionsSheetType,
@@ -160,7 +161,7 @@ export class ActionSheetProvider {
   }
 
   private setupSheet<T extends ActionSheetParent>(
-    componentType: { new (...args): T },
+    componentType: { new(...args): T },
     sheetType?: string,
     params?
   ): ComponentRef<T> {
