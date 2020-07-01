@@ -3,6 +3,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Events, ModalController, NavController, Slides } from 'ionic-angular';
 import * as _ from 'lodash';
 import * as moment from 'moment';
+import env from '../../environments';
 import { SelectCurrencyPage } from '../../pages/add/select-currency/select-currency';
 import { AmountPage } from '../../pages/send/amount/amount';
 import { FormatCurrencyPipe } from '../../pipes/format-currency';
@@ -499,7 +500,7 @@ export class HomePage {
 
   public selectWallet() {
     this.wallets = this.profileProvider.getWallets({
-      network: 'livenet',
+      network: env.name == 'development' ? null : 'livenet',
       onlyComplete: true,
       coin: ['btc', 'bch', 'eth', 'xrp', 'pax', 'busd'],
       backedUp: true

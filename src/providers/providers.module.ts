@@ -15,6 +15,7 @@ import {
   BitPayCardProvider,
   BitPayIdProvider,
   BitPayProvider,
+  BuyCryptoProvider,
   BwcErrorProvider,
   BwcProvider,
   CardPhasesProvider,
@@ -79,7 +80,8 @@ import {
   TxFormatProvider,
   UserAgent,
   Vibration,
-  WalletProvider
+  WalletProvider,
+  WyreProvider
 } from './index';
 
 @NgModule({
@@ -96,6 +98,7 @@ import {
     BitPayCardProvider,
     BitPayIdProvider,
     BitPayAccountProvider,
+    BuyCryptoProvider,
     BwcProvider,
     BwcErrorProvider,
     ConfettiProvider,
@@ -157,6 +160,7 @@ import {
     TxFormatProvider,
     UserAgent,
     WalletProvider,
+    WyreProvider,
     EmailNotificationsProvider,
     DecimalPipe,
     PersistenceProvider,
