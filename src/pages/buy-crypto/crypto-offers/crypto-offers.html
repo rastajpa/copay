@@ -25,7 +25,7 @@
         </ion-row>
       </ion-item>
 
-      <action-card-v4 (click)="goToSimplexBuyPage()" tappable *ngIf="paymentMethod?.simplexSupport">
+      <action-card-v4 (click)="goToSimplexBuyPage()" tappable *ngIf="sShowOffer">
         <div action-card-body *ngIf="!sFiatMoney && !sErrorMsg" class="loader">
           <ion-spinner></ion-spinner>
         </div>
@@ -47,7 +47,7 @@
         </div>
       </action-card-v4>
 
-      <action-card-v4 (click)="goToWyreBuyPage2()" tappable *ngIf="paymentMethod?.wyreSupport">
+      <action-card-v4 (click)="goToWyreBuyPage()" tappable *ngIf="wShowOffer">
         <div action-card-body *ngIf="!wFiatMoney" class="loader">
           <ion-spinner></ion-spinner>
         </div>
@@ -55,7 +55,7 @@
 
           <div class="main-label">{{wAmountReceiving}} {{coin | uppercase}}</div>
 
-          <div class="secondary-label">1 {{coin | uppercase}} = <span *ngIf="fiatCurrency?.toUpperCase() === 'USD'">$</span>{{wFiatMoney | number:'1.2-2'}} <span *ngIf="fiatCurrency?.toUpperCase() !== 'USD'">{{fiatCurrency}}</span></div>
+          <div class="secondary-label">1 {{coin | uppercase}} = <span *ngIf="fiatCurrency?.toUpperCase() === 'USD'">$</span>{{wFiatMoney | number:'1.2-2'}} <span *ngIf="fiatCurrency?.toUpperCase() !== 'USD'">{{fiatCurrency}}</span> *</div>
           <div class="provider">
             <span class="secondary-label">Provided by</span>
             <img src="assets/img/wyre/wyre.svg">

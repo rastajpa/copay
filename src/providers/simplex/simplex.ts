@@ -19,6 +19,7 @@ export class SimplexProvider {
   public passthrough_uri: string;
   public supportedFiatAltCurrencies;
   public supportedCoins;
+  public supportedPaymentMethods;
   public fiatAmountLimits: { min: number; max: number };
 
   constructor(

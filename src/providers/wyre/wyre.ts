@@ -16,6 +16,7 @@ export class WyreProvider {
   public uri: string;
   public supportedFiatAltCurrencies;
   public supportedCoins;
+  public supportedPaymentMethods;
 
   constructor(
     private http: HttpClient,
@@ -26,16 +27,20 @@ export class WyreProvider {
     this.logger.debug('WyreProvider initialized - env: ' + this.env);
     this.uri = env.name == 'development' ? URI_DEV : URI_PROD;
     this.supportedFiatAltCurrencies = [
-      'EUR',
-      'USD',
-      'BRL',
-      'MXN',
-      'GBP',
       'AUD',
+      'BRL',
       'CNY',
-      'HKD'
+      'EUR',
+      'GBP',
+      'HKD',
+      'MXN',
+      'USD'
     ];
     this.supportedCoins = ['ETH', 'BTC'];
+  }
+
+  public getSupportedFiatAltCurrencies(): string[] {
+    return this.supportedFiatAltCurrencies;
   }
 
   public getRates() {

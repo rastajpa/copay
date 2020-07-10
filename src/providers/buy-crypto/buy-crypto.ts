@@ -6,20 +6,57 @@ import * as _ from 'lodash';
 import { ConfigProvider } from '../config/config';
 import { HomeIntegrationsProvider } from '../home-integrations/home-integrations';
 import { Logger } from '../logger/logger';
+import { PlatformProvider } from '../platform/platform';
 import { SimplexProvider } from '../simplex/simplex';
 import { WyreProvider } from '../wyre/wyre';
 
 @Injectable()
 export class BuyCryptoProvider {
+  public paymentMethodsAvailable;
+
   constructor(
     private configProvider: ConfigProvider,
     private homeIntegrationsProvider: HomeIntegrationsProvider,
     private logger: Logger,
     private translate: TranslateService,
     private simplexProvider: SimplexProvider,
-    private wyreProvider: WyreProvider
+    private wyreProvider: WyreProvider,
+    private platformProvider: PlatformProvider
   ) {
     this.logger.debug('BuyCrypto Provider initialized');
+
+    this.paymentMethodsAvailable = {
+      applePay: {
+        label: this.translate.instant('Apple Pay'),
+        method: 'applePay',
+        imgSrc: 'assets/img/buy-crypto/apple-pay.svg',
+        supportedExchanges: {
+          simplex: false,
+          wyre: true
+        },
+        enabled: this.platformProvider.isIOS
+      },
+      creditCard: {
+        label: this.translate.instant('Credit Card'),
+        method: 'creditCard',
+        imgSrc: 'assets/img/buy-crypto/debit-card.svg',
+        supportedExchanges: {
+          simplex: true,
+          wyre: false
+        },
+        enabled: true
+      },
+      debitCard: {
+        label: this.translate.instant('Debit Card'),
+        method: 'debitCard',
+        imgSrc: 'assets/img/buy-crypto/debit-card.svg',
+        supportedExchanges: {
+          simplex: true,
+          wyre: true
+        },
+        enabled: true
+      }
+    };
   }
 
   public register(): void {
@@ -38,28 +75,45 @@ export class BuyCryptoProvider {
     });
   }
 
-  public isExchangeSupported(
-    exchange: string,
-    coin: string,
-    currency: string
-  ): boolean {
+  private isCurrencySupported(exchange: string, currency: string): boolean {
     switch (exchange) {
       case 'simplex':
-        return (
-          _.includes(
-            this.simplexProvider.supportedFiatAltCurrencies,
-            currency.toUpperCase()
-          ) && _.includes(this.simplexProvider.supportedCoins, coin)
+        return _.includes(
+          this.simplexProvider.supportedFiatAltCurrencies,
+          currency.toUpperCase()
         );
       case 'wyre':
-        return (
-          _.includes(
-            this.wyreProvider.supportedFiatAltCurrencies,
-            currency.toUpperCase()
-          ) && _.includes(this.wyreProvider.supportedCoins, coin.toUpperCase())
+        return _.includes(
+          this.wyreProvider.supportedFiatAltCurrencies,
+          currency.toUpperCase()
         );
       default:
         return false;
     }
+  }
+
+  private isCoinSupported(exchange: string, coin: string) {
+    switch (exchange) {
+      case 'simplex':
+        return _.includes(this.simplexProvider.supportedCoins, coin);
+      case 'wyre':
+        return _.includes(this.wyreProvider.supportedCoins, coin.toUpperCase());
+      default:
+        return false;
+    }
+  }
+
+  public isPaymentMethodSupported(
+    exchange: string,
+    paymentMethod,
+    coin: string,
+    currency: string
+  ): boolean {
+    console.log(exchange, paymentMethod, coin, currency);
+    return (
+      paymentMethod.supportedExchanges[exchange] &&
+      this.isCoinSupported(exchange, coin) &&
+      this.isCurrencySupported(exchange, currency)
+    );
   }
 }

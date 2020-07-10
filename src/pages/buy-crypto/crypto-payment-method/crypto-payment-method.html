@@ -11,8 +11,8 @@
           <ion-label>
             <div class="main-label">{{method.value.label}}</div>
             <div>
-              <img *ngIf="method.value.simplexSupport" src="assets/img/simplex/logo-simplex-color.svg">
-              <img *ngIf="method.value.wyreSupport" src="assets/img/wyre/wyre.svg">
+              <img *ngIf="showExchange('simplex', method.value)" src="assets/img/simplex/logo-simplex-color.svg">
+              <img *ngIf="showExchange('wyre', method.value)" src="assets/img/wyre/wyre.svg">
             </div>
           </ion-label>
           <ion-radio item-left value="{{method?.key}}" checked="methodSelected"></ion-radio>
