@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { NavController, NavParams } from 'ionic-angular';
 import * as _ from 'lodash';
 
@@ -42,6 +43,8 @@ export class CryptoOffersPage {
   public wShowOffer: boolean;
   public wFiatMoney;
   public wAmountReceiving;
+  public wAmountLimits;
+  public wErrorMsg: string;
 
   constructor(
     private appProvider: AppProvider,
@@ -55,7 +58,8 @@ export class CryptoOffersPage {
     private configProvider: ConfigProvider,
     private walletProvider: WalletProvider,
     private wyreProvider: WyreProvider,
-    private externalLinkProvider: ExternalLinkProvider
+    private externalLinkProvider: ExternalLinkProvider,
+    private translate: TranslateService
   ) {
     this.currencies = this.simplexProvider.supportedCoins;
   }
@@ -89,6 +93,7 @@ export class CryptoOffersPage {
   }
 
   public goToSimplexBuyPage() {
+    if (this.sErrorMsg) return;
     const params = {
       amount: this.amount,
       currency: this.currency,
@@ -100,6 +105,7 @@ export class CryptoOffersPage {
   }
 
   public goToWyreBuyPage() {
+    if (this.wErrorMsg) return;
     this.walletProvider
       .getAddress(this.wallet, false)
       .then(address => {
@@ -112,13 +118,12 @@ export class CryptoOffersPage {
             paymentMethod = 'debit-card';
             break;
         }
-        console.log('---- paymentMethod: ', paymentMethod);
-
         const redirectUrl = this.appProvider.info.name + '://wyre';
         const failureRedirectUrl = this.appProvider.info.name + '://wyreError';
+        const dest = this.setPrefix(address, this.coin, this.wallet.network);
         const data = {
           amount: this.amount.toString(),
-          dest: 'bitcoin:' + address,
+          dest: dest,
           destCurrency: this.coin.toUpperCase(),
           sourceCurrency: this.currency.toUpperCase()
         };
@@ -128,17 +133,15 @@ export class CryptoOffersPage {
           .then(data => {
             if (data && data.exceptionId) {
               this.logger.error(JSON.stringify(data));
-              this.showError(data.message);
+              this.showWyreError(data.message);
               return;
             }
 
             if (data && data.error && !_.isEmpty(data.error)) {
-              this.showError(data.error);
+              this.showWyreError(data.error);
               return;
             }
 
-            console.log('-------- goToWyreBuyPage data success: ', data);
-            console.log('============= wyre URL: ', data.url);
             const url =
               data.url +
               '&paymentMethod=' +
@@ -147,22 +150,35 @@ export class CryptoOffersPage {
               redirectUrl +
               '&failureRedirectUrl=' +
               failureRedirectUrl;
-            console.log('============= wyre URL2: ', url);
-
-            this.openExternalLink(url);
+            this.goToWyrePage(url);
           })
           .catch(err => {
-            this.showError(err);
+            this.showWyreError(err);
           });
       })
       .catch(err => {
-        this.showError(err);
+        this.showWyreError(err);
       });
   }
 
-  private openExternalLink(url: string) {
+  private setPrefix(address: string, coin: Coin, network: string): string {
+    const prefix: string = this.currencyProvider.getProtocolPrefix(
+      coin,
+      network
+    );
+    const addr = `${prefix}:${address}`;
+    return addr;
+  }
+
+  private goToWyrePage(url: string) {
+    const title = this.translate.instant('Continue to Wyre');
+    const message = this.translate.instant(
+      'In order to finish the payment process you will be redirected to Wyre page'
+    );
+    const okText = this.translate.instant('Continue');
+    const cancelText = this.translate.instant('Go back');
     this.externalLinkProvider
-      .open(url, true, 'Go to wyre', 'Are you sure?', 'ok', 'cancel')
+      .open(url, true, title, message, okText, cancelText)
       .then(() => {
         setTimeout(() => {
           this.navCtrl.popToRoot();
@@ -177,7 +193,6 @@ export class CryptoOffersPage {
       this.fiatCurrency,
       this.coin
     );
-    console.log('---------------------this.samount', this.sAmountLimits);
 
     if (
       this.amount < this.sAmountLimits.min ||
@@ -200,7 +215,6 @@ export class CryptoOffersPage {
         .getQuote(this.wallet, data)
         .then(data => {
           if (data) {
-            console.log('========= SIMPLEX getQuote data: ', data);
             const totalAmount = data.fiat_money.total_amount;
             this.sAmountReceiving = data.digital_money.amount;
             this.sFiatMoney = Number(
@@ -218,30 +232,42 @@ export class CryptoOffersPage {
   }
 
   private getWyreQuote(): void {
-    this.walletProvider
-      .getAddress(this.wallet, false)
-      .then(address => {
-        const data = {
-          amount: this.amount.toString(),
-          sourceCurrency: this.currency.toUpperCase(),
-          destCurrency: this.coin.toUpperCase(),
-          dest: 'bitcoin:' + address,
-          country: 'US'
-        };
+    this.wAmountLimits = this.wyreProvider.getFiatCurrencyLimits(
+      this.fiatCurrency,
+      this.coin
+    );
+    if (
+      this.amount < this.wAmountLimits.min ||
+      this.amount > this.wAmountLimits.max
+    ) {
+      this.wErrorMsg = `The ${this.fiatCurrency} daily amount must be between ${
+        this.wAmountLimits.min
+      } and ${this.wAmountLimits.max}`;
+      return;
+    } else {
+      this.walletProvider
+        .getAddress(this.wallet, false)
+        .then(address => {
+          const dest = this.setPrefix(address, this.coin, this.wallet.network);
+          const data = {
+            amount: this.amount.toString(),
+            sourceCurrency: this.currency.toUpperCase(),
+            destCurrency: this.coin.toUpperCase(),
+            dest: dest,
+            country: 'US'
+          };
 
-        this.wyreProvider
-          .walletOrderQuotation(this.wallet, data)
-          .then((data: any) => {
-            if (data) {
-              console.log('--------- WYRE walletOrderQuotation data: ', data);
+          this.wyreProvider
+            .walletOrderQuotation(this.wallet, data)
+            .then((data: any) => {
               if (data && data.exceptionId) {
                 this.logger.error(JSON.stringify(data));
-                this.showError(data.message);
+                this.showWyreError(data.message);
                 return;
               }
 
               if (data && data.error && !_.isEmpty(data.error)) {
-                this.showError(data.error);
+                this.showWyreError(data.error);
                 return;
               }
 
@@ -252,20 +278,15 @@ export class CryptoOffersPage {
               );
 
               this.logger.debug('Wyre getting quote: SUCCESS');
-            } else {
-              // show error
-              console.log('--------------------- testRequest() err2: ');
-            }
-          })
-          .catch(err => {
-            // show error
-            console.log('--------------------- testRequest() err: ', err);
-          });
-      })
-      .catch(err => {
-        // show error
-        console.log('--------------------- testRequest() err2: ', err);
-      });
+            })
+            .catch(err => {
+              this.showWyreError(err);
+            });
+        })
+        .catch(err => {
+          this.showWyreError(err);
+        });
+    }
   }
 
   private setFiatCurrency() {
@@ -286,7 +307,19 @@ export class CryptoOffersPage {
     this.navCtrl.pop();
   }
 
-  public showError(err) {
-    console.log('======== crypto-offers showError: ', err);
+  private showWyreError(err?) {
+    let msg = this.translate.instant(
+      'Could not get crypto offer. Please, try again later.'
+    );
+    if (err) {
+      if (_.isString(err)) {
+        msg = err;
+      } else if (err.exceptionId && err.message) {
+        msg = err.message;
+      }
+    }
+
+    this.logger.error('Crypto offer error: ' + msg);
+    this.wErrorMsg = msg;
   }
 }

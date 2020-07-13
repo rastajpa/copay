@@ -109,7 +109,6 @@ export class BuyCryptoProvider {
     coin: string,
     currency: string
   ): boolean {
-    console.log(exchange, paymentMethod, coin, currency);
     return (
       paymentMethod.supportedExchanges[exchange] &&
       this.isCoinSupported(exchange, coin) &&

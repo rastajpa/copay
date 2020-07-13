@@ -16,7 +16,6 @@ import { AmountPage } from '../../send/amount/amount';
 // Providers
 import {
   ActionSheetProvider,
-  AnalyticsProvider,
   ConfigProvider,
   ErrorsProvider,
   ExchangeRatesProvider,
@@ -68,8 +67,7 @@ export class PricePage {
     private profileProvider: ProfileProvider,
     private translate: TranslateService,
     private errorsProvider: ErrorsProvider,
-    private actionSheetProvider: ActionSheetProvider,
-    private analyticsProvider: AnalyticsProvider
+    private actionSheetProvider: ActionSheetProvider
   ) {
     this.card = _.clone(this.navParams.data.card);
     this.coin = this.card.unitCode;
@@ -216,7 +214,7 @@ export class PricePage {
       backedUp: true
     });
     if (_.isEmpty(this.wallets)) {
-      this.errorsProvider.showNoWalletError(option => {
+      this.errorsProvider.showNoWalletError(this.coin, option => {
         if (option) {
           this.navCtrl.push(SelectCurrencyPage);
         }

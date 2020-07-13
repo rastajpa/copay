@@ -6,6 +6,7 @@ import env from '../../environments';
 // providers
 import { Logger } from '../logger/logger';
 import { PersistenceProvider } from '../persistence/persistence';
+import { RateProvider } from '../rate/rate';
 
 const URI_DEV = 'https://api.testwyre.com';
 const URI_PROD = 'https://api.sendwyre.com';
@@ -17,11 +18,13 @@ export class WyreProvider {
   public supportedFiatAltCurrencies;
   public supportedCoins;
   public supportedPaymentMethods;
+  public fiatAmountLimits: { min: number; max: number };
 
   constructor(
     private http: HttpClient,
     private logger: Logger,
-    private persistenceProvider: PersistenceProvider
+    private persistenceProvider: PersistenceProvider,
+    private rateProvider: RateProvider
   ) {
     this.env = env.name == 'development' ? 'sandbox' : 'production';
     this.logger.debug('WyreProvider initialized - env: ' + this.env);
@@ -37,6 +40,10 @@ export class WyreProvider {
       'USD'
     ];
     this.supportedCoins = ['ETH', 'BTC'];
+    this.fiatAmountLimits = {
+      min: 1,
+      max: 500
+    };
   }
 
   public getSupportedFiatAltCurrencies(): string[] {
@@ -82,6 +89,31 @@ export class WyreProvider {
     });
   }
 
+  public getFiatCurrencyLimits(fiatCurrency: string, coin: string) {
+    this.fiatAmountLimits.min = this.calculateFiatRate(1, fiatCurrency, coin);
+    this.fiatAmountLimits.max = this.calculateFiatRate(500, fiatCurrency, coin);
+
+    return this.fiatAmountLimits;
+  }
+
+  private calculateFiatRate(
+    amount: number,
+    fiatCurrency: string,
+    cryptoCurrency: string
+  ): number {
+    if (_.includes(['USD'], fiatCurrency)) {
+      return amount;
+    }
+    const rateFromFiat = this.rateProvider.fromFiat(
+      amount,
+      'USD',
+      cryptoCurrency
+    );
+    return +this.rateProvider
+      .toFiat(rateFromFiat, fiatCurrency, cryptoCurrency)
+      .toFixed(2);
+  }
+
   public getLimits() {
     const url = this.uri + '/v3/limits';
     const headers = {
@@ -123,7 +155,7 @@ export class WyreProvider {
       'Content-Type': 'application/json'
     };
 
-    console.log('Intentando getTransfer: ', url);
+    console.log('Trying getTransfer: ', url);
     return new Promise((resolve, reject) => {
       this.http.get(url, { headers }).subscribe(
         data => {
