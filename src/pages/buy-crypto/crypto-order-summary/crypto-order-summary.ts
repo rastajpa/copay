@@ -2,13 +2,15 @@ import { Component } from '@angular/core';
 import { ModalController, NavController, NavParams } from 'ionic-angular';
 
 // Providers
+import { BitPayProvider } from '../../../providers/bitpay/bitpay';
 import { Logger } from '../../../providers/logger/logger';
+import { PersistenceProvider } from '../../../providers/persistence/persistence';
 import { ProfileProvider } from '../../../providers/profile/profile';
 import { SimplexProvider } from '../../../providers/simplex/simplex';
 import { WalletProvider } from '../../../providers/wallet/wallet';
-import { WyreProvider } from '../../../providers/wyre/wyre';
 
 // Pages
+import { CountrySelectorPage } from '../../../pages/buy-crypto/country-selector/country-selector';
 import { CryptoOffersPage } from '../../../pages/buy-crypto/crypto-offers/crypto-offers';
 import { CryptoPaymentMethodPage } from '../../../pages/buy-crypto/crypto-payment-method/crypto-payment-method';
 import { AmountPage } from '../../../pages/send/amount/amount';
@@ -26,6 +28,8 @@ export class CryptoOrderSummaryPage {
   public currencies;
   public amount: any;
   public address: string;
+  public countryList: any[] = [];
+  public selectedCountry;
 
   constructor(
     private logger: Logger,
@@ -33,9 +37,10 @@ export class CryptoOrderSummaryPage {
     private modalCtrl: ModalController,
     private simplexProvider: SimplexProvider,
     private navCtrl: NavController,
+    private persistenceProvider: PersistenceProvider,
     private profileProvider: ProfileProvider,
     private walletProvider: WalletProvider,
-    private wyreProvider: WyreProvider
+    private bitPayProvider: BitPayProvider
   ) {
     this.currencies = this.simplexProvider.supportedCoins;
   }
@@ -54,14 +59,27 @@ export class CryptoOrderSummaryPage {
     this.walletProvider.getAddress(this.wallet, false).then(addr => {
       this.address = addr;
     });
-    this.wyreProvider
-      .getCountries()
-      .then(data => {
-        console.log('----------wyre getCountries data: ', data);
-      })
-      .catch(err => {
-        console.log('----------wyre getCountries err: ', err);
-      });
+
+    this.selectedCountry = {
+      name: 'United States',
+      phonePrefix: '+1',
+      shortCode: 'US',
+      threeLetterCode: 'USA'
+    };
+    this.persistenceProvider.getCountries().then(data => {
+      if (data) {
+        this.countryList = data;
+      } else {
+        this.bitPayProvider.get(
+          '/countries',
+          ({ data }) => {
+            this.persistenceProvider.setCountries(data);
+            this.countryList = data;
+          },
+          () => {}
+        );
+      }
+    });
   }
 
   public openAmountModal() {
@@ -84,6 +102,26 @@ export class CryptoOrderSummaryPage {
       if (data) {
         this.amount = data.fiatAmount;
         this.currency = data.currency;
+      }
+    });
+  }
+
+  public openCountrySelectorModal() {
+    let modal = this.modalCtrl.create(
+      CountrySelectorPage,
+      {
+        countryList: this.countryList,
+        useAsModal: true
+      },
+      {
+        showBackdrop: true,
+        enableBackdropDismiss: true
+      }
+    );
+    modal.present();
+    modal.onDidDismiss(data => {
+      if (data) {
+        this.selectedCountry = data.selectedCountry;
       }
     });
   }
@@ -114,7 +152,8 @@ export class CryptoOrderSummaryPage {
       currency: this.currency,
       paymentMethod: this.paymentMethod,
       coin: this.coin,
-      walletId: this.walletId
+      walletId: this.walletId,
+      selectedCountry: this.selectedCountry
     };
     this.navCtrl.push(CryptoOffersPage, params);
   }

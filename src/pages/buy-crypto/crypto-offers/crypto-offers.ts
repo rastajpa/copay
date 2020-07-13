@@ -26,6 +26,7 @@ export class CryptoOffersPage {
   public walletId: any;
   public coin: Coin;
   public paymentMethod: any;
+  public selectedCountry;
   public country: string;
   public currency: string;
   public currencies;
@@ -72,6 +73,7 @@ export class CryptoOffersPage {
     this.amount = this.navParams.data.amount;
     this.currency = this.navParams.data.currency;
     this.paymentMethod = this.navParams.data.paymentMethod;
+    this.selectedCountry = this.navParams.data.selectedCountry;
     this.coin = this.navParams.data.coin;
     this.walletId = this.navParams.data.walletId;
     this.wallet = this.profileProvider.getWallet(this.walletId);
@@ -123,7 +125,7 @@ export class CryptoOffersPage {
         const dest = this.setPrefix(address, this.coin, this.wallet.network);
         const data = {
           amount: this.amount.toString(),
-          dest: dest,
+          dest,
           destCurrency: this.coin.toUpperCase(),
           sourceCurrency: this.currency.toUpperCase()
         };
@@ -131,14 +133,11 @@ export class CryptoOffersPage {
         this.wyreProvider
           .walletOrderReservation(this.wallet, data)
           .then(data => {
-            if (data && data.exceptionId) {
-              this.logger.error(JSON.stringify(data));
-              this.showWyreError(data.message);
-              return;
-            }
-
-            if (data && data.error && !_.isEmpty(data.error)) {
-              this.showWyreError(data.error);
+            if (
+              data &&
+              (data.exceptionId || (data.error && !_.isEmpty(data.error)))
+            ) {
+              this.showWyreError(data);
               return;
             }
 
@@ -253,21 +252,18 @@ export class CryptoOffersPage {
             amount: this.amount.toString(),
             sourceCurrency: this.currency.toUpperCase(),
             destCurrency: this.coin.toUpperCase(),
-            dest: dest,
-            country: 'US'
+            dest,
+            country: this.selectedCountry.shortCode
           };
 
           this.wyreProvider
             .walletOrderQuotation(this.wallet, data)
             .then((data: any) => {
-              if (data && data.exceptionId) {
-                this.logger.error(JSON.stringify(data));
-                this.showWyreError(data.message);
-                return;
-              }
-
-              if (data && data.error && !_.isEmpty(data.error)) {
-                this.showWyreError(data.error);
+              if (
+                data &&
+                (data.exceptionId || (data.error && !_.isEmpty(data.error)))
+              ) {
+                this.showWyreError(data);
                 return;
               }
 
@@ -315,7 +311,18 @@ export class CryptoOffersPage {
       if (_.isString(err)) {
         msg = err;
       } else if (err.exceptionId && err.message) {
-        msg = err.message;
+        if (err.errorCode) {
+          switch (err.errorCode) {
+            case 'validation.unsupportedCountry':
+              msg = this.translate.instant(
+                `Country not supported: ${this.selectedCountry.name}`
+              );
+              break;
+            default:
+              msg = err.message;
+              break;
+          }
+        } else msg = err.message;
       }
     }
 

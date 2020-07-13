@@ -32,6 +32,21 @@
         </ion-item>
       </ion-card>
 
+      <div class="item-label" translate>Country</div>
+      <ion-card class="item-card" (click)="openCountrySelectorModal()">
+        <ion-item>
+          <div class="main-label">{{'Selected Country' | translate}}</div>
+          <ion-note item-end>
+            <ion-row align-items-center>
+              <div class="secondary-note address-label">
+                <span>{{selectedCountry?.name}}</span>
+              </div>
+              <ion-icon item-end name="ios-arrow-forward-outline" color="light-grey"></ion-icon>
+            </ion-row>
+          </ion-note>
+        </ion-item>
+      </ion-card>
+
       <div class="item-label" translate>Payment Method</div>
       <ion-card class="item-card" (click)="openCryptoPaymentMethodModal()">
         <ion-item>
