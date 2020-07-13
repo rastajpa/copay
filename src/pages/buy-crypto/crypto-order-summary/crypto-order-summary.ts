@@ -1,7 +1,11 @@
 import { Component } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { ModalController, NavController, NavParams } from 'ionic-angular';
+import * as _ from 'lodash';
+import env from '../../../environments';
 
 // Providers
+import { ActionSheetProvider } from '../../../providers/action-sheet/action-sheet';
 import { BitPayProvider } from '../../../providers/bitpay/bitpay';
 import { Logger } from '../../../providers/logger/logger';
 import { PersistenceProvider } from '../../../providers/persistence/persistence';
@@ -19,6 +23,7 @@ import { AmountPage } from '../../../pages/send/amount/amount';
   templateUrl: 'crypto-order-summary.html'
 })
 export class CryptoOrderSummaryPage {
+  private wallets: any[];
   public wallet: any;
   public walletId: any;
   public coin: string;
@@ -40,9 +45,28 @@ export class CryptoOrderSummaryPage {
     private persistenceProvider: PersistenceProvider,
     private profileProvider: ProfileProvider,
     private walletProvider: WalletProvider,
-    private bitPayProvider: BitPayProvider
+    private bitPayProvider: BitPayProvider,
+    private translate: TranslateService,
+    private actionSheetProvider: ActionSheetProvider
   ) {
     this.currencies = this.simplexProvider.supportedCoins;
+    this.amount = this.navParams.data.amount;
+    this.currency = this.navParams.data.currency;
+    this.paymentMethod = this.navParams.data.paymentMethod;
+    this.coin = this.navParams.data.coin;
+    this.setWallet(this.navParams.data.walletId);
+    this.selectedCountry = {
+      name: 'United States',
+      phonePrefix: '+1',
+      shortCode: 'US',
+      threeLetterCode: 'USA'
+    };
+    this.wallets = this.profileProvider.getWallets({
+      network: env.name == 'development' ? null : 'livenet',
+      onlyComplete: true,
+      coin: this.coin,
+      backedUp: true
+    });
   }
 
   ionViewDidLoad() {
@@ -50,22 +74,6 @@ export class CryptoOrderSummaryPage {
   }
 
   ionViewWillEnter() {
-    this.amount = this.navParams.data.amount;
-    this.currency = this.navParams.data.currency;
-    this.paymentMethod = this.navParams.data.paymentMethod;
-    this.coin = this.navParams.data.coin;
-    this.walletId = this.navParams.data.walletId;
-    this.wallet = this.profileProvider.getWallet(this.walletId);
-    this.walletProvider.getAddress(this.wallet, false).then(addr => {
-      this.address = addr;
-    });
-
-    this.selectedCountry = {
-      name: 'United States',
-      phonePrefix: '+1',
-      shortCode: 'US',
-      threeLetterCode: 'USA'
-    };
     this.persistenceProvider.getCountries().then(data => {
       if (data) {
         this.countryList = data;
@@ -76,10 +84,18 @@ export class CryptoOrderSummaryPage {
             this.persistenceProvider.setCountries(data);
             this.countryList = data;
           },
-          () => {}
+          () => { }
         );
       }
     });
+  }
+
+  private setWallet(walletId): void {
+    this.walletId = walletId;
+    this.wallet = this.profileProvider.getWallet(this.walletId);
+    this.walletProvider.getAddress(this.wallet, false).then(addr => {
+      this.address = addr;
+    })
   }
 
   public openAmountModal() {
@@ -131,7 +147,9 @@ export class CryptoOrderSummaryPage {
       CryptoPaymentMethodPage,
       {
         paymentMethod: this.paymentMethod.method,
-        useAsModal: true
+        useAsModal: true,
+        coin: this.coin,
+        currency: this.currency
       },
       {
         showBackdrop: true,
@@ -161,5 +179,22 @@ export class CryptoOrderSummaryPage {
   public getDigitsInfo(currency: string) {
     if (!this.coin || this.coin.toUpperCase() === currency) return '';
     else return '1.2-2';
+  }
+
+  public showWallets(): void {
+    const params = {
+      wallets: this.wallets,
+      selectedWalletId: this.walletId,
+      title: this.translate.instant('Select wallet to deposit to')
+    };
+    const walletSelector = this.actionSheetProvider.createWalletSelector(
+      params
+    );
+    walletSelector.present();
+    walletSelector.onDidDismiss(wallet => {
+      if (!_.isEmpty(wallet)) {
+        this.setWallet(wallet.id);
+      }
+    });
   }
 }

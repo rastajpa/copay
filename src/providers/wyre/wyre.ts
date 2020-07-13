@@ -155,7 +155,7 @@ export class WyreProvider {
       'Content-Type': 'application/json'
     };
 
-    console.log('Trying getTransfer: ', url);
+    // console.log('Trying getTransfer: ', url);
     return new Promise((resolve, reject) => {
       this.http.get(url, { headers }).subscribe(
         data => {

@@ -16,7 +16,7 @@
       </ion-card>
 
       <div class="item-label" translate>Deposit to</div>
-      <ion-card class="item-card">
+      <ion-card class="item-card" (click)="showWallets(wallet?.coin)">
         <ion-item>
           <coin-icon item-start [coin]="wallet?.coin" [network]="wallet?.network"></coin-icon>
           <div class="main-label">
@@ -24,7 +24,7 @@
           </div>
           <ion-note item-end>
             <ion-row align-items-center>
-              <div class="secondary-note address-label" copy-to-clipboard="{{ address }}">
+              <div class="secondary-note address-label">
                 <span>{{address | shortenedAddress}}</span>
               </div>
             </ion-row>

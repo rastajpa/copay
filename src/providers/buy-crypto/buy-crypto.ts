@@ -29,7 +29,7 @@ export class BuyCryptoProvider {
       applePay: {
         label: this.translate.instant('Apple Pay'),
         method: 'applePay',
-        imgSrc: 'assets/img/buy-crypto/apple-pay.svg',
+        imgSrc: 'assets/img/buy-crypto/apple-pay-logo.svg',
         supportedExchanges: {
           simplex: false,
           wyre: true
@@ -39,7 +39,7 @@ export class BuyCryptoProvider {
       creditCard: {
         label: this.translate.instant('Credit Card'),
         method: 'creditCard',
-        imgSrc: 'assets/img/buy-crypto/debit-card.svg',
+        imgSrc: 'assets/img/buy-crypto/icon-creditcard.svg',
         supportedExchanges: {
           simplex: true,
           wyre: false
@@ -49,7 +49,7 @@ export class BuyCryptoProvider {
       debitCard: {
         label: this.translate.instant('Debit Card'),
         method: 'debitCard',
-        imgSrc: 'assets/img/buy-crypto/debit-card.svg',
+        imgSrc: 'assets/img/buy-crypto/icon-debitcard.svg',
         supportedExchanges: {
           simplex: true,
           wyre: true
@@ -63,7 +63,7 @@ export class BuyCryptoProvider {
     this.homeIntegrationsProvider.register({
       name: 'buycrypto',
       title: this.translate.instant('Buy Crypto'),
-      icon: null,
+      icon: 'assets/img/icon-coins.svg',
       showIcon: true,
       logo: null,
       logoWidth: '110',

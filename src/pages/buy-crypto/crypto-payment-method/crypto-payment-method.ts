@@ -5,6 +5,7 @@ import * as _ from 'lodash';
 // Providers
 import { BuyCryptoProvider } from '../../../providers/buy-crypto/buy-crypto';
 import { Logger } from '../../../providers/logger/logger';
+import { ThemeProvider } from '../../../providers/theme/theme';
 
 // Pages
 import { CryptoOrderSummaryPage } from '../../../pages/buy-crypto/crypto-order-summary/crypto-order-summary';
@@ -34,7 +35,8 @@ export class CryptoPaymentMethodPage {
     private navParams: NavParams,
     private navCtrl: NavController,
     private viewCtrl: ViewController,
-    private buyCryptoProvider: BuyCryptoProvider
+    private buyCryptoProvider: BuyCryptoProvider,
+    public themeProvider: ThemeProvider
   ) {
     this.coin = this.navParams.data.coin;
     this.currency = this.navParams.data.currency;
