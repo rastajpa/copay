@@ -1533,11 +1533,19 @@
   }
   page-crypto-offers {
     .bp-list {
-      .summary-order {
-        color: #757575;
-        &-bold {
-          color: $text-color-dark-theme;
-          border-bottom: solid 2.4px $text-color-dark-theme;
+      .summary-description {
+        color: $text-color-dark-theme;
+      }
+    }
+  }
+  page-crypto-coin-selector {
+    .bp-list {
+      .available-wallets {
+        &-container {
+          background-color: $bg-color-dark-theme-2;
+        }
+        &-label {
+          color: $text-color-dark-theme-2;
         }
       }
     }

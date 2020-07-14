@@ -12,6 +12,7 @@ import { ExternalLinkProvider } from '../../../providers/external-link/external-
 import { Logger } from '../../../providers/logger/logger';
 import { ProfileProvider } from '../../../providers/profile/profile';
 import { SimplexProvider } from '../../../providers/simplex/simplex';
+import { ThemeProvider } from '../../../providers/theme/theme';
 import { WalletProvider } from '../../../providers/wallet/wallet';
 import { WyreProvider } from '../../../providers/wyre/wyre';
 
@@ -60,7 +61,8 @@ export class CryptoOffersPage {
     private walletProvider: WalletProvider,
     private wyreProvider: WyreProvider,
     private externalLinkProvider: ExternalLinkProvider,
-    private translate: TranslateService
+    private translate: TranslateService,
+    public themeProvider: ThemeProvider
   ) {
     this.currencies = this.simplexProvider.supportedCoins;
   }
@@ -199,7 +201,7 @@ export class CryptoOffersPage {
     ) {
       this.sErrorMsg = `The ${this.fiatCurrency} amount must be between ${
         this.sAmountLimits.min
-      } and ${this.sAmountLimits.max}`;
+        } and ${this.sAmountLimits.max}`;
       return;
     } else {
       const data = {
@@ -220,7 +222,7 @@ export class CryptoOffersPage {
               totalAmount / this.sAmountReceiving
             ).toFixed(
               this.currencyProvider.getPrecision(this.coin).unitDecimals
-            );
+              );
             this.logger.debug('Simplex getting quote: SUCCESS');
           }
         })
@@ -241,7 +243,7 @@ export class CryptoOffersPage {
     ) {
       this.wErrorMsg = `The ${this.fiatCurrency} daily amount must be between ${
         this.wAmountLimits.min
-      } and ${this.wAmountLimits.max}`;
+        } and ${this.wAmountLimits.max}`;
       return;
     } else {
       this.walletProvider
@@ -267,11 +269,9 @@ export class CryptoOffersPage {
                 return;
               }
 
-              this.wFiatMoney = data.sourceAmount / data.destAmount; // sourceAmount = Total amount (including fees)
+              this.wFiatMoney = Number(data.sourceAmount / data.destAmount).toFixed(8); // sourceAmount = Total amount (including fees)
 
-              this.wAmountReceiving = data.destAmount.toFixed(
-                this.currencyProvider.getPrecision(this.coin).unitDecimals
-              );
+              this.wAmountReceiving = data.destAmount.toFixed(8);
 
               this.logger.debug('Wyre getting quote: SUCCESS');
             })

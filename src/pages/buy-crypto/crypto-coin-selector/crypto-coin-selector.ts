@@ -1,23 +1,23 @@
 import { Component } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
+import { NavController, NavParams } from 'ionic-angular';
 import * as _ from 'lodash';
 import env from '../../../environments';
-import { TranslateService } from '@ngx-translate/core';
-import { NavController } from 'ionic-angular';
 
 // Providers
 import {
   ActionSheetProvider,
-  ErrorsProvider,
   Coin,
+  ConfigProvider,
   CurrencyProvider,
+  ErrorsProvider,
   Logger,
-  ProfileProvider,
-  ConfigProvider
+  ProfileProvider
 } from '../../../providers';
 
 // Pages
-import { AmountPage } from '../../../pages/send/amount/amount';
 import { SelectCurrencyPage } from '../../../pages/add/select-currency/select-currency';
+import { AmountPage } from '../../../pages/send/amount/amount';
 
 @Component({
   selector: 'page-crypto-coin-selector',
@@ -36,7 +36,8 @@ export class CryptoCoinSelectorPage {
     private currencyProvider: CurrencyProvider,
     private translate: TranslateService,
     private configProvider: ConfigProvider,
-    private errorsProvider: ErrorsProvider
+    private errorsProvider: ErrorsProvider,
+    private navParams: NavParams
   ) {
     this.wallets = this.profileProvider.getWallets({
       network: env.name == 'development' ? null : 'livenet',
@@ -57,6 +58,13 @@ export class CryptoCoinSelectorPage {
 
   ionViewDidLoad() {
     this.logger.info('Loaded: CryptoCoinSelectorPage');
+  }
+
+  ionViewWillEnter() {
+    if (this.navParams.data.coin) {
+      const coin = _.find(this.coins, ['unitCode', this.navParams.data.coin]);
+      this.showWallets(coin);
+    }
   }
 
   public showWallets(coin): void {

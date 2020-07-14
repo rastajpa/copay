@@ -86,7 +86,7 @@ export class CryptoSettingsPage {
             '========= data: ',
             JSON.stringify(this.navParams.data)
           );
-          console.log('========= data: ', JSON.stringify(this.navParams.data));
+          // console.log('========= data: ', JSON.stringify(this.navParams.data));
 
           this.wyreProvider
             .getTransfer(this.navParams.data.transferId)
@@ -107,7 +107,7 @@ export class CryptoSettingsPage {
                 .then(() => {
                   this.logger.debug(
                     'Saved Wyre with transferId: ' +
-                      this.navParams.data.transferId
+                    this.navParams.data.transferId
                   );
                 })
                 .catch(() => {

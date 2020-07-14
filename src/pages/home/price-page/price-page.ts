@@ -1,5 +1,4 @@
 import { Component, ViewChild } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
 import { NavController, NavParams } from 'ionic-angular';
 import * as _ from 'lodash';
 import * as moment from 'moment';
@@ -10,17 +9,14 @@ import { Card } from '../../../components/exchange-rates/exchange-rates';
 import { PriceChart } from '../../../components/price-chart/price-chart';
 
 // Pages
-import { SelectCurrencyPage } from '../../../pages/add/select-currency/select-currency';
-import { AmountPage } from '../../send/amount/amount';
+import { CryptoCoinSelectorPage } from '../../../pages/buy-crypto/crypto-coin-selector/crypto-coin-selector';
 
 // Providers
 import {
-  ActionSheetProvider,
+  AnalyticsProvider,
   ConfigProvider,
-  ErrorsProvider,
   ExchangeRatesProvider,
   Logger,
-  ProfileProvider,
   SimplexProvider
 } from '../../../providers';
 
@@ -64,10 +60,7 @@ export class PricePage {
     private configProvider: ConfigProvider,
     private logger: Logger,
     private simplexProvider: SimplexProvider,
-    private profileProvider: ProfileProvider,
-    private translate: TranslateService,
-    private errorsProvider: ErrorsProvider,
-    private actionSheetProvider: ActionSheetProvider
+    private analyticsProvider: AnalyticsProvider
   ) {
     this.card = _.clone(this.navParams.data.card);
     this.coin = this.card.unitCode;
@@ -206,53 +199,8 @@ export class PricePage {
     this.isIsoCodeSupported = _.includes(this.fiatCodes, this.isoCode);
   }
 
-  public selectWallet() {
-    this.wallets = this.profileProvider.getWallets({
-      network: 'livenet',
-      onlyComplete: true,
-      coin: this.coin,
-      backedUp: true
-    });
-    if (_.isEmpty(this.wallets)) {
-      this.errorsProvider.showNoWalletError(this.coin, option => {
-        if (option) {
-          this.navCtrl.push(SelectCurrencyPage);
-        }
-      });
-    } else {
-      this.showWallets();
-    }
-  }
-
-  public showWallets(): void {
-    const params = {
-      wallets: this.wallets,
-      selectedWalletId: null,
-      title: this.translate.instant('Select wallet to deposit to')
-    };
-    const walletSelector = this.actionSheetProvider.createWalletSelector(
-      params
-    );
-    walletSelector.present();
-    walletSelector.onDidDismiss(wallet => {
-      this.onWalletSelect(wallet);
-    });
-  }
-
-  private onWalletSelect(wallet): void {
-    if (!_.isEmpty(wallet)) {
-      this.wallet = wallet;
-      this.goToAmountPage();
-    }
-  }
-
-  private goToAmountPage() {
-    this.navCtrl.push(AmountPage, {
-      fromBuyCrypto: true,
-      nextPage: 'CryptoPaymentMethodPage',
-      walletId: this.wallet.id,
-      coin: this.coin,
-      currency: this.configProvider.get().wallet.settings.alternativeIsoCode
-    });
+  public goToCoinSelector(): void {
+    this.analyticsProvider.logEvent('buy_crypto_button_clicked', {});
+    this.navCtrl.push(CryptoCoinSelectorPage, { coin: this.coin });
   }
 }

@@ -1,4 +1,4 @@
-<wide-header-page title="{{'Viewing Offers' | translate}}">
+<wide-header-page title="{{'Offers' | translate}}">
   <div page-content>
     <ion-list class="bp-list">
       <ion-item>
@@ -39,7 +39,7 @@
           </div>
           <div class="provider">
             <span class="secondary-label">Provided by</span>
-            <img src="assets/img/simplex/logo-simplex-color.svg">
+            <img [src]="themeProvider.currentAppTheme !== 'dark' ? 'assets/img/simplex/logo-simplex-color.svg' : 'assets/img/simplex/logo-simplex-dm.png'">
           </div>
         </div>
         <div action-card-button translate *ngIf="sFiatMoney">
@@ -56,12 +56,12 @@
             <div class="main-label">{{wErrorMsg}}</div>
           </div>
           <div *ngIf="wFiatMoney">
-            <div class="main-label">{{wAmountReceiving}} {{coin | uppercase}}</div>
+            <div class="main-label">{{wAmountReceiving }} {{coin | uppercase}}</div>
             <div class="secondary-label">1 {{coin | uppercase}} = <span *ngIf="fiatCurrency?.toUpperCase() === 'USD'">$</span>{{wFiatMoney | number:'1.2-2'}} <span *ngIf="fiatCurrency?.toUpperCase() !== 'USD'">{{fiatCurrency}}</span> *</div>
           </div>
           <div class="provider">
             <span class="secondary-label">Provided by</span>
-            <img src="assets/img/wyre/wyre.svg">
+            <img [src]="themeProvider.currentAppTheme !== 'dark' ? 'assets/img/wyre/logo-wyre.svg' : 'assets/img/wyre/logo-wyre-dm.svg'">
           </div>
         </div>
         <div action-card-button translate *ngIf="wFiatMoney">
