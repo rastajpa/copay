@@ -84,7 +84,7 @@ export class CryptoOrderSummaryPage {
             this.persistenceProvider.setCountries(data);
             this.countryList = data;
           },
-          () => { }
+          () => {}
         );
       }
     });
@@ -95,7 +95,7 @@ export class CryptoOrderSummaryPage {
     this.wallet = this.profileProvider.getWallet(this.walletId);
     this.walletProvider.getAddress(this.wallet, false).then(addr => {
       this.address = addr;
-    })
+    });
   }
 
   public openAmountModal() {
@@ -196,5 +196,9 @@ export class CryptoOrderSummaryPage {
         this.setWallet(wallet.id);
       }
     });
+  }
+
+  public cancelOrder() {
+    this.navCtrl.popToRoot();
   }
 }
