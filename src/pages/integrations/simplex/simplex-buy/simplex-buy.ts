@@ -19,6 +19,7 @@ import { PopupProvider } from '../../../../providers/popup/popup';
 import { ProfileProvider } from '../../../../providers/profile/profile';
 import { RateProvider } from '../../../../providers/rate/rate';
 import { SimplexProvider } from '../../../../providers/simplex/simplex';
+import { ThemeProvider } from '../../../../providers/theme/theme';
 import { WalletProvider } from '../../../../providers/wallet/wallet';
 
 @Component({
@@ -77,7 +78,8 @@ export class SimplexBuyPage {
     private rateProvider: RateProvider,
     private simplexProvider: SimplexProvider,
     private translate: TranslateService,
-    private walletProvider: WalletProvider
+    private walletProvider: WalletProvider,
+    public themeProvider: ThemeProvider
   ) {
     // Crypto Offers Page Params
     this.currency = this.navParams.data.currency;

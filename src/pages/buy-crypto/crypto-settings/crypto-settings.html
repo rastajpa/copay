@@ -44,7 +44,7 @@
 
     <ion-list class="bp-list" *ngIf="simplexPaymentRequests && simplexPaymentRequests.length > 0">
       <ion-item-divider>
-        <img width="95" src="assets/img/simplex/logo-simplex-color.svg" alt="Simplex Orders">
+        <img width="95" [src]="themeProvider.currentAppTheme !== 'dark' ? 'assets/img/simplex/logo-simplex-color.svg' : 'assets/img/simplex/logo-simplex-dm.png'" alt="Simplex Orders">
         <ion-spinner item-end name="crescent" *ngIf="loading"></ion-spinner>
       </ion-item-divider>
       <button ion-item *ngFor="let paymentRequest of simplexPaymentRequests | orderBy : ['-created_on']" (click)="openSimplexModal(paymentRequest)">

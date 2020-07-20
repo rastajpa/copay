@@ -9,6 +9,7 @@ import { SimplexDetailsPage } from './simplex-details/simplex-details';
 import { ExternalLinkProvider } from '../../../providers/external-link/external-link';
 import { Logger } from '../../../providers/logger/logger';
 import { SimplexProvider } from '../../../providers/simplex/simplex';
+import { ThemeProvider } from '../../../providers/theme/theme';
 
 @Component({
   selector: 'page-simplex',
@@ -25,7 +26,8 @@ export class SimplexPage {
     private externalLinkProvider: ExternalLinkProvider,
     private modalCtrl: ModalController,
     private navParams: NavParams,
-    private simplexProvider: SimplexProvider
+    private simplexProvider: SimplexProvider,
+    public themeProvider: ThemeProvider
   ) {}
 
   ionViewDidLoad() {

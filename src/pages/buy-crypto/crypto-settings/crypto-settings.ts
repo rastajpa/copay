@@ -12,6 +12,7 @@ import { HomeIntegrationsProvider } from '../../../providers/home-integrations/h
 import { Logger } from '../../../providers/logger/logger';
 import { SimplexProvider } from '../../../providers/simplex/simplex';
 import { WyreProvider } from '../../../providers/wyre/wyre';
+import { ThemeProvider } from '../../../providers/theme/theme';
 
 @Component({
   selector: 'page-crypto-settings',
@@ -33,7 +34,8 @@ export class CryptoSettingsPage {
     private simplexProvider: SimplexProvider,
     private navParams: NavParams,
     private modalCtrl: ModalController,
-    private wyreProvider: WyreProvider
+    private wyreProvider: WyreProvider,
+    public themeProvider: ThemeProvider
   ) {
     this.service = _.filter(this.homeIntegrationsProvider.get(), {
       name: this.serviceName
@@ -107,7 +109,7 @@ export class CryptoSettingsPage {
                 .then(() => {
                   this.logger.debug(
                     'Saved Wyre with transferId: ' +
-                    this.navParams.data.transferId
+                      this.navParams.data.transferId
                   );
                 })
                 .catch(() => {
