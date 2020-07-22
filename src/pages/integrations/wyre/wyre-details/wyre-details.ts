@@ -6,6 +6,7 @@ import { NavParams, ViewController } from 'ionic-angular';
 import { ExternalLinkProvider } from '../../../../providers/external-link/external-link';
 import { Logger } from '../../../../providers/logger/logger';
 import { PopupProvider } from '../../../../providers/popup/popup';
+import { ThemeProvider } from '../../../../providers/theme/theme';
 import { WyreProvider } from '../../../../providers/wyre/wyre';
 
 @Component({
@@ -22,7 +23,8 @@ export class WyreDetailsPage {
     private popupProvider: PopupProvider,
     private wyreProvider: WyreProvider,
     private translate: TranslateService,
-    private viewCtrl: ViewController
+    private viewCtrl: ViewController,
+    public themeProvider: ThemeProvider
   ) {
     this.paymentRequest = this.navParams.data.paymentRequestData;
     this.paymentRequest.fiatBaseAmount =

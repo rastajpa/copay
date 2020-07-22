@@ -115,4 +115,18 @@ export class BuyCryptoProvider {
       this.isCurrencySupported(exchange, currency)
     );
   }
+
+  public async getPaymentRequests(): Promise<any> {
+    const [
+      simplexPaymentRequests,
+      wyrePaymentRequests
+    ]: any = await Promise.all([
+      this.simplexProvider.getSimplex(),
+      this.wyreProvider.getWyre()
+    ]);
+    return {
+      simplexPaymentRequests: _.values(simplexPaymentRequests),
+      wyrePaymentRequests: _.values(wyrePaymentRequests)
+    };
+  }
 }

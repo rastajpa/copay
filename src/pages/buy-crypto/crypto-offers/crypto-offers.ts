@@ -178,13 +178,14 @@ export class CryptoOffersPage {
     );
     const okText = this.translate.instant('Continue');
     const cancelText = this.translate.instant('Go back');
-    this.externalLinkProvider
-      .open(url, true, title, message, okText, cancelText)
-      .then(() => {
-        setTimeout(() => {
-          this.navCtrl.popToRoot();
-        }, 2500);
-      });
+    this.externalLinkProvider.open(
+      url,
+      true,
+      title,
+      message,
+      okText,
+      cancelText
+    );
   }
 
   private getSimplexQuote(): void {
