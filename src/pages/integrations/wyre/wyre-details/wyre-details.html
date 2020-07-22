@@ -65,6 +65,7 @@
       {{'Status' | translate}}
       <ion-note item-end>
         <span class="assertive" *ngIf="paymentRequest.status == 'failed'" translate>Payment request rejected</span>
+        <span *ngIf="paymentRequest.status == 'paymentRequestSent'" translate>Payment request sent</span>
         <span class="balanced" *ngIf="paymentRequest.status == 'success'" translate>Payment request approved</span>
       </ion-note>
     </ion-item>

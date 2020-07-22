@@ -33,6 +33,41 @@ export class WyreDetailsPage {
     this.logger.info('Loaded: WyreDetailsPage');
   }
 
+  ionViewWillEnter() {
+    if (
+      this.paymentRequest.status != 'success' &&
+      this.paymentRequest.transferId
+    ) {
+      this.logger.info('Wyre Details: trying to get transaction info');
+      this.wyreProvider
+        .getTransfer(this.navParams.data.transferId)
+        .then((transferData: any) => {
+          this.paymentRequest.status = 'success';
+          this.paymentRequest.sourceAmount = transferData.sourceAmount;
+          this.paymentRequest.fee = transferData.fee; // Total fee (crypto fee + Wyre fee)
+          this.paymentRequest.destCurrency = transferData.destCurrency;
+          this.paymentRequest.sourceCurrency = transferData.sourceCurrency;
+
+          this.wyreProvider
+            .saveWyre(this.paymentRequest, null)
+            .then(() => {
+              this.logger.debug(
+                'Saved Wyre with transferId: ' + this.navParams.data.transferId
+              );
+            })
+            .catch(() => {
+              this.logger.warn('Could not update payment request status');
+            });
+        })
+        .catch(_err => {
+          this.logger.warn(
+            'Could not get transfer for transferId: ' +
+              this.navParams.data.transferId
+          );
+        });
+    }
+  }
+
   public remove() {
     const title = this.translate.instant('Removing Payment Request Data');
     const message = this.translate.instant(

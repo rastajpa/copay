@@ -675,7 +675,7 @@ export class IncomingDataProvider {
 
     const stateParams = { success, paymentId, quoteId, userId };
     const nextView = {
-      name: 'SimplexPage',
+      name: 'CryptoSettingsPage',
       params: stateParams
     };
     this.incomingDataRedir(nextView);
@@ -706,7 +706,7 @@ export class IncomingDataProvider {
       blockchainNetworkTx
     };
     const nextView = {
-      name: 'WyrePage',
+      name: 'CryptoSettingsPage',
       params: stateParams
     };
     this.incomingDataRedir(nextView);

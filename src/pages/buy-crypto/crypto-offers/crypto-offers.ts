@@ -129,6 +129,8 @@ export class CryptoOffersPage {
           amount: this.amount.toString(),
           dest,
           destCurrency: this.coin.toUpperCase(),
+          lockFields: ['dest'],
+          paymentMethod,
           sourceCurrency: this.currency.toUpperCase()
         };
 
@@ -145,8 +147,6 @@ export class CryptoOffersPage {
 
             const url =
               data.url +
-              '&paymentMethod=' +
-              paymentMethod +
               '&redirectUrl=' +
               redirectUrl +
               '&failureRedirectUrl=' +
@@ -201,7 +201,7 @@ export class CryptoOffersPage {
     ) {
       this.sErrorMsg = `The ${this.fiatCurrency} amount must be between ${
         this.sAmountLimits.min
-        } and ${this.sAmountLimits.max}`;
+      } and ${this.sAmountLimits.max}`;
       return;
     } else {
       const data = {
@@ -222,7 +222,7 @@ export class CryptoOffersPage {
               totalAmount / this.sAmountReceiving
             ).toFixed(
               this.currencyProvider.getPrecision(this.coin).unitDecimals
-              );
+            );
             this.logger.debug('Simplex getting quote: SUCCESS');
           }
         })
@@ -243,7 +243,7 @@ export class CryptoOffersPage {
     ) {
       this.wErrorMsg = `The ${this.fiatCurrency} daily amount must be between ${
         this.wAmountLimits.min
-        } and ${this.wAmountLimits.max}`;
+      } and ${this.wAmountLimits.max}`;
       return;
     } else {
       this.walletProvider
@@ -269,7 +269,9 @@ export class CryptoOffersPage {
                 return;
               }
 
-              this.wFiatMoney = Number(data.sourceAmount / data.destAmount).toFixed(8); // sourceAmount = Total amount (including fees)
+              this.wFiatMoney = Number(
+                data.sourceAmount / data.destAmount
+              ).toFixed(8); // sourceAmount = Total amount (including fees)
 
               this.wAmountReceiving = data.destAmount.toFixed(8);
 

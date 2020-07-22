@@ -83,7 +83,9 @@ export class CryptoSettingsPage {
     this.wyreProvider
       .getWyre()
       .then(wyreData => {
+        if (!wyreData || _.isEmpty(wyreData)) wyreData = {};
         if (!_.isEmpty(this.navParams.data) && this.navParams.data.transferId) {
+          wyreData[this.navParams.data.transferId] = this.navParams.data;
           this.logger.info(
             '========= data: ',
             JSON.stringify(this.navParams.data)
@@ -117,7 +119,28 @@ export class CryptoSettingsPage {
                 });
             })
             .catch(err => {
+              this.logger.warn(
+                'Could not get transfer for transferId: ' +
+                  this.navParams.data.transferId
+              );
               this.showError(err);
+
+              this.setWyrePaymentRequests(wyreData);
+
+              wyreData[this.navParams.data.transferId].status =
+                'paymentRequestSent';
+
+              this.wyreProvider
+                .saveWyre(wyreData[this.navParams.data.transferId], null)
+                .then(() => {
+                  this.logger.debug(
+                    'Saved Wyre with transferId: ' +
+                      this.navParams.data.transferId
+                  );
+                })
+                .catch(() => {
+                  this.logger.warn('Could not update payment request status');
+                });
             });
         } else {
           this.setWyrePaymentRequests(wyreData);

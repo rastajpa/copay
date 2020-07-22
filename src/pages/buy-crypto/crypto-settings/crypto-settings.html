@@ -34,6 +34,11 @@
       <button ion-item *ngFor="let paymentRequest of wyrePaymentRequests | orderBy : ['-created_on']" (click)="openWyreModal(paymentRequest)">
         <ion-label>
           <div class="ellipsis">{{paymentRequest.sourceAmount }} {{ paymentRequest.sourceCurrency }}</div>
+          <div class="status">
+            <span class="assertive" *ngIf="paymentRequest.status == 'failed'" translate>Payment request rejected</span>
+            <span class="balanced" *ngIf="paymentRequest.status == 'success'" translate>Payment request approved</span>
+            <span class="royal" *ngIf="paymentRequest.status == 'paymentRequestSent'" translate>Attempted payment request</span>
+          </div>
         </ion-label>
         <div item-content text-end>
           <div class="text-bold">{{ paymentRequest.destAmount | number:'1.0-6'}} {{ paymentRequest.destCurrency }}</div>
