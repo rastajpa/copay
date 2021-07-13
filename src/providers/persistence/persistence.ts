@@ -92,7 +92,9 @@ const Keys = {
   CARD_FAST_TRACK_ENABLED: 'cardFastTrackEnabled',
   TEMP_MDES_DEBUG_FLAG: 'tempMdesDebugFlag',
   TEMP_MDES_CERT_ONLY_DEBUG_FLAG: 'tempMdesCertOnlyDebugFlag',
-  NETWORK: 'network'
+  NETWORK: 'network',
+  BITPAY_CARD_ORDER_STARTED: `bitPayCardOrderStarted`,
+  BITPAY_SURVEY_CARD_DISMISSED: `bitPaySurveyCardDismissed`
 };
 
 interface Storage {
@@ -1043,6 +1045,22 @@ export class PersistenceProvider {
 
   getNetwork() {
     return this.storage.get(Keys.NETWORK);
+  }
+
+  setBitPayCardOrderStarted(ts: number) {
+    return this.storage.set(Keys.BITPAY_CARD_ORDER_STARTED, ts);
+  }
+
+  getBitPayCardOrderStarted() {
+    return this.storage.get(Keys.BITPAY_CARD_ORDER_STARTED);
+  }
+
+  setBitPaySurveyCardDismissed(ts: number) {
+    return this.storage.set(Keys.BITPAY_SURVEY_CARD_DISMISSED, ts);
+  }
+
+  getBitPaySurveyCardDismissed() {
+    return this.storage.get(Keys.BITPAY_SURVEY_CARD_DISMISSED);
   }
 }
 
