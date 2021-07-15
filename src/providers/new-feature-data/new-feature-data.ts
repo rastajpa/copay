@@ -159,6 +159,31 @@ export class NewFeatureData {
             }
           }
         ]
+      },
+      {
+        majorversion: 12,
+        minorversion: 7,
+        app: ['*'],
+        platform: ['*'],
+        dummy: this.translate.instant('dummy'),
+        features: [
+          {
+            title: 'Litecoin added',
+            details:
+              'Now you can store, send and receive Litecoin, a low cost, instant peer-to-peer Internet currency, in your BitPay App.',
+            image: {
+              path: 'assets/img/new-feature/12.7/12.7-1-ltc.svg'
+            }
+          },
+          {
+            slideTitle: 'Recently added',
+            title: 'Connect with Google Pay',
+            details: `Now it's easy to use your BitPay Card with Google Pay. Make payments in stores, in apps, and online.`,
+            image: {
+              path: 'assets/img/new-feature/12.7/12.7-2-google-pay.svg'
+            }
+          }
+        ]
       }
     ];
   }
